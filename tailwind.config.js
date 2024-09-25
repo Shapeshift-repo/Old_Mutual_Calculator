@@ -7,11 +7,23 @@ module.exports = {
   ],
   theme: {
     extend: {
+      container: {
+				center: true,
+				padding: '15px',
+				screens: {
+					'2xl': '1350px',
+				},
+			},
       colors: {
+				primary: '#009677',
+				secondary: '#323232',
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-dotted-background'),
+    require('tailwind-scrollbar-hide')
+  ],
 };

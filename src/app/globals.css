@@ -4,24 +4,138 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --foreground: #000000;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+.submenu:hover > .submenu-holder{
+  @apply block w-[266px];
+}
+
+.submenu-icon {
+  @apply absolute top-[10px] right-[-20px];
+}
+
+.site-btn svg{
+  @apply absolute top-[18px] right-[15px];
+}
+
+.down-bounce svg{
+  @apply animate-bounce;
+}
+
+@keyframes stroke-animation {
+    0% {
+        stroke-dasharray: 0 1000;
+    }
+    100% {
+        stroke-dasharray: 1000 0;
+    }
   }
+
+  /* Fill animation */
+  @keyframes fill-animation {
+    0% {
+        fill: transparent;
+    }
+    100% {
+        fill: url(#paint0_linear_1_66382);
+    }
+  }
+
+  #animated-path {
+    stroke: url(#paint0_linear_1_66382);
+    stroke-width: 2;
+    animation: stroke-animation 2s forwards, fill-animation 2s 2s forwards;
+  }
+
+  
+
+  /* Fill animation */
+  @keyframes fill-animation-2 {
+    0% {
+        fill: #6C6C6C;
+    }
+    100% {
+        fill: #ABABAB;
+    }
+  }
+
+  #animated-path-2 {
+    stroke: #ABABAB;
+    stroke-width: 2;
+    animation: stroke-animation 2s forwards, fill-animation-2 2s 2s forwards;
+  }
+
+.range-holder{
+  position: relative;
+}
+
+.tab-item:before{
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+  -ms-transition: 0.5s;
+  transition: 0.5s;
+}
+.tab-item.active:before{
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+  -ms-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.multi-range-holder .MuiSlider-root .css-cp2j25-MuiSlider-thumb:nth-child(3){
+  @apply bg-[#F37021];
+}
+
+.css-14gyywz-MuiSlider-valueLabel.MuiSlider-valueLabelOpen{
+  @apply bg-transparent text-black text-[20px] leading-[25px] font-medium;
+}
+
+.estimate-footer .css-14gyywz-MuiSlider-valueLabel.MuiSlider-valueLabelOpen{
+  @apply text-[17px] leading-[25px] font-medium;
+}
+
+.animated-line {
+  stroke-dasharray: 1000; /* Length of the dash array (can be adjusted) */
+  stroke-dashoffset: 1000; /* Initially set dash offset to hide the path */
+  animation: draw 3s ease forwards; /* Apply the animation */
+}
+
+/* Keyframes for the drawing effect */
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0; /* Draw the path by reducing the dash offset */
+  }
+}
+
+.graph-line svg{
+  @apply w-full;
+}
+
+.color-card-content p{
+  @apply mb-[32px];
+}
+.color-card-content p:last-child{
+  @apply mb-0;
+}
+.color-card-content strong{
+  @apply font-semibold;
+}
+.custom-artwork .artwork svg{
+  @apply w-[226px] lg:w-[583px] h-auto;
+}
+
+.custom-blue{
+  @apply text-[#00C0E8];
+}
+
+.simple-plate{
+  @apply shadow-none bg-transparent text-left;
 }

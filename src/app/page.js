@@ -1,101 +1,108 @@
-import Image from "next/image";
+import Link from 'next/link'
+import Image from 'next/image';
+import Hero from "./components/Hero";
+import InvestingBlock from "./components/InvestingBlock";
+import ScrollableTabs from "./components/Tabs";
+import CardBlock from "./components/CardBlock";
+import CardsData from "./dummy-content/cardsData.json";
+import CallToAction from './components/CallToAction';
+import ArtworkBackgroundBlock from './components/ArtworkBackgroundBlock';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+  const tabsData = [
+    { 
+      id: "tab1", 
+      title: "STEP 1", 
+      subTitle: "Get tax back on your investment", 
+      content: (
+        <>
+          Did you know the taxman (SARS) gives you money back for investing in a retirement annuity? Pay less tax or get a tax refund every year, based on your income and retirement annuity contributions. Getting a tax refund means you're paying less for your investment. Now that's powerful! Use our &nbsp; 
+          <Link href="/">Tax Back calculator</Link> 
+          &nbsp;to see your potential savings. Download the comprehensive report to review or share with your financial adviser.
+        </>
+      )
+    },
+    { 
+      id: "tab2", 
+      title: "STEP 2", 
+      subTitle: "How much you can save over time", 
+      content: "Did you know the taxman (SARS) gives you money back for investing in a retirement annuity? Pay less tax or get a tax refund every year, based on your income and retirement annuity contributions. Getting a tax refund means you're paying less for your investment. Now that's powerful! Use our Tax Back calculator to see your potential savings.  Download the comprehensive report to review or share with your financial adviser."
+    },
+    { 
+      id: "tab3", 
+      title: "STEP 3", 
+      subTitle: "What your future income will be", 
+      content: "Did you know the taxman (SARS) gives you money back for investing in a retirement annuity? Pay less tax or get a tax refund every year, based on your income and retirement annuity contributions. Getting a tax refund means you're paying less for your investment. Now that's powerful! Use our Tax Back calculator to see your potential savings.  Download the comprehensive report to review or share with your financial adviser."
+    },
+    { 
+      id: "tab4", 
+      title: "STEP 4", 
+      subTitle: "Plan and find the money", 
+      content: "Did you know the taxman (SARS) gives you money back for investing in a retirement annuity? Pay less tax or get a tax refund every year, based on your income and retirement annuity contributions. Getting a tax refund means you're paying less for your investment. Now that's powerful! Use our Tax Back calculator to see your potential savings.  Download the comprehensive report to review or share with your financial adviser."
+    },
+    { 
+      id: "tab5", 
+      title: "STEP 5", 
+      subTitle: "Take action today!", 
+      content: "Did you know the taxman (SARS) gives you money back for investing in a retirement annuity? Pay less tax or get a tax refund every year, based on your income and retirement annuity contributions. Getting a tax refund means you're paying less for your investment. Now that's powerful! Use our Tax Back calculator to see your potential savings.  Download the comprehensive report to review or share with your financial adviser."
+    },
+  ];
+
+  const CallToActionData1 = {
+    heading: 'LIFE AND DISABILITY COVER',
+    subHeading: 'Protect you & your family’s financial future.',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ornare dignissim nibh, vel feugiat justo.',
+    buttonLabel: 'FIND OUT MORE',
+  }
+
+  const CallToActionData2 = {
+    heading: 'JOIN OLD MUTUAL REWARDS',
+    subHeading: 'Make your savings journey much <br/>more rewarding.',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ornare dignissim nibh, vel feugiat justo.',
+    buttonLabel: 'FIND OUT MORE',
+    artwork: (
+      <>
+        <svg width="557" height="433" viewBox="0 0 557 433" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M97.8225 421C64.0533 370.941 -17.1057 247.388 39.5479 273.78C110.365 306.769 233.311 458.421 206.755 355.514C180.198 252.607 119.217 127.05 219.049 216.171C318.881 305.291 426.582 376.687 398.551 273.78C370.519 170.872 351.831 27.0974 416.747 103.909C481.662 180.72 544.611 239.804 536.25 136.897C529.562 54.5709 528.546 11.9965 528.873 1" stroke="url(#paint0_linear_1_66461)" stroke-width="40"/>
+          <defs>
+          <linearGradient id="paint0_linear_1_66461" x1="20" y1="211" x2="537" y2="211" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#ED0080"/>
+          <stop offset="1" stop-color="#F37021"/>
+          </linearGradient>
+          </defs>
+        </svg>
+      </>
+      )
+  }
+
+  const onClickAction = () => {
+    console.log('add action to this button');
+  }
+
+  const handleSliderChange = (newValue) => {
+    console.log("New slider value:", newValue);
+  };
+
+  return (
+    <>
+      <div className='relative pt-[118px] lg:p-0'>
+        <Hero />
+      </div>
+      <div className="side-bg hidden lg:block sm-hidden absolute top-[1000px] right-0 z-[-1]">
+        <Image
+          src="/images/side-bg.png"
+          alt=""
+          width={490}
+          height={1610}
+        />
+      </div>
+      <InvestingBlock />
+      <ScrollableTabs tabs={tabsData} />
+      <CardBlock cardsData={CardsData} />
+      <CallToAction heading={CallToActionData1.heading} subheading={CallToActionData1.subHeading} content={CallToActionData1.content} buttonLabel={CallToActionData1.buttonLabel} buttonOnClick={onClickAction()} sectionClasses='bg-gradient-to-r from-[#F4F3F6] to-[#FFFFFF]' headingClasses='text-transparent' buttonClasses='border-0 lg:border border-primary text-primary from-transparent to-transparent' />
+      <CallToAction heading={CallToActionData2.heading} subheading={CallToActionData2.subHeading} content={CallToActionData2.content} buttonLabel={CallToActionData2.buttonLabel} buttonOnClick={onClickAction()} sectionClasses='custom-artwork' headingClasses='from-[#ED0080] to-[#F37021] text-transparent' buttonClasses='border-0 lg:border border-[#ED0080] text-[#ED0080] from-transparent to-transparent' artwork={CallToActionData2.artwork} />
+      <ArtworkBackgroundBlock />
+    </>
   );
 }

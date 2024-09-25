@@ -1,0 +1,26 @@
+[
+    {
+        "heading": "Investment Calculator",
+        "content": "Calculate your potential investment returns over time.",
+        "image": "https://via.placeholder.com/400x300?text=Investment",
+        "link": "/investment"
+    },
+    {
+        "heading": "Loan Calculator",
+        "content": "Estimate your loan payments and interest.",
+        "image": "https://via.placeholder.com/400x300?text=Loan",
+        "link": "/loan"
+    },
+    {
+        "heading": "Savings Calculator",
+        "content": "Determine how much you can save over a period.",
+        "image": "https://via.placeholder.com/400x300?text=Savings",
+        "link": "/savings"
+    },
+    {
+        "heading": "Mortgage Calculator",
+        "content": "Calculate your mortgage payments and schedule.",
+        "image": "https://via.placeholder.com/400x300?text=Mortgage",
+        "link": "/mortgage"
+    }
+]

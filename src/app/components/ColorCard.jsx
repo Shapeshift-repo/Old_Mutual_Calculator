@@ -47,7 +47,7 @@ export default function ColorCard({ heading = null, content = null, link = null,
         </div>
   
         {showShadow && (
-          <div className="section-shadow absolute left-0 bottom-[5px] w-full h-[71px]">
+          <div className="section-shadow absolute left-0 bottom-[5px] w-full h-[71px] z-[-1]">
             <svg
               className="w-full"
               width="759"

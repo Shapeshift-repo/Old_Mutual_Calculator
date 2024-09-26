@@ -34,7 +34,7 @@ export default function StepButton({heading = null, content = null, link = null,
                 )}
             </div>
 
-            <div className="section-shadow absolute left-0 bottom-[5px] w-full h-[71px]">            
+            <div className="section-shadow absolute left-0 bottom-[5px] w-full h-[71px] z-[-1]">            
                 <svg className="w-full" width="759" height="140" viewBox="0 0 759 140" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g opacity="0.6" filter="url(#filter0_f_1_25916)">
                     <path d="M673.736 103.611C482.295 83.1805 199.446 95.0984 81.9508 103.611C18.9994 116.23 31.2879 62.8001 45.301 34.5078H709.308C726.914 60.7971 744.449 111.423 673.736 103.611Z" fill="url(#paint0_linear_1_25916)"/>

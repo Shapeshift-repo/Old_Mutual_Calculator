@@ -17,7 +17,7 @@ export default function Home() {
       subTitle: "Get tax back on your investment", 
       content: (
         <>
-          Did you know the taxman (SARS) gives you money back for investing in a retirement annuity? Pay less tax or get a tax refund every year, based on your income and retirement annuity contributions. Getting a tax refund means you're paying less for your investment. Now that's powerful! Use our &nbsp; 
+          Did you know the taxman (SARS) gives you money back for investing in a retirement annuity? Pay less tax or get a tax refund every year, based on your income and retirement annuity contributions. Getting a tax refund means you&lsquo;re paying less for your investment. Now that&lsquo;s powerful! Use our &nbsp; 
           <Link href="/">Tax Back calculator</Link> 
           &nbsp;to see your potential savings. Download the comprehensive report to review or share with your financial adviser.
         </>

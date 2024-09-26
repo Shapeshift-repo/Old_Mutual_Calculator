@@ -28,7 +28,7 @@ const TextInput = ({
 
     if (onlyNumber) {
       // Remove all non-numeric characters except for the currency sign if present
-      inputValue = inputValue.replace(/[^\d]/g, '');
+      inputValue = inputValue.replace(/[^\d]/g, ''); // Allow only numbers
 
       // Format the number with spaces
       inputValue = formatNumber(inputValue);
@@ -48,13 +48,16 @@ const TextInput = ({
     const cleanedValue = inputValue.replace(/[^\d]/g, ''); // Remove currency sign and spaces
     const numericValue = parseFloat(cleanedValue);
 
+    // If numeric value exceeds maxValue, show error
+    const currentError = numericValue > maxValue ? maxValueError : "";
+
     // Ensure onChange is a valid function before calling it
     if (typeof onChange === 'function') {
-      onChange({ 
-        target: { 
-          name, 
-          value: inputValue, 
-          error: numericValue > maxValue ? maxValueError : ""  // Pass error message if value exceeds maxValue
+      onChange({
+        target: {
+          name,
+          value: inputValue,
+          error: currentError  // Pass error message if value exceeds maxValue
         }
       });
     }
@@ -77,6 +80,7 @@ const TextInput = ({
         onChange={handleInputChange}
         className="border border-[#C9C9C9] rounded-[2px] w-full h-[45px] mb-[15px] text-[20px] leading-[25px] font-normal px-[10px] outline-0 focus:border-[#50B848]"
       />
+      {/* Show the error message below the input */}
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );

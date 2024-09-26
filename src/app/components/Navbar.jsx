@@ -46,7 +46,7 @@ export default function Navbar() {
           className="text-[24px] leading-[28px] font-normal text-[#1E1E1E] mb-[14px]" 
           tag="h3"
         />
-        <p className="text-[20px] leading-[25px] font-light mb-[25px]">Share your details and we'll get in touch as soon as possible.</p>
+        <p className="text-[20px] leading-[25px] font-light mb-[25px]">Share your details and we&lsquo;ll get in touch as soon as possible.</p>
         <TalkForm />
       </div>
 

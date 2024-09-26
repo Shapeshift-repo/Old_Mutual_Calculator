@@ -253,10 +253,6 @@ export default function TaxBackForm() {
                                     {
                                         errors.monthlyInvest && 
                                         <div className="absolute inline-block">
-                                            <span
-                                                className="cursor-pointer text-black font-bold h-[19px] w-[19px] bg-[#D9D9D9] text-[10px] leading-[19px] rounded-full flex justify-center items-center"
-                                            >
-                                            </span>
                                             <div className="absolute min-w-[370px] max-w-[370px] left-0 top-[-70px] bg-[#252525] text-white rounded-[5px] text-[14px] leading-[25px] font-light py-2 px-4 z-10">
                                                 {errors.monthlyInvest}
                                                 <div className="absolute bottom-[-6px] left-1/2 transform -translate-x-1/2 w-3 h-3 bg-[#252525] rotate-45"></div>

@@ -94,7 +94,7 @@ export default function Navbar() {
           </nav>
           
           {/* Call me back button */}
-          <Button label="CALL ME BACK" onClick={toggleSideForm} className="text-white" />
+          <Button label="CALL ME BACK" onClick={toggleSideForm} className="text-white w-[185px] lg:w-[238px]" />
 
           {/* Menu button for mobile */}
           <button

@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-
 import Link from 'next/link'
 import Button from './Button'
 import Modal from '@mui/material/Modal'
@@ -28,9 +27,12 @@ export default function Footer() {
   const handleClose = () => setOpen(false);
 
   return (
-    <footer className="bg-[#252525] pt-[55px] pb-[40px]">
-        <div className="container">
-            <div className="flex gap-[40px] items-center justify-center lg:justify-between">
+    <footer className="bg-[#252525] relative z-10">
+        <div className="container pt-[55px] pb-[40px] relative">
+            <Link href="/" className="mobile-logo flex justify-center items-start p-[10px] absolute top-[-26px] lg:top-[-11px] left-[10px] lg:left-0 w-[65px] lg:w-[82px] h-[calc(100%+26px)] lg:h-[calc(100%+11px)] bg-gradient-to-r from-[#009677] to-[#50B848]">
+                <h4 className="rotate-[-90deg] absolute top-[75px] lg:top-[85px] text-white text-[20px] lg:text-[24px]">OLD<span className="font-bold">MUTUAL</span></h4>
+            </Link>
+            <div className="flex gap-[40px] items-center justify-center lg:justify-between pl-[90px] lg:pl-[100px]">
                 <div className="copy-right-section w-[280px] lg:w-full text-[12px] leading-[18px] lg:text-[14px] lg:leading-[23px] text-white font-light [&>p]:mb-[10px]">
                     <p>Copyright Old Mutual Limited 2024</p>
                     <p>Old Mutual Life Assurance Company (SA) Limited is a licensed FSP and Life Insurer.</p>

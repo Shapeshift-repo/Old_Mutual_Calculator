@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
 import Banner from "./Banner";
 import Heading from "./Heading";
 import Slider from '@mui/material/Slider';
@@ -10,7 +9,6 @@ import TextInput from "./TextInput";
 import Button from "./Button";
 import VideoCard from "./VideoCard";
 import StepButton from "./StepButton";
-import { colors } from "@mui/material";
 import Lottie from "lottie-react";
 import animationData1 from "../animations/animation1.json";
 import animationData2 from "../animations/animation2.json";
@@ -126,13 +124,34 @@ export default function TaxBackForm() {
             // Scroll to the output section
             const outputElement1 = document.getElementById('form-output1');
             const outputElement2 = document.getElementById('form-output2');
+            const fadeInBoxes = document.querySelectorAll('.fadeIn'); // Use querySelectorAll to get all elements with class 'fadeIn'
+
+            // Show the elements and scroll into view if they exist
             if (outputElement1) {
                 outputElement1.classList.remove('invisible');
                 outputElement1.scrollIntoView({ behavior: 'smooth' });
             }
             if (outputElement2) {
                 outputElement2.classList.remove('hidden');
+                outputElement2.scrollIntoView({ behavior: 'smooth' });
             }
+
+            // IntersectionObserver to handle fadeIn class activation
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    } else {
+                        entry.target.classList.remove('active');
+                    }
+                });
+            });
+
+            // Observe each element with the fadeIn class
+            fadeInBoxes.forEach(box => {
+                observer.observe(box);
+            });
+
         }
     };   
     
@@ -203,7 +222,8 @@ export default function TaxBackForm() {
                                 heading="TAX BACK"
                                 subHeading="CALCULATOR"
                                 content="See what you can get back when you invest in a retirement annuity"
-                                image="https://via.placeholder.com/600x400"
+                                image="/images/banner1-img-desktop.svg"
+                                mobileImage="/images/banner1-img-mobile.svg"
                                 icon={<Lottie
                                     animationData={animationData1}
                                     loop={false}
@@ -212,7 +232,7 @@ export default function TaxBackForm() {
                                 link="#calculator-form"
                                 linkIcon={linkIcon}
                                 linkIconClasses="rotate-[90deg] lg:rotate-0"
-                                className="before:content-[''] before:absolute before:top-0 before:left-[5%] lg:before:left-[7%] before:h-[97%] lg:before:h-[96%] before:w-[90%] lg:before:w-[86%] before:rounded-bl-[214px] before:rounded-br-[214px] lg:before:rounded-bl-[317px] lg:before:rounded-br-[317px] before:border before:border-white before:z-10"
+                                className="before:content-[''] before:absolute before:top-0 before:left-[20px] lg:before:left-[30px] before:h-[calc(100%-20px)] lg:before:h-[calc(100%-30px)] before:w-[calc(100%-40px)] lg:before:w-[calc(100%-60px)] before:rounded-bl-[214px] before:rounded-br-[214px] lg:before:rounded-bl-[317px] lg:before:rounded-br-[317px] before:border before:border-white before:border-t-0 before:z-10"
                             />
                         </div>
                     </div>
@@ -224,6 +244,7 @@ export default function TaxBackForm() {
                                     className="text-[24px] leading-[28px] hidden lg:flex font-normal pb-[60px] text-[#1E1E1E] pr-[20px]" 
                                     tag="h3"
                                 />
+
                                 <div className="flex justify-between items-center">
                                     <label>Age</label>
                                     <span>{value}</span>
@@ -339,17 +360,17 @@ export default function TaxBackForm() {
                                     <div class="pr-0 lg:pr-[105px]">
                                         <div
                                             ref={animation2Ref}
-                                            className="flex justify-center items-center max-w-[200px] lg:max-w-[241px]"
+                                            className="flex justify-center items-center max-w-[200px] lg:max-w-[241px] fadeIn"
                                         >
                                             {hasPlayedAnimation2 && (
-                                            <Lottie animationData={animationData2} loop={false} />
+                                            <Lottie animationData={animationData2} loop={true} />
                                             )}
                                         </div>
                                     </div>
                                 </div>
 
                                 <div className="get-box flex justify-center mt-[10px] lg:mt-[42px]">
-                                    <div className="inline-block pl-[180px] lg:pl-0">
+                                    <div className="inline-block pl-[180px] lg:pl-0 fadeIn">
                                         <p>
                                             <span className="text-[20px] leading-[26px] lg:text-[30px] lg:leading-[25px] font-light block">You get</span>
                                             <strong className="text-[37px] leading-[25px] lg:text-[47px] lg:leading-[25px] font-semibold block my-[7px] lg:my-[17px]">R{formatNumberWithSpaces(investmentDetails.taxBack)}</strong>
@@ -361,16 +382,16 @@ export default function TaxBackForm() {
                                 <div class="means flex justify-center mt-[130px] lg:mt-[265px]">
                                     <div
                                         ref={animation3Ref}
-                                        className="flex justify-center items-center max-w-[240px] lg:max-w-[284px]"
+                                        className="flex justify-center items-center max-w-[240px] lg:max-w-[284px] fadeIn"
                                     >
                                         {hasPlayedAnimation3 && (
-                                        <Lottie animationData={animationData3} loop={false} />
+                                        <Lottie animationData={animationData3} loop={true} />
                                         )}
                                     </div>
                                 </div>
 
                                 <div class="after-means flex justify-center mt-[74px]">
-                                    <div class="inline-block min-w-[308px]">
+                                    <div class="inline-block min-w-[308px] fadeIn">
                                         <p>
                                             <span className="text-[20px] leading-[26px] lg:text-[30px] lg:leading-[35px] font-light block">That means your</span>
                                             <strong className="text-[20px] leading-[26px] lg:text-[30px] lg:leading-[35px] font-semibold block">R{formatNumberWithSpaces(investmentDetails.monthlyInvest)} investment</strong>
@@ -381,7 +402,7 @@ export default function TaxBackForm() {
                                 </div>
 
                                 <div className="now mt-[225px] lg:mt-[298px] flex justify-center text-center mb-[380px]">
-                                    <div class="inline-block min-w-[308px]">
+                                    <div class="inline-block min-w-[308px] fadeIn">
                                         <p>
                                             <span className="text-[30px] lg:text-[40px] leading-[36px] font-light block">Now that’s a</span>
                                             <strong className="text-[30px] lg:text-[40px] leading-[36px] font-semibold block">great investment!</strong>
@@ -409,9 +430,9 @@ export default function TaxBackForm() {
 
                                 </div>
 
-                                <VideoCard heading="Tax back explained" videoID="L61p2uyiMSo" className="mt-[60px]"/>
+                                <VideoCard heading="Tax back explained" image="/images/video-thumb.svg" videoID="L61p2uyiMSo" className="mt-[60px]"/>
 
-                                <StepButton heading="NEXT STEP" content="See how your money will grow until retirement." link="/" className="mt-[60px]" />
+                                <StepButton heading="NEXT STEP" content="See how your money will grow until retirement." link="/retirement-annuity" className="mt-[60px]" />
 
                             </div>
                         </div>

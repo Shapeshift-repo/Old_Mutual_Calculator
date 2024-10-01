@@ -89,14 +89,16 @@ export default function RetirementAnnuityForm() {
 
     // Check if form is valid (i.e., no required field is empty and no errors)
     const isFormValid = () => {
-        const { grossIncome, monthlyInvest } = formData;
-        return grossIncome && monthlyInvest && !errors.monthlyInvest;
+        const { monthlyInvest } = formData;
+        return monthlyInvest && !errors.monthlyInvest;
     };
 
     const [investmentDetails, setInvestmentDetails] = useState({
-        monthlyInvest: 0,
-        taxBack: 0,
-        sum: 0
+        sum: 0,
+        tenYears: 0,
+        tenYearsGrowth: 0,
+        twientyFiveYears: 0,
+        twientyFiveYearsGrowth: 0
     });
 
     // On submit
@@ -105,31 +107,27 @@ export default function RetirementAnnuityForm() {
     
         if (isFormValid()) {
             // Clean the values by removing non-numeric characters
-            let { grossIncome, monthlyInvest } = formData;
+            let { monthlyInvest } = formData;
     
-            grossIncome = parseFloat(grossIncome.replace(/[^\d]/g, '')); 
             monthlyInvest = parseFloat(monthlyInvest.replace(/[^\d]/g, ''));
     
             // Ensure values are valid
-            if (isNaN(grossIncome) || isNaN(monthlyInvest)) return;
-    
-            // Calculate the maximum allowable tax deduction (27.5% of gross income)
-            const maxTaxFreeContribution = grossIncome * 0.275;
-    
-            // The tax back is based on the smaller of monthlyInvest and maxTaxFreeContribution
-            const applicableInvestment = Math.min(monthlyInvest, maxTaxFreeContribution);
-    
-            // Calculate the tax back as 27.5% of the applicable investment
-            const taxBack = Math.round(applicableInvestment * 0.275);
-            
+            if (isNaN(monthlyInvest)) return;
+           
             // Calculate the final sum as the investment minus the tax back
-            const sum = Math.round(monthlyInvest - taxBack);
+            const sum = Math.round(monthlyInvest + 5000);            
+            const tenYears = 50;
+            const tenYearsGrowth = 4;
+            const twientyFiveYears = 65;
+            const twientyFiveYearsGrowth = 8;
     
             // Update the investmentDetails state
             setInvestmentDetails({
-                monthlyInvest,
-                taxBack,
-                sum
+                sum,
+                tenYears,
+                tenYearsGrowth,
+                twientyFiveYears,
+                twientyFiveYearsGrowth
             });
     
             // Scroll to the output section
@@ -139,7 +137,7 @@ export default function RetirementAnnuityForm() {
                 outputElement.scrollIntoView({ behavior: 'smooth' });
             }
         }
-    };   
+    };
     
     const formatNumberWithSpaces = (number) => {
         return new Intl.NumberFormat('en-US', {
@@ -164,12 +162,13 @@ export default function RetirementAnnuityForm() {
                                 heading="RETIREMENT INCOME"
                                 subHeading="CALCULATOR"
                                 content="See what monthly income you could get during retirement from a Living Annuity"
-                                image="https://via.placeholder.com/600x400"
+                                image="/images/banner3-img-desktop.svg"
+                                mobileImage="/images/banner3-img-mobile.svg"
                                 icon=""
                                 link="#calculator-form"
                                 linkIcon={linkIcon}
                                 linkIconClasses="block md:hidden"
-                                className="h-[836px] rounded-bl-[62px] rounded-br-[62px]"
+                                className="rounded-bl-[62px] rounded-br-[62px] lg:rounded-bl-[62px] lg:rounded-br-[62px] custom-shadow"
                             />
                         </div>
                     </div>
@@ -211,7 +210,7 @@ export default function RetirementAnnuityForm() {
 
                                 <p className="text-[14px] leading-[19px] text-[#50B848] font-normal">
                                     Not sure about this amount? Go to the &nbsp;
-                                    <Link className="link underline" href="#">                    
+                                    <Link className="link underline" href="/retirement-annuity">                    
                                         Retirement annuity calculator
                                     </Link>
                                 </p>
@@ -228,7 +227,7 @@ export default function RetirementAnnuityForm() {
                             </div>
                         </form>
 
-                        <div id="form-output" className="form-output relative">
+                        <div id="form-output" className="form-output hidden relative">
                             
                             <div className="output-holder relative z-10 mt-[169px] lg:mt-[209px]">
 
@@ -239,7 +238,7 @@ export default function RetirementAnnuityForm() {
                                     >
                                         <p className="text-[22px] leading-[19px] font-light text-white text-center w-full">Estimated monthly income</p>
                                         <Heading 
-                                            content="R15 000"
+                                            content={`R${formatNumberWithSpaces(investmentDetails.sum)}`}
                                             className="text-[47px] leading-[26px] font-semibold pt-[15px] text-white text-center w-full" 
                                             tag="h5"
                                         />
@@ -253,8 +252,8 @@ export default function RetirementAnnuityForm() {
 
                                         <ProgressBar 
                                             label="10 Years" 
-                                            hint="Poor markets (4% growth)" 
-                                            progress="50"
+                                            hint={`Poor markets (${investmentDetails.tenYearsGrowth}% growth)`} 
+                                            progress={investmentDetails.tenYears}
                                             labelClasses="mt-[42px] from-[#ED0080] to-[#F37021]" 
                                             trackClasses=""
                                             progressClasses="from-[#ED0080] to-[#F37021]"
@@ -263,8 +262,8 @@ export default function RetirementAnnuityForm() {
 
                                         <ProgressBar 
                                             label="25 Years" 
-                                            hint="Average markets (8% growth)" 
-                                            progress="65"
+                                            hint={`Average markets (${investmentDetails.twientyFiveYearsGrowth}% growth)`} 
+                                            progress={investmentDetails.twientyFiveYears}
                                             labelClasses="mt-[37px]" 
                                             trackClasses=""
                                             progressClasses=""
@@ -320,9 +319,7 @@ export default function RetirementAnnuityForm() {
 
                                 </div>
 
-                                <VideoCard heading="Tax back explained" videoID="L61p2uyiMSo" className="mt-[60px]"/>
-
-                                <StepButton heading="NEXT STEP" content="See how your money will grow until retirement." link="/" className="mt-[60px]" />
+                                <VideoCard heading="Tax back explained" image="/images/video-thumb.svg" videoID="L61p2uyiMSo" className="mt-[60px]"/>
 
                             </div>
                         </div>

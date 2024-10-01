@@ -1,5 +1,6 @@
 import Button from './Button';
 import Heading from './Heading';
+import Image from 'next/image';
 
 export default function Hero() {
 
@@ -20,7 +21,7 @@ export default function Hero() {
         <section className="hero-section py-0 lg:py-[80px]">
             <div className="container">
                 <div className="flex flex-col gap-[40px] lg:gap-[160px] lg:flex-row items-center">
-                    <div className="w-full flex flex-col gap-[10px] justify-center lg:justify-end text-center lg:text-right order-2 lg:order-1">
+                    <div className="relative z-[1] w-full flex flex-col gap-[10px] justify-center lg:justify-end text-center lg:text-right order-2 lg:order-1">
                         <Heading 
                             content={heroContent.title} 
                             className="text-[40px] leading-[46px] lg:text-[72px] lg:leading-[70px] font-extrabold pb-[5px] text-transparent" 
@@ -47,8 +48,8 @@ export default function Hero() {
                         </div>
                     </div>
                     <div className="w-full order-1 lg:order-2">
-                        <div className="relative flex justify-center lg:block">
-                            <svg className="w-[222px] lg:w-[525px] h-auto" width="525" height="632" viewBox="0 0 515 632" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <div className="relative flex justify-center lg:block w-[222px] lg:max-w-[490px] ml-[38%] lg:ml-0">
+                            <svg className="w-[222px] lg:w-[515px] h-auto" width="490" height="632" viewBox="0 0 515 632" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path id="animated-path" d="M482.979 632C456.295 605.333 421.013 570.667 377.133 528C348.67 560 317.835 584.593 284.629 601.778C251.422 618.37 217.326 626.667 182.34 626.667C149.134 626.667 118.595 619.259 90.7254 604.444C62.8555 589.63 40.6189 569.482 24.0155 544C8.00518 517.926 0 489.185 0 457.778C0 416.889 12.4525 383.111 37.3575 356.444C62.8555 329.778 98.4341 304.296 144.093 280C122.153 251.556 105.55 225.185 94.2832 200.889C83.6097 176.593 78.2729 153.185 78.2729 130.667C78.2729 105.778 84.4991 83.5556 96.9516 64C109.404 43.8518 126.897 28.1481 149.43 16.8889C172.556 5.62962 198.647 0 227.703 0C269.211 0 303.011 11.5555 329.102 34.6666C355.193 57.1852 368.238 86.5185 368.238 122.667C368.238 148.741 361.123 171.852 346.891 192C332.66 212.148 315.167 229.333 294.413 243.556C273.659 257.185 246.085 273.185 211.693 291.556C242.527 328.889 295.599 384.593 370.907 458.667C395.219 422.519 417.159 381.037 436.727 334.222L478.532 364.444C456.592 414.222 432.28 456.889 405.596 492.444L515 600.889L482.979 632ZM128.083 130.667C128.083 165.63 147.058 208.296 185.009 258.667C214.657 243.259 238.377 229.63 256.166 217.778C274.548 205.926 289.372 192.296 300.639 176.889C312.499 160.889 318.428 142.519 318.428 121.778C318.428 97.4815 310.127 77.9259 293.523 63.1111C276.92 47.7037 254.98 40 227.703 40C198.054 40 174.039 48.5926 155.656 65.7778C137.274 82.9629 128.083 104.593 128.083 130.667ZM184.119 579.556C239.859 579.556 292.93 551.111 343.333 494.222C262.096 414.222 204.577 354.074 170.777 313.778C132.827 335.111 103.474 356.444 82.7202 377.778C61.966 398.519 51.5889 424 51.5889 454.222C51.5889 490.37 64.3379 520.296 89.8359 544C115.334 567.704 146.762 579.556 184.119 579.556Z" />
                                 <defs>
                                     <linearGradient id="paint0_linear_1_66382" x1="122" y1="113" x2="499" y2="453" gradientUnits="userSpaceOnUse">
@@ -57,9 +58,9 @@ export default function Hero() {
                                     </linearGradient>
                                 </defs>
                             </svg>
-                            <div className="shodow-holder absolute bottom-[-115px] left-[-25px]">
+                            <div className="shodow-holder absolute bottom-[-65px] lg:bottom-[-115px] left-[-25px]">
                                 
-                                <svg width="430" height="298" viewBox="0 0 430 298" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg className="w-full lg:w-[430px] h-auto" width="430" height="298" viewBox="0 0 430 298" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g opacity="0.5" filter="url(#filter0_f_1_66381)">
                                 <ellipse cx="215" cy="149" rx="131" ry="65" fill="url(#paint0_linear_1_66381)"/>
                                 </g>
@@ -77,6 +78,15 @@ export default function Hero() {
                                 </svg>
 
                             </div>
+
+                            <Image
+                                src="/images/hero.png"
+                                alt="Hero Image"
+                                width={751}
+                                height={625}
+                                className="absolute bottom-[27px] right-[50px] lg:bottom-[67px] lg:right-[-176px] w-[332px] lg:w-fit h-auto max-w-fit opacity-0 animate-zoom-in"
+                            />
+
                         </div>
                     </div>
                 </div>

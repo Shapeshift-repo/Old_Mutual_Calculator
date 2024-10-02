@@ -39,7 +39,7 @@ export default function Footer() {
                     <ul className="flex flex-col lg:flex-row items-start lg:items-center gap-[10px] [&>li>a:hover]:underline">
                         <li>
                             <Link className="link" href="/">
-                                Disclaimer
+                                Disclaimer 2
                             </Link>
                         </li>
                         <li className="hidden lg:inline-block">|</li>

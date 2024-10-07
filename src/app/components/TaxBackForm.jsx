@@ -84,9 +84,18 @@ export default function TaxBackForm() {
 
     const [investmentDetails, setInvestmentDetails] = useState({
         monthlyInvest: 0,
-        taxBack: 0,
-        sum: 0
     });
+
+    const taxBrackets = [
+        { bracket: 0, startBracket: 0, taxRate: 0, previousBracket: 0 },
+        { bracket: 1, startBracket: 95750, taxRate: 18, previousBracket: 0 },
+        { bracket: 2, startBracket: 237100, taxRate: 26, previousBracket: 25443 },
+        { bracket: 3, startBracket: 370500, taxRate: 31, previousBracket: 60127 },
+        { bracket: 4, startBracket: 512800, taxRate: 36, previousBracket: 104240 },
+        { bracket: 5, startBracket: 673000, taxRate: 39, previousBracket: 161912 },
+        { bracket: 6, startBracket: 857900, taxRate: 41, previousBracket: 234023 },
+        { bracket: 7, startBracket: 1817000, taxRate: 45, previousBracket: 627254 }
+    ];
 
     // On submit
     const handleSubmit = (e) => {
@@ -97,35 +106,76 @@ export default function TaxBackForm() {
             let { grossIncome, monthlyInvest } = formData;
     
             grossIncome = parseFloat(grossIncome.replace(/[^\d]/g, '')); 
+            let annualIncome = grossIncome * 12;
             monthlyInvest = parseFloat(monthlyInvest.replace(/[^\d]/g, ''));
-    
-            // Ensure values are valid
-            if (isNaN(grossIncome) || isNaN(monthlyInvest)) return;
-    
-            // Calculate the maximum allowable tax deduction (27.5% of gross income)
-            const maxTaxFreeContribution = grossIncome * 0.275;
-    
-            // The tax back is based on the smaller of monthlyInvest and maxTaxFreeContribution
-            const applicableInvestment = Math.min(monthlyInvest, maxTaxFreeContribution);
-    
-            // Calculate the tax back as 27.5% of the applicable investment
-            const taxBack = Math.round(applicableInvestment * 0.275);
+            let annualInvest = monthlyInvest * 12;
             
-            // Calculate the final sum as the investment minus the tax back
-            const sum = Math.round(monthlyInvest - taxBack);
+            // Ensure values are valid
+            if (isNaN(grossIncome) || isNaN(annualIncome) || isNaN(monthlyInvest) || isNaN(annualInvest)) return;
+            
+            let startBracket = 0;
+            let taxRate = 0;
+            let previousBracket = 0;
+            let taxPrior = 0;
+            let annualSalaryNet = 0;
+            let taxAfterContribution = 0;
+            let taxBack = 0;
+            let cost = 0;
+
+            if (annualIncome >= taxBrackets[7].startBracket) {
+                // Income is above the highest bracket
+                startBracket = taxBrackets[7].startBracket;
+                taxRate = taxBrackets[7].taxRate;
+                previousBracket = taxBrackets[7].previousBracket;
+                taxPrior = previousBracket + (annualIncome - startBracket) * (taxRate / 100);
+                annualSalaryNet = annualIncome - annualInvest;
+                taxAfterContribution = previousBracket + (annualSalaryNet - startBracket) * (taxRate / 100);
+                taxBack = taxPrior - taxAfterContribution;
+                cost = annualInvest - taxBack;
+            } else {
+                // Find the correct tax bracket based on annual salary if it's within the range
+                const taxBracket = taxBrackets.find((bracket, index) => {
+                    const nextBracket = taxBrackets[index + 1];
+                    // Make sure to check if `nextBracket` exists for all but the last bracket
+                    if (nextBracket) {
+                        return annualIncome >= bracket.startBracket && annualIncome < nextBracket.startBracket;
+                    }
+                });
+
+                // If a valid tax bracket is found, set the values
+                if (taxBracket) {
+                    startBracket = taxBracket.startBracket;
+                    taxRate = taxBracket.taxRate;
+                    previousBracket = taxBracket.previousBracket;
+                    taxPrior = previousBracket + (annualIncome - startBracket) * (taxRate / 100);
+                    annualSalaryNet = annualIncome - annualInvest;
+                    taxAfterContribution = previousBracket + (annualSalaryNet - startBracket) * (taxRate / 100);
+                    taxBack = Math.round(taxPrior - taxAfterContribution);
+                    cost = annualInvest - taxBack;
+                }
+            }  
     
             // Update the investmentDetails state
             setInvestmentDetails({
+                grossIncome,
+                annualIncome,
                 monthlyInvest,
+                annualInvest,
                 taxBack,
-                sum
+                startBracket,
+                taxRate,
+                previousBracket,
+                taxPrior,
+                annualSalaryNet,
+                taxAfterContribution,
+                cost
             });
     
             // Scroll to the output section
             const outputElement1 = document.getElementById('form-output1');
             const outputElement2 = document.getElementById('form-output2');
-            const fadeInBoxes = document.querySelectorAll('.fadeIn'); // Use querySelectorAll to get all elements with class 'fadeIn'
-
+            const fadeInBoxes = document.querySelectorAll('.fadeIn');
+    
             // Show the elements and scroll into view if they exist
             if (outputElement1) {
                 outputElement1.classList.remove('invisible');
@@ -135,7 +185,7 @@ export default function TaxBackForm() {
                 outputElement2.classList.remove('hidden');
                 outputElement2.scrollIntoView({ behavior: 'smooth' });
             }
-
+    
             // IntersectionObserver to handle fadeIn class activation
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -146,12 +196,11 @@ export default function TaxBackForm() {
                     }
                 });
             });
-
+    
             // Observe each element with the fadeIn class
             fadeInBoxes.forEach(box => {
                 observer.observe(box);
             });
-
         }
     };   
     
@@ -236,6 +285,7 @@ export default function TaxBackForm() {
                             />
                         </div>
                     </div>
+
                     <div id="calculator-form" className="w-full relative">
                         <form className="relative px-[30px] lg:px-0 mt-[-418px] lg:mt-0 pt-[468px] lg:pt-0 pb-[88px] lg:pb-0 bg-[#F0F0F0] lg:bg-transparent rounded-bl-[214px] lg:rounded-bl-0 rounded-br-[214px] lg:rounded-br-0">
                             <div className="form-field-holder max-w-[570px]">
@@ -313,7 +363,7 @@ export default function TaxBackForm() {
                                     />
 
                                     <Heading 
-                                        content={`R${formatNumberWithSpaces(investmentDetails.monthlyInvest)}`}
+                                        content={`R${formatNumberWithSpaces(investmentDetails.annualInvest)}`}
                                         className="text-[47px] leading-[25px] font-semibold pt-[22px] text-primary text-center w-full" 
                                         tag="h3"
                                     />
@@ -394,9 +444,9 @@ export default function TaxBackForm() {
                                     <div class="inline-block min-w-[308px] fadeIn">
                                         <p>
                                             <span className="text-[20px] leading-[26px] lg:text-[30px] lg:leading-[35px] font-light block">That means your</span>
-                                            <strong className="text-[20px] leading-[26px] lg:text-[30px] lg:leading-[35px] font-semibold block">R{formatNumberWithSpaces(investmentDetails.monthlyInvest)} investment</strong>
+                                            <strong className="text-[20px] leading-[26px] lg:text-[30px] lg:leading-[35px] font-semibold block">R{formatNumberWithSpaces(investmentDetails.annualInvest)} investment</strong>
                                             <span className="text-[20px] leading-[26px] lg:text-[30px] lg:leading-[35px] font-light block">only really costs you</span>
-                                            <strong className="text-[37px] leading-[25px] lg:text-[47px] font-semimedium block mt-[21px]"></strong>
+                                            <strong className="text-[37px] leading-[25px] lg:text-[47px] font-semimedium block mt-[21px]">R{investmentDetails.cost}</strong>
                                         </p>
                                     </div>
                                 </div>

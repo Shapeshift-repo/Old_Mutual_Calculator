@@ -60,8 +60,6 @@ export default function RetirementAnnuityForm() {
     const [formData, setFormData] = useState({
         grossIncome: "",
         contribution: "",
-        investment: "",
-        monthlyInvest: "",
         saving: "",
         monthly: ""
     });
@@ -69,8 +67,6 @@ export default function RetirementAnnuityForm() {
     const [errors, setErrors] = useState({
         grossIncome: "",
         contribution: "",
-        investment: "",
-        monthlyInvest: "",
         saving: "",
         monthly: ""
     });
@@ -133,8 +129,8 @@ export default function RetirementAnnuityForm() {
 
     // Check if form is valid (i.e., no required field is empty and no errors)
     const isFormValid = () => {
-        const { grossIncome, monthlyInvest } = formData;
-        return grossIncome && monthlyInvest && !errors.monthlyInvest;
+        const { grossIncome } = formData;
+        return grossIncome;
     };
 
     const [investmentDetails, setInvestmentDetails] = useState({
@@ -152,13 +148,12 @@ export default function RetirementAnnuityForm() {
     
         if (isFormValid()) {
             // Clean the values by removing non-numeric characters
-            let { grossIncome, monthlyInvest } = formData;
+            let { grossIncome } = formData;
     
             grossIncome = parseFloat(grossIncome.replace(/[^\d]/g, '')); 
-            monthlyInvest = parseFloat(monthlyInvest.replace(/[^\d]/g, ''));
     
             // Ensure values are valid
-            if (isNaN(grossIncome) || isNaN(monthlyInvest)) return;
+            if (isNaN(grossIncome)) return;
     
             // Calculate the tax back as 27.5% of the applicable investment
             const taxBack = 111600;

@@ -11,10 +11,13 @@ export default function Banner({
   link = null,
   linkIcon = null,
   linkIconClasses = "",
-  className = ''
+  className = "",
+  id = "",
+  gradient = ""
 }) {
   return (
     <div
+      id={id}
       className={`relative lg:fixed min-h-[750px] lg:min-h-[600px] lg:h-[calc(100vh-30px)] w-full lg:w-[600px] rounded-bl-[214px] rounded-br-[214px] lg:rounded-bl-[317px] lg:rounded-br-[317px] overflow-hidden ${className}`}
     >
       <div className="w-full h-full relative">
@@ -34,8 +37,7 @@ export default function Banner({
       <div
         className="banner-content flex flex-col justify-end items-center absolute bottom-0 w-full h-[100%] px-[45px] lg:px-[80px] pb-[150px] lg:pb-[100px] text-center"
         style={{
-          background:
-            "linear-gradient(8.46deg, rgba(0, 150, 119, 0.93) 17.02%, rgba(80, 184, 72, 0.93) 44.72%, rgba(80, 184, 72, 0) 78.61%)",
+          background: gradient || "linear-gradient(8.46deg, rgba(0, 150, 119, 0.93) 17.02%, rgba(80, 184, 72, 0.93) 44.72%, rgba(80, 184, 72, 0) 78.61%)",
         }}
       >
         {icon && (

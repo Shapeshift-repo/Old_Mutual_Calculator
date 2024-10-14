@@ -48,6 +48,15 @@ const PrimarySlider = styled(Slider)(({ theme }) => ({
 
 export default function RetirementAnnuityForm() {
 
+    const toggleSideForm = () => {
+        const element = document.querySelector('#sideform');
+        if (element.classList.contains('active')) {
+          element.classList.remove('active');
+        } else {
+          element.classList.add('active');
+        }
+    };
+
     const [formData, setFormData] = useState({
         grossIncome: "",
         contribution: "",
@@ -207,16 +216,17 @@ export default function RetirementAnnuityForm() {
                     <div className="w-full relative">
                         <div className="relative lg:absolute top-0 lg:top-[-230px] left-0 w-full">
                             <Banner 
+                                id="main-banner"
                                 heading="RETIREMENT ANNUITY"
                                 subHeading="CALCULATOR"
                                 content="See how your money will grow over time with the power of compound growth."
-                                image="/images/banner2-img-desktop.svg"
-                                mobileImage="/images/banner2-img-mobile.svg"
+                                image="/images/banner2-img-desktop.jpg"
+                                mobileImage="/images/banner2-img-mobile.jpg"
                                 icon=""
                                 link="#calculator-form"
                                 linkIcon={linkIcon}
                                 linkIconClasses="block md:hidden"
-                                className="rounded-bl-[62px] rounded-br-[62px] lg:rounded-bl-[62px] lg:rounded-br-[62px]"
+                                className="rounded-bl-[62px] rounded-br-[62px] lg:rounded-bl-[62px] lg:rounded-br-[62px] min-h-[880px]"
                             />
                         </div>
                     </div>
@@ -239,7 +249,7 @@ export default function RetirementAnnuityForm() {
                                 <PrimarySlider 
                                     aria-label="Age" 
                                     min={18} 
-                                    max={88} 
+                                    max={65} 
                                     value={value} 
                                     defaultValue={45} 
                                     onChange={handleSlideChange} 
@@ -270,26 +280,14 @@ export default function RetirementAnnuityForm() {
                                 <SelectInput
                                     label="Investment strategy"
                                     required
+                                    className="mt-[28px]" 
                                     value={formData.investment}
                                     onChange={handleChange}
                                     name="investment"
                                     options={contributionOptions}
                                 />
 
-                                <TextInput 
-                                    label="How much you’d like to invest monthly?"
-                                    required 
-                                    className="mt-[28px]"
-                                    value={formData.monthlyInvest} 
-                                    onChange={handleChange} 
-                                    onlyNumber={true} 
-                                    currencySign="R" 
-                                    name="monthlyInvest"
-                                    maxValue={350000}
-                                    maxValueError="There is a limit on tax-free contributions of 27.5% or R350 000 per year."
-                                />
-
-                                <label className="mt-[65px] mb-[15px] text-[20px] leading-[25px] font-light block">Do you have any current retirement savings?</label>
+                                <label className="mt-[20px] mb-[15px] text-[20px] leading-[25px] font-light block">Do you have any current retirement savings?</label>
                                 <ToggleButtonGroup
                                     value={choice}
                                     exclusive
@@ -313,6 +311,7 @@ export default function RetirementAnnuityForm() {
                                         color: '#ACACAC', // Text color
                                         fontSize: '20px', // Font size
                                         fontWeight: '400', // Font weight
+                                        textTransform: 'capitalize',
                                         '&:hover': {
                                             backgroundColor: '#ECECEC', // Hover background
                                         },
@@ -338,6 +337,7 @@ export default function RetirementAnnuityForm() {
                                         color: '#ACACAC',
                                         fontSize: '20px',
                                         fontWeight: '400',
+                                        textTransform: 'capitalize',
                                         '&:hover': {
                                             backgroundColor: '#ECECEC',
                                         },
@@ -462,7 +462,7 @@ export default function RetirementAnnuityForm() {
                                     getAriaLabel={() => 'Age'}
                                     value={value1}
                                     min={25} 
-                                    max={100}
+                                    max={65}
                                     onChange={handleSlide2Change}
                                     valueLabelDisplay="on"
                                     getAriaValueText={valuetext}
@@ -504,12 +504,12 @@ export default function RetirementAnnuityForm() {
                                     
                                     <div className="flex flex-col items-center gap-[20px] justify-center mt-[35px]">
                                         <Button label="GENERATE REPORT" className="text-primary w-full max-w-[310px] border border-primary bg-transparent from-transparent to-transparent" />
-                                        <Button label="CALL ME BACK" className="text-white w-full max-w-[310px]" />
+                                        <Button label="CALL ME BACK" onClick={toggleSideForm} className="text-white w-full max-w-[310px]" />
                                     </div>
 
                                 </div>
 
-                                <VideoCard heading="Tax back explained" image="/images/video-thumb.svg" videoID="L61p2uyiMSo" className="mt-[60px]"/>
+                                <VideoCard heading="Tax back explained" image="/images/video-thumb.jpg" videoID="L61p2uyiMSo" className="mt-[60px]"/>
 
                                 <StepButton heading="NEXT STEP" content="See what income your savings will give you in retirement." link="/retirement-income" className="mt-[60px]" />
 

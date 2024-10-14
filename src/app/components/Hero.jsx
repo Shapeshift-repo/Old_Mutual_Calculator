@@ -1,3 +1,5 @@
+"use client";
+
 import Button from './Button';
 import Heading from './Heading';
 import Image from 'next/image';
@@ -15,6 +17,13 @@ export default function Hero() {
         subtitle: "get your tax back <br>for that holiday",
         description: "Five steps to a secure financial <br>future for you, & your family.",
         buttonLabel: "CALCULATOR"
+    };
+
+    const scrollToSection = () => {
+        const section = document.getElementById('calculator-section');
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
     };
 
     return (
@@ -44,7 +53,7 @@ export default function Hero() {
 
                         {/* Button - Dynamic Label */}
                         <div className="flex justify-center lg:justify-end mt-[20px]">
-                            <Button label={heroContent.buttonLabel} Icon={icon} className="down-bounce text-white" />
+                            <Button onClick={scrollToSection} label={heroContent.buttonLabel} Icon={icon} className="down-bounce text-white" />
                         </div>
                     </div>
                     <div className="w-full order-1 lg:order-2">

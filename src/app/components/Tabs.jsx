@@ -94,7 +94,7 @@ export default function ScrollableTabs({ tabs }){
                     >
                       <Heading 
                         content={tab.title} 
-                        className={`text-[18px] leading-[35px] lg:text-[20px] text-center lg:text-left font-semibold w-full ${activeTabIndex === index ? ' text-transparent' : 'text-[#323232]'}`} 
+                        className={`text-[18px] leading-[35px] lg:text-[20px] text-center lg:text-left font-semibold w-full ${activeTabIndex === index ? ' text-transparent tabs-title' : 'text-[#323232]'}`} 
                         tag="h5"
                       />
                       <Heading 

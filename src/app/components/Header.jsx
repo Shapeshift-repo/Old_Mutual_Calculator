@@ -17,7 +17,7 @@ export default function Header() {
                 alt="Logo"
                 width={82}
                 height={123}
-                className="absolute top-[-40px] lg:top-0 left-0 lg:left-[-92px]"
+                className="absolute top-[-20px] lg:top-0 left-0 2xl:left-[-92px]"
               />
             </Link>
           </div>

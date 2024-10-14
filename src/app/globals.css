@@ -172,3 +172,31 @@ body {
 .custom-shadow{
   box-shadow: 0px 15px 30px -15px rgba(80, 184, 71, 1);
 }
+
+.tabs-title{
+  @apply to-[#50B848] via-[#50B848] from-[#009677] !important;
+}
+
+.card-section-heading{
+  @apply from-[#50B848] from-30% to-[#009677] to-70% !important;
+}
+
+.card-box:hover img{
+  @apply scale-110;
+}
+
+#sideform.active{
+  @apply right-0;
+}
+
+.third-banner .banner-content h3{
+  @apply text-[40px] leading-[40px] mb-[7px];
+}
+
+.third-banner .banner-content h3 + h3{
+  @apply text-[37px] leading-[25px];
+}
+
+#main-banner.active{
+  top: -300px;
+}

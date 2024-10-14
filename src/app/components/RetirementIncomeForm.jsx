@@ -46,6 +46,15 @@ const PrimarySlider = styled(Slider)(({ theme }) => ({
 
 export default function RetirementAnnuityForm() {
 
+    const toggleSideForm = () => {
+        const element = document.querySelector('#sideform');
+        if (element.classList.contains('active')) {
+          element.classList.remove('active');
+        } else {
+          element.classList.add('active');
+        }
+    };
+
     const [formData, setFormData] = useState({
         grossIncome: "",
         monthlyInvest: ""
@@ -159,16 +168,18 @@ export default function RetirementAnnuityForm() {
                     <div className="w-full relative">
                     <div className="relative lg:absolute top-0 lg:top-[-230px] left-0 w-full">
                             <Banner 
+                                id="main-banner"
                                 heading="RETIREMENT INCOME"
                                 subHeading="CALCULATOR"
                                 content="See what monthly income you could get during retirement from a Living Annuity"
-                                image="/images/banner3-img-desktop.svg"
-                                mobileImage="/images/banner3-img-mobile.svg"
+                                image="/images/banner3-img-desktop.jpg"
+                                mobileImage="/images/banner3-img-mobile.jpg"
                                 icon=""
                                 link="#calculator-form"
                                 linkIcon={linkIcon}
                                 linkIconClasses="block md:hidden"
-                                className="rounded-bl-[62px] rounded-br-[62px] lg:rounded-bl-[62px] lg:rounded-br-[62px] custom-shadow"
+                                className="third-banner rounded-bl-[62px] rounded-br-[62px] lg:rounded-bl-[62px] lg:rounded-br-[62px] custom-shadow"
+                                gradient="linear-gradient(0deg, #009677 24.3%, rgba(0, 150, 119, 0) 91.96%)"
                             />
                         </div>
                     </div>
@@ -189,7 +200,7 @@ export default function RetirementAnnuityForm() {
                                 <PrimarySlider 
                                     aria-label="Rate" 
                                     min={18} 
-                                    max={88} 
+                                    max={65} 
                                     value={value} 
                                     defaultValue={45} 
                                     onChange={handleSlideChange} 
@@ -233,7 +244,7 @@ export default function RetirementAnnuityForm() {
 
                                 <div className="estimate-box">
                                     <div 
-                                        className="estimate-head py-[44px] px-[15px] rounded-tl-[62px] rounded-tr-[62px] lg:rounded-tl-[20px] lg:rounded-tr-[20px]"
+                                        className="estimate-head relative py-[44px] px-[15px] rounded-tl-[62px] rounded-tr-[62px] lg:rounded-tl-[20px] lg:rounded-tr-[20px] shadow-[0_4px_29px_0_rgba(0,0,0,0.25)] lg:shadow-none"
                                         style={{ background: 'linear-gradient(98.34deg, #009677 4.08%, #50B848 100%)' }}
                                     >
                                         <p className="text-[22px] leading-[19px] font-light text-white text-center w-full">Estimated monthly income</p>
@@ -314,12 +325,12 @@ export default function RetirementAnnuityForm() {
                                     
                                     <div className="flex flex-col items-center gap-[20px] justify-center mt-[35px]">
                                         <Button label="GENERATE REPORT" className="text-primary w-full max-w-[310px] border border-primary bg-transparent from-transparent to-transparent" />
-                                        <Button label="CALL ME BACK" className="text-white w-full max-w-[310px]" />
+                                        <Button label="CALL ME BACK" onClick={toggleSideForm} className="text-white w-full max-w-[310px]" />
                                     </div>
 
                                 </div>
 
-                                <VideoCard heading="Tax back explained" image="/images/video-thumb.svg" videoID="L61p2uyiMSo" className="mt-[60px]"/>
+                                <VideoCard heading="Tax back explained" image="/images/video-thumb.jpg" videoID="L61p2uyiMSo" className="mt-[60px]"/>
 
                             </div>
                         </div>

@@ -3,9 +3,9 @@
 import React from 'react';
 import Tooltip from './Tooltip';
 
-export default function SelectInput({ label, name, value, onChange, options, error, required, tooltipText }){
+export default function SelectInput({ label, name, value, onChange, options, error, required, tooltipText, className = "" }){
   return (  // Missing return
-    <div className="form-group">
+    <div className={`form-group ${className}`}>
       <label 
         htmlFor={name} 
         className="flex items-center justify-between text-[20px] leading-[25px] font-light mb-[10px]"

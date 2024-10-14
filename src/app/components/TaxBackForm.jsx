@@ -48,6 +48,15 @@ const PrimarySlider = styled(Slider)(({ theme }) => ({
 
 export default function TaxBackForm() {
 
+    const toggleSideForm = () => {
+      const element = document.querySelector('#sideform');
+      if (element.classList.contains('active')) {
+        element.classList.remove('active');
+      } else {
+        element.classList.add('active');
+      }
+    };
+
     const [formData, setFormData] = useState({
         grossIncome: "",
         monthlyInvest: ""
@@ -268,11 +277,12 @@ export default function TaxBackForm() {
                     <div className="w-full relative z-10">
                         <div className="relative lg:absolute top-0 lg:top-[-230px] left-0 w-full">
                             <Banner 
+                                id="main-banner"
                                 heading="TAX BACK"
                                 subHeading="CALCULATOR"
                                 content="See what you can get back when you invest in a retirement annuity"
-                                image="/images/banner1-img-desktop.svg"
-                                mobileImage="/images/banner1-img-mobile.svg"
+                                image="/images/banner1-img-desktop.jpg"
+                                mobileImage="/images/banner1-img-mobile.jpg"
                                 icon={<Lottie
                                     animationData={animationData1}
                                     loop={false}
@@ -302,9 +312,9 @@ export default function TaxBackForm() {
                                 
                                 <PrimarySlider 
                                     aria-label="Age" 
-                                    min={18} max={88} 
+                                    min={18} max={65} 
                                     value={value} 
-                                    defaultValue={45} 
+                                    defaultValue={40} 
                                     onChange={handleSlideChange} 
                                 />
                                 
@@ -382,6 +392,26 @@ export default function TaxBackForm() {
                                 </div>
                             
                             </div>
+
+                            <div className="flex justify-center absolute left-0 bottom-[-100px] z-[-1] lg:hidden">
+                                <svg className="w-full h-auto" width="428" height="208" viewBox="0 0 428 208" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g opacity="0.7" filter="url(#filter0_f_59_2750)">
+                                    <ellipse cx="214" cy="104" rx="151" ry="40" fill="url(#paint0_linear_59_2750)"/>
+                                    </g>
+                                    <defs>
+                                    <filter id="filter0_f_59_2750" x="-1" y="0" width="430" height="208" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                                    <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                                    <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                                    <feGaussianBlur stdDeviation="32" result="effect1_foregroundBlur_59_2750"/>
+                                    </filter>
+                                    <linearGradient id="paint0_linear_59_2750" x1="63" y1="104" x2="365" y2="104" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#009677"/>
+                                    <stop offset="1" stop-color="#50B848"/>
+                                    </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+
                         </form>
 
                         <div id="form-output2" className="form-output hidden relative">
@@ -413,7 +443,7 @@ export default function TaxBackForm() {
                                             className="flex justify-center items-center max-w-[200px] lg:max-w-[241px] fadeIn"
                                         >
                                             {hasPlayedAnimation2 && (
-                                            <Lottie animationData={animationData2} loop={true} />
+                                            <Lottie animationData={animationData2} loop={false} />
                                             )}
                                         </div>
                                     </div>
@@ -435,7 +465,7 @@ export default function TaxBackForm() {
                                         className="flex justify-center items-center max-w-[240px] lg:max-w-[284px] fadeIn"
                                     >
                                         {hasPlayedAnimation3 && (
-                                        <Lottie animationData={animationData3} loop={true} />
+                                        <Lottie animationData={animationData3} loop={false} />
                                         )}
                                     </div>
                                 </div>
@@ -460,27 +490,36 @@ export default function TaxBackForm() {
                                     </div>
                                 </div>
 
-                                <div className="generate-report bg-[#F2F2F2] rounded-[15px] lg:pt-[75px] pb-[54px] px-[15px]">
-                                    <Heading 
-                                        content="Start today and"
-                                        className="text-[30px] leading-[36px] font-light text-[#1E1E1E]black text-center w-full" 
-                                        tag="h4"
-                                    />
+                                <div className="px-[33px] lg:px-0">
+                                    <div className="generate-report bg-[#F2F2F2] rounded-[15px] pt-[22px] pb-[54px] px-[15px]">
 
-                                    <Heading 
-                                        content="Start today and"
-                                        className="text-[30px] leading-[36px] font-semibold text-black text-center w-full" 
-                                        tag="h3"
-                                    />
-                                    
-                                    <div className="flex flex-col items-center gap-[20px] justify-center mt-[35px]">
-                                        <Button label="GENERATE REPORT" className="text-primary w-full max-w-[310px] border border-primary bg-transparent from-transparent to-transparent" />
-                                        <Button label="CALL ME BACK" className="text-white w-full max-w-[310px]" />
+                                        <div className="flex justify-center mb-[46px] block">
+                                            <span className="w-[66px] h-[7px] rounded-[4px] bg-white"></span>
+                                        </div>
+
+                                        <Heading 
+                                            content="Start today and"
+                                            className="text-[30px] leading-[36px] font-light text-[#1E1E1E]black text-center w-full" 
+                                            tag="h4"
+                                        />
+
+                                        <div className="flex justify-center">
+                                            <Heading 
+                                                content="get your tax back."
+                                                className="text-[30px] leading-[36px] font-semibold text-black text-center w-full lg:w-[270px]" 
+                                                tag="h3"
+                                            />
+                                        </div>
+
+                                        <div className="flex flex-col items-center gap-[20px] justify-center mt-[35px]">
+                                            <Button label="GENERATE REPORT" className="text-primary w-full max-w-[255px] lg:max-w-[310px] border border-primary bg-transparent from-transparent to-transparent" />
+                                            <Button label="CALL ME BACK" onClick={toggleSideForm} className="text-white w-full max-w-[255px] lg:max-w-[310px]" />
+                                        </div>
+
                                     </div>
-
                                 </div>
 
-                                <VideoCard heading="Tax back explained" image="/images/video-thumb.svg" videoID="L61p2uyiMSo" className="mt-[60px]"/>
+                                <VideoCard heading="Tax back explained" image="/images/video-thumb.jpg" videoID="L61p2uyiMSo" className="mt-[60px]"/>
 
                                 <StepButton heading="NEXT STEP" content="See how your money will grow until retirement." link="/retirement-annuity" className="mt-[60px]" />
 

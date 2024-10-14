@@ -48,17 +48,34 @@ const PrimarySlider = styled(Slider)(({ theme }) => ({
 
 export default function RetirementAnnuityForm() {
 
+    const toggleSideForm = () => {
+        const element = document.querySelector('#sideform');
+        if (element.classList.contains('active')) {
+          element.classList.remove('active');
+        } else {
+          element.classList.add('active');
+        }
+    };
+
     const [formData, setFormData] = useState({
         grossIncome: "",
-        monthlyInvest: ""
+        contribution: "",
+        investment: "",
+        monthlyInvest: "",
+        saving: "",
+        monthly: ""
     });
 
     const [errors, setErrors] = useState({
         grossIncome: "",
-        monthlyInvest: ""
+        contribution: "",
+        investment: "",
+        monthlyInvest: "",
+        saving: "",
+        monthly: ""
     });
 
-    const [choice, setChoice] = React.useState('yes');
+    const [choice, setChoice] = React.useState('no');
 
     const handleChoice = (event, newChoice) => {
         setChoice(newChoice);
@@ -80,13 +97,25 @@ export default function RetirementAnnuityForm() {
 
     const handleSlide2Change = (event, newValue, activeThumb) => {
         if (!Array.isArray(newValue)) {
-          return;
+            return;
         }
-    
+
         if (activeThumb === 0) {
-          setValue1([Math.min(newValue[0], value1[1] - minDistance), value1[1]]);
+            // If the minimum value changes, decrease LumpSum based on the new value
+            const minValue = Math.min(newValue[0], value1[1] - minDistance);
+            setValue1([minValue, value1[1]]);
+            
+            // Example: Decrease LumpSum based on the minimum slider value
+            const decreasedLumpSum = 250000 - minValue - 5000; // Decrease LumpSum as min value goes down
+            const updatedLumpSum = Math.max(decreasedLumpSum, 0); // Ensure LumpSum doesn't go negative
+
+            // Update investment details with the new LumpSum
+            setInvestmentDetails(prevDetails => ({
+                ...prevDetails,
+                LumpSum: updatedLumpSum
+            }));
         } else {
-          setValue1([value1[0], Math.max(newValue[1], value1[0] + minDistance)]);
+            setValue1([value1[0], Math.max(newValue[1], value1[0] + minDistance)]);
         }
     };
 
@@ -109,9 +138,12 @@ export default function RetirementAnnuityForm() {
     };
 
     const [investmentDetails, setInvestmentDetails] = useState({
-        monthlyInvest: 0,
         taxBack: 0,
-        sum: 0
+        totalInvestment: 0,
+        yourInvestment: 0,
+        contributionsPaid: 0,
+        contributionsPaid: 0,
+        LumpSum: 0
     });
 
     // On submit
@@ -128,23 +160,25 @@ export default function RetirementAnnuityForm() {
             // Ensure values are valid
             if (isNaN(grossIncome) || isNaN(monthlyInvest)) return;
     
-            // Calculate the maximum allowable tax deduction (27.5% of gross income)
-            const maxTaxFreeContribution = grossIncome * 0.275;
-    
-            // The tax back is based on the smaller of monthlyInvest and maxTaxFreeContribution
-            const applicableInvestment = Math.min(monthlyInvest, maxTaxFreeContribution);
-    
             // Calculate the tax back as 27.5% of the applicable investment
-            const taxBack = Math.round(applicableInvestment * 0.275);
-            
+            const taxBack = 111600;
+
+            const totalInvestment = 820000;
+
+            const yourInvestment = 467000;
+
+            const contributionsPaid = 360000;
+
             // Calculate the final sum as the investment minus the tax back
-            const sum = Math.round(monthlyInvest - taxBack);
+            const LumpSum = 250000;
     
             // Update the investmentDetails state
             setInvestmentDetails({
-                monthlyInvest,
                 taxBack,
-                sum
+                totalInvestment,
+                yourInvestment,
+                contributionsPaid,
+                LumpSum
             });
     
             // Scroll to the output section
@@ -170,10 +204,10 @@ export default function RetirementAnnuityForm() {
     ];
 
     const linkIcon = (
-            <svg width="15" height="29" viewBox="0 0 15 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="15" height="29" viewBox="0 0 15 29" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M14.2908 20C14.1034 19.8137 13.85 19.7092 13.5858 19.7092C13.3216 19.7092 13.0682 19.8137 12.8808 20L8.24079 24.56V1C8.24079 0.734784 8.13544 0.48043 7.9479 0.292893C7.76036 0.105357 7.50601 0 7.24079 0C6.97558 0 6.72122 0.105357 6.53369 0.292893C6.34615 0.48043 6.24079 0.734784 6.24079 1V24.53L1.71079 20C1.61783 19.9063 1.50723 19.8319 1.38537 19.7811C1.26351 19.7303 1.1328 19.7042 1.00079 19.7042C0.868781 19.7042 0.738075 19.7303 0.616216 19.7811C0.494356 19.8319 0.383755 19.9063 0.290792 20C0.104542 20.1874 0 20.4408 0 20.705C0 20.9692 0.104542 21.2226 0.290792 21.41L6.66079 27.78C6.82946 27.9479 7.05778 28.0422 7.29579 28.0422C7.5338 28.0422 7.76213 27.9479 7.93079 27.78L14.2908 21.41C14.477 21.2226 14.5816 20.9692 14.5816 20.705C14.5816 20.4408 14.477 20.1874 14.2908 20Z" fill="white"/>
-            </svg>
-        );
+        </svg>
+    );
 
     return (
         <section className="tax-back-section pt-0 lg:pt-[118px] pb-[100px]">
@@ -182,20 +216,22 @@ export default function RetirementAnnuityForm() {
                     <div className="w-full relative">
                         <div className="relative lg:absolute top-0 lg:top-[-230px] left-0 w-full">
                             <Banner 
+                                id="main-banner"
                                 heading="RETIREMENT ANNUITY"
                                 subHeading="CALCULATOR"
                                 content="See how your money will grow over time with the power of compound growth."
-                                image="https://via.placeholder.com/600x400"
+                                image="/images/banner2-img-desktop.jpg"
+                                mobileImage="/images/banner2-img-mobile.jpg"
                                 icon=""
                                 link="#calculator-form"
                                 linkIcon={linkIcon}
                                 linkIconClasses="block md:hidden"
-                                className="h-[818px] rounded-bl-[62px] rounded-br-[62px]"
+                                className="rounded-bl-[62px] rounded-br-[62px] lg:rounded-bl-[62px] lg:rounded-br-[62px] min-h-[880px]"
                             />
                         </div>
                     </div>
                     <div id="calculator-form" className="w-full relative">
-                        <form className="relative mt-[-220px] pt-[30px] pb-[48px] lg:pb-0 lg:pt-0 lg:mt-0 bg-white px-[34px] lg:px-0 rounded-[64px] lg:rounded-0 z-10 lg:z-2 shadow-[0_4px_29px_0_rgba(0,0,0,0.24)] lg:shadow-none">
+                        <form className="relative mt-[-110px] pt-[30px] pb-[48px] lg:pb-0 lg:pt-0 lg:mt-0 bg-white px-[34px] lg:px-0 rounded-[64px] lg:rounded-0 z-10 lg:z-2 shadow-[0_4px_29px_0_rgba(0,0,0,0.24)] lg:shadow-none">
                             <div className="flex justify-center mb-[60px] block lg:hidden">
                                 <span className="w-[66px] h-[7px] rounded-[4px] bg-[#028F72]"></span>
                             </div>
@@ -213,7 +249,7 @@ export default function RetirementAnnuityForm() {
                                 <PrimarySlider 
                                     aria-label="Age" 
                                     min={18} 
-                                    max={88} 
+                                    max={65} 
                                     value={value} 
                                     defaultValue={45} 
                                     onChange={handleSlideChange} 
@@ -244,37 +280,25 @@ export default function RetirementAnnuityForm() {
                                 <SelectInput
                                     label="Investment strategy"
                                     required
-                                    value={formData.contribution}
+                                    className="mt-[28px]" 
+                                    value={formData.investment}
                                     onChange={handleChange}
                                     name="investment"
                                     options={contributionOptions}
                                 />
 
-                                <TextInput 
-                                    label="How much you’d like to invest monthly?"
-                                    required 
-                                    className="mt-[28px]"
-                                    value={formData.monthlyInvest} 
-                                    onChange={handleChange} 
-                                    onlyNumber={true} 
-                                    currencySign="R" 
-                                    name="monthlyInvest"
-                                    maxValue={350000}
-                                    maxValueError="There is a limit on tax-free contributions of 27.5% or R350 000 per year."
-                                />
-
-                                <label className="mt-[65px] mb-[15px] text-[20px] leading-[25px] font-light block">Do you have any current retirement savings?</label>
+                                <label className="mt-[20px] mb-[15px] text-[20px] leading-[25px] font-light block">Do you have any current retirement savings?</label>
                                 <ToggleButtonGroup
                                     value={choice}
                                     exclusive
                                     onChange={handleChoice}
-                                    aria-label="Yes"
+                                    aria-label="Retirement savings"
                                     sx={{
                                         width: '100%', // Full width
                                         backgroundColor: '#ECECEC', // Background color
                                         borderRadius: '30px', // Rounded corners
                                     }}
-                                    >
+                                >
                                     <ToggleButton
                                         value="no"
                                         aria-label="no"
@@ -287,6 +311,7 @@ export default function RetirementAnnuityForm() {
                                         color: '#ACACAC', // Text color
                                         fontSize: '20px', // Font size
                                         fontWeight: '400', // Font weight
+                                        textTransform: 'capitalize',
                                         '&:hover': {
                                             backgroundColor: '#ECECEC', // Hover background
                                         },
@@ -312,6 +337,7 @@ export default function RetirementAnnuityForm() {
                                         color: '#ACACAC',
                                         fontSize: '20px',
                                         fontWeight: '400',
+                                        textTransform: 'capitalize',
                                         '&:hover': {
                                             backgroundColor: '#ECECEC',
                                         },
@@ -324,29 +350,32 @@ export default function RetirementAnnuityForm() {
                                     >
                                         Yes
                                     </ToggleButton>
-                                    </ToggleButtonGroup>
+                                </ToggleButtonGroup>
 
-                                <TextInput 
-                                    label="Your retirement savings to date"
-                                    required 
-                                    className="mt-[28px]"
-                                    value={formData.saving} 
-                                    onChange={handleChange} 
-                                    onlyNumber={true} 
-                                    currencySign="R" 
-                                    name="saving"
-                                />
-
-                                <TextInput 
-                                    label="Your monthly retirement contribution"
-                                    required 
-                                    className="mt-[28px]"
-                                    value={formData.monthly} 
-                                    onChange={handleChange} 
-                                    onlyNumber={true} 
-                                    currencySign="R" 
-                                    name="monthly"
-                                />
+                                {choice === "yes" && (
+                                    <div id="hidden-fields">
+                                    <TextInput 
+                                        label="Your retirement savings to date"
+                                        required 
+                                        className="mt-[28px]"
+                                        value={formData.saving} 
+                                        onChange={handleChange} 
+                                        onlyNumber={true} 
+                                        currencySign="R" 
+                                        name="saving"
+                                    />
+                                    <TextInput 
+                                        label="Your monthly retirement contribution"
+                                        required 
+                                        className="mt-[28px]"
+                                        value={formData.monthly} 
+                                        onChange={handleChange} 
+                                        onlyNumber={true} 
+                                        currencySign="R" 
+                                        name="monthly"
+                                    />
+                                    </div>
+                                )}
 
                                 <div className="flex justify-center">
                                     <Button
@@ -361,10 +390,10 @@ export default function RetirementAnnuityForm() {
                             </div>
                         </form>
 
-                        <div id="form-output" className="form-output relative mt-0 lg:mt-[90px] z-[1]">
+                        <div id="form-output" className="form-output hidden relative mt-0 lg:mt-[90px] z-[1]">
 
                             <ColorCard 
-                                heading="R111 600" 
+                                heading={`R${formatNumberWithSpaces(investmentDetails.taxBack)}`}
                                 content="<p>Total TAX BACK over the term</p>" 
                                 className="mt-[-200px] lg:mt-0 pt-[236px] lg:pt-[50px] rounded-[64px] lg:rounded-0" 
                             />
@@ -409,13 +438,13 @@ export default function RetirementAnnuityForm() {
 
                                 </div>
 
-                                <NumberPlate heading="R820 000" content="Total investment value" dot={true} />
+                                <NumberPlate heading={`R${formatNumberWithSpaces(investmentDetails.totalInvestment)}`} content="Total investment value" dot={true} />
 
-                                <NumberPlate heading="R467 000" content="Your investment growth" colorCode="#ED0080" />
+                                <NumberPlate heading={`R${formatNumberWithSpaces(investmentDetails.yourInvestment)}`} content="Your investment growth" colorCode="#ED0080" />
 
                                 <div className="flex justify-between w-full">
-                                    <NumberPlate heading="R250 000" content="Lump sum" colorCode="#000000" className="simple-plate" />
-                                    <NumberPlate heading="R360 000" content="Total contributions paid" colorCode="#00C0E8" className="custom-blue" />
+                                    <NumberPlate heading={`R${formatNumberWithSpaces(investmentDetails.LumpSum)}`} content="Lump sum" colorCode="#000000" className="simple-plate" />
+                                    <NumberPlate heading={`R${formatNumberWithSpaces(investmentDetails.contributionsPaid)}`} content="Total contributions paid" colorCode="#00C0E8" className="custom-blue" />
                                 </div>
 
                             </div>
@@ -433,7 +462,7 @@ export default function RetirementAnnuityForm() {
                                     getAriaLabel={() => 'Age'}
                                     value={value1}
                                     min={25} 
-                                    max={100}
+                                    max={65}
                                     onChange={handleSlide2Change}
                                     valueLabelDisplay="on"
                                     getAriaValueText={valuetext}
@@ -475,14 +504,14 @@ export default function RetirementAnnuityForm() {
                                     
                                     <div className="flex flex-col items-center gap-[20px] justify-center mt-[35px]">
                                         <Button label="GENERATE REPORT" className="text-primary w-full max-w-[310px] border border-primary bg-transparent from-transparent to-transparent" />
-                                        <Button label="CALL ME BACK" className="text-white w-full max-w-[310px]" />
+                                        <Button label="CALL ME BACK" onClick={toggleSideForm} className="text-white w-full max-w-[310px]" />
                                     </div>
 
                                 </div>
 
-                                <VideoCard heading="Tax back explained" videoID="L61p2uyiMSo" className="mt-[60px]"/>
+                                <VideoCard heading="Tax back explained" image="/images/video-thumb.jpg" videoID="L61p2uyiMSo" className="mt-[60px]"/>
 
-                                <StepButton heading="NEXT STEP" content="See what income your savings will give you in retirement." link="/" className="mt-[60px]" />
+                                <StepButton heading="NEXT STEP" content="See what income your savings will give you in retirement." link="/retirement-income" className="mt-[60px]" />
 
                         </div>
 

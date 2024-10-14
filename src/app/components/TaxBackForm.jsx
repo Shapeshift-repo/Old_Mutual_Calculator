@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
 import Banner from "./Banner";
 import Heading from "./Heading";
 import Slider from '@mui/material/Slider';
@@ -10,7 +9,6 @@ import TextInput from "./TextInput";
 import Button from "./Button";
 import VideoCard from "./VideoCard";
 import StepButton from "./StepButton";
-import { colors } from "@mui/material";
 import Lottie from "lottie-react";
 import animationData1 from "../animations/animation1.json";
 import animationData2 from "../animations/animation2.json";
@@ -50,6 +48,15 @@ const PrimarySlider = styled(Slider)(({ theme }) => ({
 
 export default function TaxBackForm() {
 
+    const toggleSideForm = () => {
+      const element = document.querySelector('#sideform');
+      if (element.classList.contains('active')) {
+        element.classList.remove('active');
+      } else {
+        element.classList.add('active');
+      }
+    };
+
     const [formData, setFormData] = useState({
         grossIncome: "",
         monthlyInvest: ""
@@ -86,9 +93,18 @@ export default function TaxBackForm() {
 
     const [investmentDetails, setInvestmentDetails] = useState({
         monthlyInvest: 0,
-        taxBack: 0,
-        sum: 0
     });
+
+    const taxBrackets = [
+        { bracket: 0, startBracket: 0, taxRate: 0, previousBracket: 0 },
+        { bracket: 1, startBracket: 95750, taxRate: 18, previousBracket: 0 },
+        { bracket: 2, startBracket: 237100, taxRate: 26, previousBracket: 25443 },
+        { bracket: 3, startBracket: 370500, taxRate: 31, previousBracket: 60127 },
+        { bracket: 4, startBracket: 512800, taxRate: 36, previousBracket: 104240 },
+        { bracket: 5, startBracket: 673000, taxRate: 39, previousBracket: 161912 },
+        { bracket: 6, startBracket: 857900, taxRate: 41, previousBracket: 234023 },
+        { bracket: 7, startBracket: 1817000, taxRate: 45, previousBracket: 627254 }
+    ];
 
     // On submit
     const handleSubmit = (e) => {
@@ -99,40 +115,101 @@ export default function TaxBackForm() {
             let { grossIncome, monthlyInvest } = formData;
     
             grossIncome = parseFloat(grossIncome.replace(/[^\d]/g, '')); 
+            let annualIncome = grossIncome * 12;
             monthlyInvest = parseFloat(monthlyInvest.replace(/[^\d]/g, ''));
-    
-            // Ensure values are valid
-            if (isNaN(grossIncome) || isNaN(monthlyInvest)) return;
-    
-            // Calculate the maximum allowable tax deduction (27.5% of gross income)
-            const maxTaxFreeContribution = grossIncome * 0.275;
-    
-            // The tax back is based on the smaller of monthlyInvest and maxTaxFreeContribution
-            const applicableInvestment = Math.min(monthlyInvest, maxTaxFreeContribution);
-    
-            // Calculate the tax back as 27.5% of the applicable investment
-            const taxBack = Math.round(applicableInvestment * 0.275);
+            let annualInvest = monthlyInvest * 12;
             
-            // Calculate the final sum as the investment minus the tax back
-            const sum = Math.round(monthlyInvest - taxBack);
+            // Ensure values are valid
+            if (isNaN(grossIncome) || isNaN(annualIncome) || isNaN(monthlyInvest) || isNaN(annualInvest)) return;
+            
+            let startBracket = 0;
+            let taxRate = 0;
+            let previousBracket = 0;
+            let taxPrior = 0;
+            let annualSalaryNet = 0;
+            let taxAfterContribution = 0;
+            let taxBack = 0;
+            let cost = 0;
+
+            if (annualIncome >= taxBrackets[7].startBracket) {
+                // Income is above the highest bracket
+                startBracket = taxBrackets[7].startBracket;
+                taxRate = taxBrackets[7].taxRate;
+                previousBracket = taxBrackets[7].previousBracket;
+                taxPrior = previousBracket + (annualIncome - startBracket) * (taxRate / 100);
+                annualSalaryNet = annualIncome - annualInvest;
+                taxAfterContribution = previousBracket + (annualSalaryNet - startBracket) * (taxRate / 100);
+                taxBack = taxPrior - taxAfterContribution;
+                cost = annualInvest - taxBack;
+            } else {
+                // Find the correct tax bracket based on annual salary if it's within the range
+                const taxBracket = taxBrackets.find((bracket, index) => {
+                    const nextBracket = taxBrackets[index + 1];
+                    // Make sure to check if `nextBracket` exists for all but the last bracket
+                    if (nextBracket) {
+                        return annualIncome >= bracket.startBracket && annualIncome < nextBracket.startBracket;
+                    }
+                });
+
+                // If a valid tax bracket is found, set the values
+                if (taxBracket) {
+                    startBracket = taxBracket.startBracket;
+                    taxRate = taxBracket.taxRate;
+                    previousBracket = taxBracket.previousBracket;
+                    taxPrior = previousBracket + (annualIncome - startBracket) * (taxRate / 100);
+                    annualSalaryNet = annualIncome - annualInvest;
+                    taxAfterContribution = previousBracket + (annualSalaryNet - startBracket) * (taxRate / 100);
+                    taxBack = Math.round(taxPrior - taxAfterContribution);
+                    cost = annualInvest - taxBack;
+                }
+            }  
     
             // Update the investmentDetails state
             setInvestmentDetails({
+                grossIncome,
+                annualIncome,
                 monthlyInvest,
+                annualInvest,
                 taxBack,
-                sum
+                startBracket,
+                taxRate,
+                previousBracket,
+                taxPrior,
+                annualSalaryNet,
+                taxAfterContribution,
+                cost
             });
     
             // Scroll to the output section
             const outputElement1 = document.getElementById('form-output1');
             const outputElement2 = document.getElementById('form-output2');
+            const fadeInBoxes = document.querySelectorAll('.fadeIn');
+    
+            // Show the elements and scroll into view if they exist
             if (outputElement1) {
                 outputElement1.classList.remove('invisible');
                 outputElement1.scrollIntoView({ behavior: 'smooth' });
             }
             if (outputElement2) {
                 outputElement2.classList.remove('hidden');
+                outputElement2.scrollIntoView({ behavior: 'smooth' });
             }
+    
+            // IntersectionObserver to handle fadeIn class activation
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    } else {
+                        entry.target.classList.remove('active');
+                    }
+                });
+            });
+    
+            // Observe each element with the fadeIn class
+            fadeInBoxes.forEach(box => {
+                observer.observe(box);
+            });
         }
     };   
     
@@ -200,10 +277,12 @@ export default function TaxBackForm() {
                     <div className="w-full relative z-10">
                         <div className="relative lg:absolute top-0 lg:top-[-230px] left-0 w-full">
                             <Banner 
+                                id="main-banner"
                                 heading="TAX BACK"
                                 subHeading="CALCULATOR"
                                 content="See what you can get back when you invest in a retirement annuity"
-                                image="https://via.placeholder.com/600x400"
+                                image="/images/banner1-img-desktop.jpg"
+                                mobileImage="/images/banner1-img-mobile.jpg"
                                 icon={<Lottie
                                     animationData={animationData1}
                                     loop={false}
@@ -212,10 +291,11 @@ export default function TaxBackForm() {
                                 link="#calculator-form"
                                 linkIcon={linkIcon}
                                 linkIconClasses="rotate-[90deg] lg:rotate-0"
-                                className="before:content-[''] before:absolute before:top-0 before:left-[5%] lg:before:left-[7%] before:h-[97%] lg:before:h-[96%] before:w-[90%] lg:before:w-[86%] before:rounded-bl-[214px] before:rounded-br-[214px] lg:before:rounded-bl-[317px] lg:before:rounded-br-[317px] before:border before:border-white before:z-10"
+                                className="before:content-[''] before:absolute before:top-0 before:left-[20px] lg:before:left-[30px] before:h-[calc(100%-20px)] lg:before:h-[calc(100%-30px)] before:w-[calc(100%-40px)] lg:before:w-[calc(100%-60px)] before:rounded-bl-[214px] before:rounded-br-[214px] lg:before:rounded-bl-[317px] lg:before:rounded-br-[317px] before:border before:border-white before:border-t-0 before:z-10"
                             />
                         </div>
                     </div>
+
                     <div id="calculator-form" className="w-full relative">
                         <form className="relative px-[30px] lg:px-0 mt-[-418px] lg:mt-0 pt-[468px] lg:pt-0 pb-[88px] lg:pb-0 bg-[#F0F0F0] lg:bg-transparent rounded-bl-[214px] lg:rounded-bl-0 rounded-br-[214px] lg:rounded-br-0">
                             <div className="form-field-holder max-w-[570px]">
@@ -224,6 +304,7 @@ export default function TaxBackForm() {
                                     className="text-[24px] leading-[28px] hidden lg:flex font-normal pb-[60px] text-[#1E1E1E] pr-[20px]" 
                                     tag="h3"
                                 />
+
                                 <div className="flex justify-between items-center">
                                     <label>Age</label>
                                     <span>{value}</span>
@@ -231,9 +312,9 @@ export default function TaxBackForm() {
                                 
                                 <PrimarySlider 
                                     aria-label="Age" 
-                                    min={18} max={88} 
+                                    min={18} max={65} 
                                     value={value} 
-                                    defaultValue={45} 
+                                    defaultValue={40} 
                                     onChange={handleSlideChange} 
                                 />
                                 
@@ -292,7 +373,7 @@ export default function TaxBackForm() {
                                     />
 
                                     <Heading 
-                                        content={`R${formatNumberWithSpaces(investmentDetails.monthlyInvest)}`}
+                                        content={`R${formatNumberWithSpaces(investmentDetails.annualInvest)}`}
                                         className="text-[47px] leading-[25px] font-semibold pt-[22px] text-primary text-center w-full" 
                                         tag="h3"
                                     />
@@ -311,6 +392,26 @@ export default function TaxBackForm() {
                                 </div>
                             
                             </div>
+
+                            <div className="flex justify-center absolute left-0 bottom-[-100px] z-[-1] lg:hidden">
+                                <svg className="w-full h-auto" width="428" height="208" viewBox="0 0 428 208" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g opacity="0.7" filter="url(#filter0_f_59_2750)">
+                                    <ellipse cx="214" cy="104" rx="151" ry="40" fill="url(#paint0_linear_59_2750)"/>
+                                    </g>
+                                    <defs>
+                                    <filter id="filter0_f_59_2750" x="-1" y="0" width="430" height="208" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                                    <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                                    <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                                    <feGaussianBlur stdDeviation="32" result="effect1_foregroundBlur_59_2750"/>
+                                    </filter>
+                                    <linearGradient id="paint0_linear_59_2750" x1="63" y1="104" x2="365" y2="104" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#009677"/>
+                                    <stop offset="1" stop-color="#50B848"/>
+                                    </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+
                         </form>
 
                         <div id="form-output2" className="form-output hidden relative">
@@ -339,7 +440,7 @@ export default function TaxBackForm() {
                                     <div class="pr-0 lg:pr-[105px]">
                                         <div
                                             ref={animation2Ref}
-                                            className="flex justify-center items-center max-w-[200px] lg:max-w-[241px]"
+                                            className="flex justify-center items-center max-w-[200px] lg:max-w-[241px] fadeIn"
                                         >
                                             {hasPlayedAnimation2 && (
                                             <Lottie animationData={animationData2} loop={false} />
@@ -349,7 +450,7 @@ export default function TaxBackForm() {
                                 </div>
 
                                 <div className="get-box flex justify-center mt-[10px] lg:mt-[42px]">
-                                    <div className="inline-block pl-[180px] lg:pl-0">
+                                    <div className="inline-block pl-[180px] lg:pl-0 fadeIn">
                                         <p>
                                             <span className="text-[20px] leading-[26px] lg:text-[30px] lg:leading-[25px] font-light block">You get</span>
                                             <strong className="text-[37px] leading-[25px] lg:text-[47px] lg:leading-[25px] font-semibold block my-[7px] lg:my-[17px]">R{formatNumberWithSpaces(investmentDetails.taxBack)}</strong>
@@ -361,7 +462,7 @@ export default function TaxBackForm() {
                                 <div class="means flex justify-center mt-[130px] lg:mt-[265px]">
                                     <div
                                         ref={animation3Ref}
-                                        className="flex justify-center items-center max-w-[240px] lg:max-w-[284px]"
+                                        className="flex justify-center items-center max-w-[240px] lg:max-w-[284px] fadeIn"
                                     >
                                         {hasPlayedAnimation3 && (
                                         <Lottie animationData={animationData3} loop={false} />
@@ -370,18 +471,18 @@ export default function TaxBackForm() {
                                 </div>
 
                                 <div class="after-means flex justify-center mt-[74px]">
-                                    <div class="inline-block min-w-[308px]">
+                                    <div class="inline-block min-w-[308px] fadeIn">
                                         <p>
                                             <span className="text-[20px] leading-[26px] lg:text-[30px] lg:leading-[35px] font-light block">That means your</span>
-                                            <strong className="text-[20px] leading-[26px] lg:text-[30px] lg:leading-[35px] font-semibold block">R{formatNumberWithSpaces(investmentDetails.monthlyInvest)} investment</strong>
+                                            <strong className="text-[20px] leading-[26px] lg:text-[30px] lg:leading-[35px] font-semibold block">R{formatNumberWithSpaces(investmentDetails.annualInvest)} investment</strong>
                                             <span className="text-[20px] leading-[26px] lg:text-[30px] lg:leading-[35px] font-light block">only really costs you</span>
-                                            <strong className="text-[37px] leading-[25px] lg:text-[47px] font-semimedium block mt-[21px]"></strong>
+                                            <strong className="text-[37px] leading-[25px] lg:text-[47px] font-semimedium block mt-[21px]">R{investmentDetails.cost}</strong>
                                         </p>
                                     </div>
                                 </div>
 
                                 <div className="now mt-[225px] lg:mt-[298px] flex justify-center text-center mb-[380px]">
-                                    <div class="inline-block min-w-[308px]">
+                                    <div class="inline-block min-w-[308px] fadeIn">
                                         <p>
                                             <span className="text-[30px] lg:text-[40px] leading-[36px] font-light block">Now that’s a</span>
                                             <strong className="text-[30px] lg:text-[40px] leading-[36px] font-semibold block">great investment!</strong>
@@ -389,29 +490,38 @@ export default function TaxBackForm() {
                                     </div>
                                 </div>
 
-                                <div className="generate-report bg-[#F2F2F2] rounded-[15px] lg:pt-[75px] pb-[54px] px-[15px]">
-                                    <Heading 
-                                        content="Start today and"
-                                        className="text-[30px] leading-[36px] font-light text-[#1E1E1E]black text-center w-full" 
-                                        tag="h4"
-                                    />
+                                <div className="px-[33px] lg:px-0">
+                                    <div className="generate-report bg-[#F2F2F2] rounded-[15px] pt-[22px] pb-[54px] px-[15px]">
 
-                                    <Heading 
-                                        content="Start today and"
-                                        className="text-[30px] leading-[36px] font-semibold text-black text-center w-full" 
-                                        tag="h3"
-                                    />
-                                    
-                                    <div className="flex flex-col items-center gap-[20px] justify-center mt-[35px]">
-                                        <Button label="GENERATE REPORT" className="text-primary w-full max-w-[310px] border border-primary bg-transparent from-transparent to-transparent" />
-                                        <Button label="CALL ME BACK" className="text-white w-full max-w-[310px]" />
+                                        <div className="flex justify-center mb-[46px] block">
+                                            <span className="w-[66px] h-[7px] rounded-[4px] bg-white"></span>
+                                        </div>
+
+                                        <Heading 
+                                            content="Start today and"
+                                            className="text-[30px] leading-[36px] font-light text-[#1E1E1E]black text-center w-full" 
+                                            tag="h4"
+                                        />
+
+                                        <div className="flex justify-center">
+                                            <Heading 
+                                                content="get your tax back."
+                                                className="text-[30px] leading-[36px] font-semibold text-black text-center w-full lg:w-[270px]" 
+                                                tag="h3"
+                                            />
+                                        </div>
+
+                                        <div className="flex flex-col items-center gap-[20px] justify-center mt-[35px]">
+                                            <Button label="GENERATE REPORT" className="text-primary w-full max-w-[255px] lg:max-w-[310px] border border-primary bg-transparent from-transparent to-transparent" />
+                                            <Button label="CALL ME BACK" onClick={toggleSideForm} className="text-white w-full max-w-[255px] lg:max-w-[310px]" />
+                                        </div>
+
                                     </div>
-
                                 </div>
 
-                                <VideoCard heading="Tax back explained" videoID="L61p2uyiMSo" className="mt-[60px]"/>
+                                <VideoCard heading="Tax back explained" image="/images/video-thumb.jpg" videoID="L61p2uyiMSo" className="mt-[60px]"/>
 
-                                <StepButton heading="NEXT STEP" content="See how your money will grow until retirement." link="/" className="mt-[60px]" />
+                                <StepButton heading="NEXT STEP" content="See how your money will grow until retirement." link="/retirement-annuity" className="mt-[60px]" />
 
                             </div>
                         </div>

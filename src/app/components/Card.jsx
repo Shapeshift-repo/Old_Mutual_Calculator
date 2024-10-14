@@ -1,15 +1,19 @@
 import Link from "next/link";
 import Heading from "./Heading";
+import Image from "next/image";
 
-export default function Card({ heading = null, content = null, image = null, link = null }){
+export default function Card({ heading = null, content = null, image = null, link = null, contentClasses = "" }){
   return (
-    <div className="relative h-[433px] w-full rounded-[30px] overflow-hidden transition-transform duration-300 ease-in-out transform hover:scale-105 hover:rotate-3">
+    <div className="card-box relative h-[433px] w-full rounded-[30px] overflow-hidden transition-transform duration-300 ease-in-out transform">
       {/* Card Image */}
       <div className="w-full h-full relative">
-        <img
-          src={image || "https://via.placeholder.com/400x300"} 
+        <Image
+          src={image || "https://via.placeholder.com/400x300"}
           alt="Card Image"
-          className="w-full h-full object-cover transition-transform duration-300 ease-in-out transform hover:scale-110 hover:rotate-3"
+          layout="fill" // Ensures the image fills the parent container
+          objectFit="cover" // Ensures the image maintains its aspect ratio
+          className="transition-transform duration-300 ease-in-out transform"
+          priority={false} // Lazy load by default unless `priority` is set to true
         />
       </div>
 
@@ -26,7 +30,7 @@ export default function Card({ heading = null, content = null, image = null, lin
           />
         )}
         {content && (
-          <p className="text-[16px] leading-[24px] lg:text-[20px] lg:leading-[30px] font-light text-white">
+          <p className={`text-[16px] leading-[24px] lg:text-[20px] lg:leading-[30px] min-h-[90px] font-light text-white ${contentClasses}`}>
             {content}
           </p>
         )}

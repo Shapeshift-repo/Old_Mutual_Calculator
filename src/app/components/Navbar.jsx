@@ -11,16 +11,23 @@ export default function Navbar() {
 
     const pathname = usePathname();
     
-    const [isOpen, setIsOpen] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false); // State to control side menu visibility
     const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State to control dropdown
 
     const toggleSideForm = () => {
-      setIsOpen(!isOpen);
+      const element = document.querySelector('#sideform');
+      if (element.classList.contains('active')) {
+        element.classList.remove('active');
+      } else {
+        element.classList.add('active');
+      }
     };
 
     const toggleMenu = () => {
       setIsMenuOpen(!isMenuOpen); // Toggle the side menu visibility
+      if (isDropdownOpen) {
+        setIsDropdownOpen(false); // Close the dropdown if it's open
+      }
     };
 
     const toggleDropdown = () => {
@@ -30,9 +37,8 @@ export default function Navbar() {
   return (
     <>
       {/* Sideform */}
-      <div
-        className={`sideform fixed z-10 top-0 w-full max-w-[402px] bg-white p-[45px] rounded-[10px] shadow-[0_4px_18px_0_rgba(0,0,0,0.18)] transition-all duration-500 ${
-          isOpen ? 'right-0' : 'right-[-100%]'
+      <div id="sideform"
+        className={`sideform fixed z-10 top-0 w-full max-w-[402px] bg-white p-[45px] rounded-[10px] shadow-[0_4px_18px_0_rgba(0,0,0,0.18)] transition-all duration-500 right-[-100%]
         }`}
       >
         <span className="toggle-sideform absolute top-[20px] right-[20px] cursor-pointer" onClick={toggleSideForm}>          
@@ -65,7 +71,7 @@ export default function Navbar() {
               <li className="submenu relative group">
                 <Link
                   className={`link ${pathname === '/about' ? 'active' : ''}`}
-                  href="/about"
+                  href="#"
                 >
                   Retirement Calculators
                   <svg className="submenu-icon" width="11" height="7" viewBox="0 0 11 7" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -85,7 +91,7 @@ export default function Navbar() {
                       <Link href="/retirement-income">Income Annuity</Link>
                     </li>
                     <li>
-                      <Link href="#">Pay Yourself Firs</Link>
+                      <Link href="#">Pay Yourself First</Link>
                     </li>
                   </ul>
                 </div>
@@ -94,7 +100,7 @@ export default function Navbar() {
           </nav>
           
           {/* Call me back button */}
-          <Button label="CALL ME BACK" onClick={toggleSideForm} className="text-white" />
+          <Button label="CALL ME BACK" onClick={toggleSideForm} className="text-white w-[185px] lg:w-[238px]" />
 
           {/* Menu button for mobile */}
           <button
@@ -128,7 +134,7 @@ export default function Navbar() {
         <nav>
           <ul className="flex flex-col gap-[16px] [&>li]:mb-[16px] [&>li>a]:text-[18px] [&>li>a]:leading-[25px] [&>li>a]:text-white [&>li>a]:font-light">
             <li>
-              <Link className={`link ${pathname === '/' ? 'active' : ''}`} href="/">
+              <Link className={`link ${pathname === '/' ? 'active' : ''}`} href="/" onClick={toggleMenu}>
                 Home
               </Link>
             </li>
@@ -144,16 +150,16 @@ export default function Navbar() {
               {/* Dropdown for mobile (on click) */}
               <ul className={`mt-[10px] [&>li>a]:text-[18px] [&>li>a]:leading-[40px] [&>li>a]:text-white [&>li>a]:font-light ${isDropdownOpen ? 'block' : 'hidden'}`}>
                   <li>
-                    <Link href="/tax-back">Tax Back</Link>
+                    <Link href="/tax-back" onClick={toggleMenu}>Tax Back</Link>
                   </li>
                   <li>
-                    <Link href="/retirement-annuity">Retirement Annuity</Link>
+                    <Link href="/retirement-annuity" onClick={toggleMenu}>Retirement Annuity</Link>
                   </li>
                   <li>
-                    <Link href="/retirement-income">Income Annuity</Link>
+                    <Link href="/retirement-income" onClick={toggleMenu}>Income Annuity</Link>
                   </li>
                   <li>
-                    <Link href="#">Pay Yourself Firs</Link>
+                    <Link href="#" onClick={toggleMenu}>Pay Yourself First</Link>
                   </li>
               </ul>
             </li>

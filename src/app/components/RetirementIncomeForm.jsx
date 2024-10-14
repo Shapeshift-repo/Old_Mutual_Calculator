@@ -46,6 +46,15 @@ const PrimarySlider = styled(Slider)(({ theme }) => ({
 
 export default function RetirementAnnuityForm() {
 
+    const toggleSideForm = () => {
+        const element = document.querySelector('#sideform');
+        if (element.classList.contains('active')) {
+          element.classList.remove('active');
+        } else {
+          element.classList.add('active');
+        }
+    };
+
     const [formData, setFormData] = useState({
         grossIncome: "",
         monthlyInvest: ""
@@ -89,14 +98,16 @@ export default function RetirementAnnuityForm() {
 
     // Check if form is valid (i.e., no required field is empty and no errors)
     const isFormValid = () => {
-        const { grossIncome, monthlyInvest } = formData;
-        return grossIncome && monthlyInvest && !errors.monthlyInvest;
+        const { monthlyInvest } = formData;
+        return monthlyInvest && !errors.monthlyInvest;
     };
 
     const [investmentDetails, setInvestmentDetails] = useState({
-        monthlyInvest: 0,
-        taxBack: 0,
-        sum: 0
+        sum: 0,
+        tenYears: 0,
+        tenYearsGrowth: 0,
+        twientyFiveYears: 0,
+        twientyFiveYearsGrowth: 0
     });
 
     // On submit
@@ -105,31 +116,27 @@ export default function RetirementAnnuityForm() {
     
         if (isFormValid()) {
             // Clean the values by removing non-numeric characters
-            let { grossIncome, monthlyInvest } = formData;
+            let { monthlyInvest } = formData;
     
-            grossIncome = parseFloat(grossIncome.replace(/[^\d]/g, '')); 
             monthlyInvest = parseFloat(monthlyInvest.replace(/[^\d]/g, ''));
     
             // Ensure values are valid
-            if (isNaN(grossIncome) || isNaN(monthlyInvest)) return;
-    
-            // Calculate the maximum allowable tax deduction (27.5% of gross income)
-            const maxTaxFreeContribution = grossIncome * 0.275;
-    
-            // The tax back is based on the smaller of monthlyInvest and maxTaxFreeContribution
-            const applicableInvestment = Math.min(monthlyInvest, maxTaxFreeContribution);
-    
-            // Calculate the tax back as 27.5% of the applicable investment
-            const taxBack = Math.round(applicableInvestment * 0.275);
-            
+            if (isNaN(monthlyInvest)) return;
+           
             // Calculate the final sum as the investment minus the tax back
-            const sum = Math.round(monthlyInvest - taxBack);
+            const sum = Math.round(monthlyInvest + 5000);            
+            const tenYears = 50;
+            const tenYearsGrowth = 4;
+            const twientyFiveYears = 65;
+            const twientyFiveYearsGrowth = 8;
     
             // Update the investmentDetails state
             setInvestmentDetails({
-                monthlyInvest,
-                taxBack,
-                sum
+                sum,
+                tenYears,
+                tenYearsGrowth,
+                twientyFiveYears,
+                twientyFiveYearsGrowth
             });
     
             // Scroll to the output section
@@ -139,7 +146,7 @@ export default function RetirementAnnuityForm() {
                 outputElement.scrollIntoView({ behavior: 'smooth' });
             }
         }
-    };   
+    };
     
     const formatNumberWithSpaces = (number) => {
         return new Intl.NumberFormat('en-US', {
@@ -161,15 +168,18 @@ export default function RetirementAnnuityForm() {
                     <div className="w-full relative">
                     <div className="relative lg:absolute top-0 lg:top-[-230px] left-0 w-full">
                             <Banner 
+                                id="main-banner"
                                 heading="RETIREMENT INCOME"
                                 subHeading="CALCULATOR"
                                 content="See what monthly income you could get during retirement from a Living Annuity"
-                                image="https://via.placeholder.com/600x400"
+                                image="/images/banner3-img-desktop.jpg"
+                                mobileImage="/images/banner3-img-mobile.jpg"
                                 icon=""
                                 link="#calculator-form"
                                 linkIcon={linkIcon}
                                 linkIconClasses="block md:hidden"
-                                className="h-[836px] rounded-bl-[62px] rounded-br-[62px]"
+                                className="third-banner rounded-bl-[62px] rounded-br-[62px] lg:rounded-bl-[62px] lg:rounded-br-[62px] custom-shadow"
+                                gradient="linear-gradient(0deg, #009677 24.3%, rgba(0, 150, 119, 0) 91.96%)"
                             />
                         </div>
                     </div>
@@ -190,7 +200,7 @@ export default function RetirementAnnuityForm() {
                                 <PrimarySlider 
                                     aria-label="Rate" 
                                     min={18} 
-                                    max={88} 
+                                    max={65} 
                                     value={value} 
                                     defaultValue={45} 
                                     onChange={handleSlideChange} 
@@ -211,7 +221,7 @@ export default function RetirementAnnuityForm() {
 
                                 <p className="text-[14px] leading-[19px] text-[#50B848] font-normal">
                                     Not sure about this amount? Go to the &nbsp;
-                                    <Link className="link underline" href="#">                    
+                                    <Link className="link underline" href="/retirement-annuity">                    
                                         Retirement annuity calculator
                                     </Link>
                                 </p>
@@ -228,18 +238,18 @@ export default function RetirementAnnuityForm() {
                             </div>
                         </form>
 
-                        <div id="form-output" className="form-output relative">
+                        <div id="form-output" className="form-output hidden relative">
                             
                             <div className="output-holder relative z-10 mt-[169px] lg:mt-[209px]">
 
                                 <div className="estimate-box">
                                     <div 
-                                        className="estimate-head py-[44px] px-[15px] rounded-tl-[62px] rounded-tr-[62px] lg:rounded-tl-[20px] lg:rounded-tr-[20px]"
+                                        className="estimate-head relative py-[44px] px-[15px] rounded-tl-[62px] rounded-tr-[62px] lg:rounded-tl-[20px] lg:rounded-tr-[20px] shadow-[0_4px_29px_0_rgba(0,0,0,0.25)] lg:shadow-none"
                                         style={{ background: 'linear-gradient(98.34deg, #009677 4.08%, #50B848 100%)' }}
                                     >
                                         <p className="text-[22px] leading-[19px] font-light text-white text-center w-full">Estimated monthly income</p>
                                         <Heading 
-                                            content="R15 000"
+                                            content={`R${formatNumberWithSpaces(investmentDetails.sum)}`}
                                             className="text-[47px] leading-[26px] font-semibold pt-[15px] text-white text-center w-full" 
                                             tag="h5"
                                         />
@@ -253,8 +263,8 @@ export default function RetirementAnnuityForm() {
 
                                         <ProgressBar 
                                             label="10 Years" 
-                                            hint="Poor markets (4% growth)" 
-                                            progress="50"
+                                            hint={`Poor markets (${investmentDetails.tenYearsGrowth}% growth)`} 
+                                            progress={investmentDetails.tenYears}
                                             labelClasses="mt-[42px] from-[#ED0080] to-[#F37021]" 
                                             trackClasses=""
                                             progressClasses="from-[#ED0080] to-[#F37021]"
@@ -263,8 +273,8 @@ export default function RetirementAnnuityForm() {
 
                                         <ProgressBar 
                                             label="25 Years" 
-                                            hint="Average markets (8% growth)" 
-                                            progress="65"
+                                            hint={`Average markets (${investmentDetails.twientyFiveYearsGrowth}% growth)`} 
+                                            progress={investmentDetails.twientyFiveYears}
                                             labelClasses="mt-[37px]" 
                                             trackClasses=""
                                             progressClasses=""
@@ -315,14 +325,12 @@ export default function RetirementAnnuityForm() {
                                     
                                     <div className="flex flex-col items-center gap-[20px] justify-center mt-[35px]">
                                         <Button label="GENERATE REPORT" className="text-primary w-full max-w-[310px] border border-primary bg-transparent from-transparent to-transparent" />
-                                        <Button label="CALL ME BACK" className="text-white w-full max-w-[310px]" />
+                                        <Button label="CALL ME BACK" onClick={toggleSideForm} className="text-white w-full max-w-[310px]" />
                                     </div>
 
                                 </div>
 
-                                <VideoCard heading="Tax back explained" videoID="L61p2uyiMSo" className="mt-[60px]"/>
-
-                                <StepButton heading="NEXT STEP" content="See how your money will grow until retirement." link="/" className="mt-[60px]" />
+                                <VideoCard heading="Tax back explained" image="/images/video-thumb.jpg" videoID="L61p2uyiMSo" className="mt-[60px]"/>
 
                             </div>
                         </div>

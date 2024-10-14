@@ -6,7 +6,7 @@ export default function StepButton({heading = null, content = null, link = null,
   return (
     <div className="container px-[34px] lg:px-0">
         <div 
-            className={`step-btn relative px-[28px] lg:px-[58px] pt-[28px] lg:pt-[55px] pb-[18px] ;g:pb-[44px] rounded-[20px] ${className}`}
+            className={`flex w-full items-center step-btn relative px-[28px] lg:px-[58px] py-[18px] min-h-[122px] lg:min-h-[153px] rounded-[20px] ${className}`}
             style={{ background: 'linear-gradient(90deg, #009677 0%, #50B848 143.37%)' }}
         >
             <div className="flex justify-between items-center gap-[30px]">
@@ -14,7 +14,7 @@ export default function StepButton({heading = null, content = null, link = null,
                     {heading && (
                         <Heading 
                             content={heading}
-                            className="text-[18px] lg:text-[30px] leading-[19px] font-semibold text-white" 
+                            className="text-[18px] lg:text-[30px] leading-[19px] mb-[7px] lg:mb-[12px] font-semibold text-white" 
                             tag="h4"
                         />
                     )}

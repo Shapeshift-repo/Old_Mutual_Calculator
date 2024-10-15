@@ -217,9 +217,9 @@ export default function RetirementAnnuityForm() {
                         <div className="relative lg:absolute top-0 lg:top-[-230px] left-0 w-full">
                             <Banner 
                                 id="main-banner"
-                                heading="RETIREMENT ANNUITY"
-                                subHeading="CALCULATOR"
-                                content="See how your money will grow over time with the power of compound growth."
+                                heading="RETIREMENT ANNUITY2"
+                                subHeading="CALCULATOR2"
+                                content="See how your money will grow over time with the power of compound growth.2"
                                 image="/images/banner2-img-desktop.jpg"
                                 mobileImage="/images/banner2-img-mobile.jpg"
                                 icon=""

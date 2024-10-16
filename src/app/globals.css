@@ -181,6 +181,10 @@ body {
   @apply from-[#50B848] from-30% to-[#009677] to-70% !important;
 }
 
+.custom-gradient{
+  @apply from-[#009677] to-[#50B848];
+}
+
 .card-box:hover img{
   @apply scale-110;
 }

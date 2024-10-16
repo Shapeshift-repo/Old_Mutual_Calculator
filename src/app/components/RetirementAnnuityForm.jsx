@@ -78,6 +78,11 @@ export default function RetirementAnnuityForm() {
         if (newChoice !== null) {
             setChoice(newChoice);
 
+            // Set J9 based on the new choice value
+            const J9 = newChoice === 'yes' ? 100000 : 0;
+
+            console.log(`Choice: ${newChoice}, J9: ${J9}`);
+
             // Clean the values by removing non-numeric characters
             let { grossIncome, contribution, investment, saving, monthly } = formData;
 
@@ -102,32 +107,6 @@ export default function RetirementAnnuityForm() {
     const handleSlideChange = (event) => {
         const newValue = event.target.value; // Get the new value from the slider
         setValue(newValue); // Update the slider value
-
-        // Clean the values by removing non-numeric characters
-        let { grossIncome, contribution, investment, saving, monthly } = formData;
-
-        const age = newValue; // Use the slider value as the age
-        grossIncome = parseFloat(grossIncome.replace(/[^\d]/g, '')); 
-        const annualIncome = grossIncome * 12;
-        contribution = parseFloat(contribution.replace(/[^\d]/g, ''));
-        const annualContribution = contribution * 12;
-
-        // Clean and set saving and monthly, defaulting to 0 if empty
-        saving = parseFloat((saving || '').replace(/[^\d]/g, '')) || 0; // Default to 0 if empty
-        monthly = parseFloat((monthly || '').replace(/[^\d]/g, '')) || 0; // Default to 0 if empty
-
-        // Call your calculation function with updated form data
-        const updatedFormData = {
-            ...formData,
-            age,
-            annualIncome,
-            annualContribution,
-            saving,
-            monthly,
-        };
-
-        const result = calculateInvestmentAndTax(updatedFormData);
-        setResult(result); // Update the result state
     };
 
     function valuetext(value) {
@@ -219,6 +198,8 @@ export default function RetirementAnnuityForm() {
         let D15 = D13 + D11; // Total Monthly Contributions
         
         let J9 = choice === 'yes' ? 0 : 100000;
+
+        //console.log("Choice:", choice, "J9:", J9);
 
         let N5 = 0.05; // 5% as a decimal
     
@@ -395,16 +376,6 @@ export default function RetirementAnnuityForm() {
                 <div className="flex flex-col lg:flex-row gap-0 lg:gap-[150px] items-start">
                     <div className="w-full relative">
                         <div className="relative lg:absolute top-0 lg:top-[-230px] left-0 w-full">
-                        {result && (
-                <div className="results">
-                    <h2>Calculation Results</h2>
-                    <p>Total Investment: ${result.totalInvestment}</p>
-                    <p>Tax Get Back: ${result.taxGetBack}</p>
-                    <p>Investment Growth: ${result.investmentGrowth}</p>
-                    <p>Total Contribution Paid: ${result.totalContributionPaid}</p>
-                    <p>Lump Sum: ${result.lampSum}</p>
-                </div>
-            )}
                             <Banner 
                                 id="main-banner"
                                 heading="RETIREMENT ANNUITY"

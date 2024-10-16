@@ -97,7 +97,10 @@ export default function RetirementAnnuityForm() {
             monthly = parseFloat((monthly || '').replace(/[^\d]/g, '')) || "";
 
             // Calculate the investment and tax based on the cleaned formData
-            const result = calculateInvestmentAndTax(formData);
+            const result = calculateInvestmentAndTax({
+                ...formData,
+                J9, // Pass the updated J9 value to the calculation function
+            });
             setResult(result);
         }
     };
@@ -176,7 +179,7 @@ export default function RetirementAnnuityForm() {
     const calculateInvestmentAndTax = (formData) => {
         
         // Clean the values by removing non-numeric characters
-        let { grossIncome, contribution, investment, saving, monthly } = formData;
+        let { grossIncome, contribution, investment, saving, monthly, J9 } = formData;
         
         const age = value; // Use the slider value as the age
         grossIncome = parseFloat(grossIncome.replace(/[^\d]/g, '')); 
@@ -196,8 +199,6 @@ export default function RetirementAnnuityForm() {
         let D13 = monthly;
     
         let D15 = D13 + D11; // Total Monthly Contributions
-        
-        let J9 = choice === 'yes' ? 0 : 100000;
 
         //console.log("Choice:", choice, "J9:", J9);
 
@@ -332,7 +333,13 @@ export default function RetirementAnnuityForm() {
             saving = parseFloat((saving || '').replace(/[^\d]/g, '')) || "";
             monthly = parseFloat((monthly || '').replace(/[^\d]/g, '')) || "";
 
-            const result = calculateInvestmentAndTax(formData);
+            const J9 = choice === 'yes' ? 100000 : 0;
+
+            const result = calculateInvestmentAndTax({
+                ...formData,
+                J9, // Include J9 in the formData object
+            });
+            
             setResult(result);
 
             // Ensure values are valid

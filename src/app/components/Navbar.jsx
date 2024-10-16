@@ -140,7 +140,7 @@ export default function Navbar() {
             </li>
             <li className="submenu relative">
               <div onClick={toggleDropdown} className="flex justify-between cursor-pointer">
-                <Link className={`link font-normal text-white ${pathname === '/about' ? 'active' : ''}`} href="/about">
+                <Link className={`link font-normal text-white`} href="#">
                   Retirement Calculators
                 </Link>
                 <svg className="submenu-icon" width="11" height="7" viewBox="0 0 11 7" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -60,31 +60,56 @@ export default function RetirementAnnuityForm() {
     const [formData, setFormData] = useState({
         grossIncome: "",
         contribution: "",
-        investment: "",
-        monthlyInvest: "",
-        saving: "",
-        monthly: ""
+        investment: "moderate",
+        saving: 0,
+        monthly: 0
     });
+
+    const [result, setResult] = useState(null);
 
     const [errors, setErrors] = useState({
         grossIncome: "",
         contribution: "",
-        investment: "",
-        monthlyInvest: "",
-        saving: "",
-        monthly: ""
     });
 
     const [choice, setChoice] = React.useState('no');
 
     const handleChoice = (event, newChoice) => {
-        setChoice(newChoice);
+        if (newChoice !== null) {
+            setChoice(newChoice);
+
+            // Set J9 based on the new choice value
+            const J9 = newChoice === 'yes' ? 100000 : 0;
+
+            console.log(`Choice: ${newChoice}, J9: ${J9}`);
+
+            // Clean the values by removing non-numeric characters
+            let { grossIncome, contribution, investment, saving, monthly } = formData;
+
+            const age = value; // Use the slider value as the age
+            grossIncome = parseFloat(grossIncome.replace(/[^\d]/g, '')); 
+            const annualIncome = grossIncome * 12;
+            contribution = parseFloat(contribution.replace(/[^\d]/g, ''));
+            const annualContribution = contribution * 12;
+
+            // Clean and set saving and monthly, defaulting to 0 if empty
+            saving = parseFloat((saving || '').replace(/[^\d]/g, '')) || "";
+            monthly = parseFloat((monthly || '').replace(/[^\d]/g, '')) || "";
+
+            // Calculate the investment and tax based on the cleaned formData
+            const result = calculateInvestmentAndTax({
+                ...formData,
+                J9, // Pass the updated J9 value to the calculation function
+            });
+            setResult(result);
+        }
     };
 
     const [value, setValue] = useState(45);
 
-    const handleSlideChange = (event, newValue) => {
-        setValue(newValue);
+    const handleSlideChange = (event) => {
+        const newValue = event.target.value; // Get the new value from the slider
+        setValue(newValue); // Update the slider value
     };
 
     function valuetext(value) {
@@ -104,16 +129,7 @@ export default function RetirementAnnuityForm() {
             // If the minimum value changes, decrease LumpSum based on the new value
             const minValue = Math.min(newValue[0], value1[1] - minDistance);
             setValue1([minValue, value1[1]]);
-            
-            // Example: Decrease LumpSum based on the minimum slider value
-            const decreasedLumpSum = 250000 - minValue - 5000; // Decrease LumpSum as min value goes down
-            const updatedLumpSum = Math.max(decreasedLumpSum, 0); // Ensure LumpSum doesn't go negative
 
-            // Update investment details with the new LumpSum
-            setInvestmentDetails(prevDetails => ({
-                ...prevDetails,
-                LumpSum: updatedLumpSum
-            }));
         } else {
             setValue1([value1[0], Math.max(newValue[1], value1[0] + minDistance)]);
         }
@@ -133,53 +149,201 @@ export default function RetirementAnnuityForm() {
 
     // Check if form is valid (i.e., no required field is empty and no errors)
     const isFormValid = () => {
-        const { grossIncome, monthlyInvest } = formData;
-        return grossIncome && monthlyInvest && !errors.monthlyInvest;
+        const { age, grossIncome, contribution, investment } = formData;
+        return grossIncome && contribution;
     };
 
-    const [investmentDetails, setInvestmentDetails] = useState({
-        taxBack: 0,
-        totalInvestment: 0,
-        yourInvestment: 0,
-        contributionsPaid: 0,
-        contributionsPaid: 0,
-        LumpSum: 0
-    });
+    const investmentStrategyTable = [
+        {
+            lowest: 1.5,
+            low: 2.63,
+            light: 3.08,
+            moderate: 4.67,
+            medium: 5.24,
+            high: 5.60,
+            highest: 6.41
+        }
+    ];
+    
+    const taxBrackets = [
+        { bracket: 0, startBracket: 0, taxRate: 0, previousBracket: 0 },
+        { bracket: 1, startBracket: 95750, taxRate: 18, previousBracket: 0 },
+        { bracket: 2, startBracket: 237100, taxRate: 26, previousBracket: 25443 },
+        { bracket: 3, startBracket: 370500, taxRate: 31, previousBracket: 60127 },
+        { bracket: 4, startBracket: 512800, taxRate: 36, previousBracket: 104240 },
+        { bracket: 5, startBracket: 673000, taxRate: 39, previousBracket: 161912 },
+        { bracket: 6, startBracket: 857900, taxRate: 41, previousBracket: 234023 },
+        { bracket: 7, startBracket: 1817000, taxRate: 45, previousBracket: 627254 }
+    ];
+    
+    const calculateInvestmentAndTax = (formData) => {
+        
+        // Clean the values by removing non-numeric characters
+        let { grossIncome, contribution, investment, saving, monthly, J9 } = formData;
+        
+        const age = value; // Use the slider value as the age
+        grossIncome = parseFloat(grossIncome.replace(/[^\d]/g, '')); 
+        const annualIncome = grossIncome * 12;
+        contribution = parseFloat(contribution.replace(/[^\d]/g, ''));
+        const annualContribution = contribution * 12;
+        
+        // Clean and set saving and monthly, defaulting to 0 if empty
+        saving = parseFloat((saving || '').replace(/[^\d]/g, '')) || 0;
+        monthly = parseFloat((monthly || '').replace(/[^\d]/g, '')) || 0;
+        
+        // Parsing inputs
+        let D9 = age;
+        let G9 = grossIncome;
+        let D11 = contribution
+        let investmentStrategyValue = investmentStrategyTable[0][investment] / 100;
+        let D13 = monthly;
+    
+        let D15 = D13 + D11; // Total Monthly Contributions
+
+        //console.log("Choice:", choice, "J9:", J9);
+
+        let N5 = 0.05; // 5% as a decimal
+    
+        // Calculate effective return rate
+        let N7 = (1 + N5) * (1 + investmentStrategyValue) - 1;
+    
+        let N8 = 65; // Target age
+        let N9 = 0.05; // Rate again
+    
+        let N15 = N5 === 0
+            ? D15 * (N8 - D9) * 12
+            : 12 * D15 * (((1 + N5) ** (N8 - D9) - 1) / N5);
+
+        let N16 = J9; // Initial investment
+    
+        let Q5 = ((1 + N7) ** (1 / 12)) - 1;
+    
+        let N13 = (D15*((1+Q5) ** 12-1)/(Q5/(1+Q5)))*((1+N7) ** (N8-D9)-(1+N5)^(N8-D9))/(N7-N5)+J9*(1+N7) ** (N8-D9);
+        
+        let N14 = N13 - N15 - N16;
+    
+        // Function to calculate tax based on income
+        const calculateTax = (income) => {
+            // Check for income less than the lowest bracket
+            if (income < taxBrackets[1].startBracket) return 0;
+        
+            let taxAmount = 0;
+            let previousBracket = 0;
+        
+            // Find the applicable tax bracket using a loop
+            for (const bracket of taxBrackets) {
+                if (income >= bracket.startBracket) {
+                    // Calculate tax for the current bracket
+                    taxAmount += (Math.min(income, bracket.startBracket) - previousBracket) * (bracket.taxRate / 100);
+                    previousBracket = bracket.startBracket;
+                } else {
+                    // Break the loop if income is less than the current bracket
+                    break;
+                }
+            }
+            
+            return taxAmount;
+        };
+
+        const getBracketDetails = (income) => {
+            let bracketDetails = {};
+        
+            for (const bracket of taxBrackets) {
+                if (income >= bracket.startBracket) {
+                    bracketDetails = {
+                        startBracket: bracket.startBracket,
+                        previousBracket: bracket.previousBracket,
+                        taxRate: bracket.taxRate,
+                    };
+                } else {
+                    // Once the correct bracket is found, exit the loop
+                    break;
+                }
+            }
+        
+            return bracketDetails;
+        };
+    
+        let U14 = G9 * 12; // Annual gross income
+
+        let { startBracket: U16, previousBracket: U17, taxRate: U15 } = getBracketDetails(U14);
+        
+        U15 = U15 / 100;
+
+        let U18 = U17+(U14-U16)*U15;
+
+        let U19 = U14 - D15 * 12 - J9; // Adjusted gross income after contributions
+
+        let { startBracket: U21, previousBracket: U22, taxRate: U20 } = getBracketDetails(U19);
+
+        U20 = U20 / 100;
+
+        let U23 = U22+(U19-U21)*U20;
+        
+        let U24 = (U18 - U23) / (D15 * 12 + J9);
+        
+        let Q13 = U24 * (N16 + 12 * D15);
+
+        let V14 = G9 * 12;
+        
+        let { startBracket: V16, previousBracket: V17, taxRate: V15 } = getBracketDetails(V14);
+
+        V15 = V15 / 100;
+
+        let V18 = V17+(V14-V16)*V15;
+        
+        let V19 = V14 - D15 * 12 - J9; // Adjusted gross income after contributions
+        
+        let { startBracket: V21, previousBracket: V22, taxRate: V20 } = getBracketDetails(V19);
+
+        V20 = V20 / 100;
+
+        let V23 = V22+(V19-V21)*V20;
+        
+        let V24 = (V18 - V23) / (D15 * 12 + J9);
+        
+        let Q14 = V24 * (N16 + 12 * D15);
+
+        let Q15 = Q13 + Q14;
+        
+        const totalInvestment = N13.toFixed(0);
+        const taxGetBack = Q15.toFixed(0);
+        const investmentGrowth = N14.toFixed(0);
+        const totalContributionPaid = (N15 + N16).toFixed(0);
+        const lampSum = J9.toFixed(0);
+
+        return { totalInvestment, taxGetBack, investmentGrowth, totalContributionPaid, lampSum };
+    };
 
     // On submit
     const handleSubmit = (e) => {
         e.preventDefault();
-    
+
         if (isFormValid()) {
             // Clean the values by removing non-numeric characters
-            let { grossIncome, monthlyInvest } = formData;
-    
+            let { grossIncome, contribution, investment, saving, monthly } = formData;
+
+            const age = value; // Use the slider value as the age
             grossIncome = parseFloat(grossIncome.replace(/[^\d]/g, '')); 
-            monthlyInvest = parseFloat(monthlyInvest.replace(/[^\d]/g, ''));
-    
-            // Ensure values are valid
-            if (isNaN(grossIncome) || isNaN(monthlyInvest)) return;
-    
-            // Calculate the tax back as 27.5% of the applicable investment
-            const taxBack = 111600;
+            const annualIncome = grossIncome * 12;
+            contribution = parseFloat(contribution.replace(/[^\d]/g, ''));
+            const annualContribution = contribution * 12;
+            
+            // Clean and set saving and monthly, defaulting to 0 if empty
+            saving = parseFloat((saving || '').replace(/[^\d]/g, '')) || "";
+            monthly = parseFloat((monthly || '').replace(/[^\d]/g, '')) || "";
 
-            const totalInvestment = 820000;
+            const J9 = choice === 'yes' ? 100000 : 0;
 
-            const yourInvestment = 467000;
-
-            const contributionsPaid = 360000;
-
-            // Calculate the final sum as the investment minus the tax back
-            const LumpSum = 250000;
-    
-            // Update the investmentDetails state
-            setInvestmentDetails({
-                taxBack,
-                totalInvestment,
-                yourInvestment,
-                contributionsPaid,
-                LumpSum
+            const result = calculateInvestmentAndTax({
+                ...formData,
+                J9, // Include J9 in the formData object
             });
+            
+            setResult(result);
+
+            // Ensure values are valid
+            if (isNaN(grossIncome) || isNaN(annualIncome) || isNaN(contribution) || isNaN(annualContribution)) return;  
     
             // Scroll to the output section
             const outputElement = document.getElementById('form-output');
@@ -198,9 +362,13 @@ export default function RetirementAnnuityForm() {
     };
 
     const contributionOptions = [
-        { value: '3', label: 'Inflation plus 3%-4%' },
-        { value: '4', label: 'Inflation plus 4%-5%' },
-        { value: '5', label: 'Inflation plus 5%-6%' },
+        { value: 'lowest', label: 'Lowest - Cash' },
+        { value: 'low', label: 'Low - Enhanced Income' },
+        { value: 'light', label: 'Light - Inflation plus 2%-3%' },
+        { value: 'moderate', label: 'Moderate - Inflation plus 3%-4%' },
+        { value: 'medium', label: 'Medium - Inflation plus 4%-5% ' },
+        { value: 'high', label: 'High - Inflation plus 5%-7%' },
+        { value: 'highest', label: 'Highest - Maximum Return' },
     ];
 
     const linkIcon = (
@@ -393,7 +561,7 @@ export default function RetirementAnnuityForm() {
                         <div id="form-output" className="form-output hidden relative mt-0 lg:mt-[90px] z-[1]">
 
                             <ColorCard 
-                                heading={`R${formatNumberWithSpaces(investmentDetails.taxBack)}`}
+                                heading={`R${result ? formatNumberWithSpaces(result.taxGetBack) : ''}`}
                                 content="<p>Total TAX BACK over the term</p>" 
                                 className="mt-[-200px] lg:mt-0 pt-[236px] lg:pt-[50px] rounded-[64px] lg:rounded-0" 
                             />
@@ -438,13 +606,20 @@ export default function RetirementAnnuityForm() {
 
                                 </div>
 
-                                <NumberPlate heading={`R${formatNumberWithSpaces(investmentDetails.totalInvestment)}`} content="Total investment value" dot={true} />
+                                <NumberPlate heading={`R${result ? formatNumberWithSpaces(result.totalInvestment) : ''}`} content="Total investment value" dot={true} />
 
-                                <NumberPlate heading={`R${formatNumberWithSpaces(investmentDetails.yourInvestment)}`} content="Your investment growth" colorCode="#ED0080" />
+                                <NumberPlate heading={`R${result ? formatNumberWithSpaces(result.investmentGrowth) : ''}`} content="Your investment growth" colorCode="#ED0080" />
 
-                                <div className="flex justify-between w-full">
-                                    <NumberPlate heading={`R${formatNumberWithSpaces(investmentDetails.LumpSum)}`} content="Lump sum" colorCode="#000000" className="simple-plate" />
-                                    <NumberPlate heading={`R${formatNumberWithSpaces(investmentDetails.contributionsPaid)}`} content="Total contributions paid" colorCode="#00C0E8" className="custom-blue" />
+                                <div className={`flex ${choice === 'yes' ? 'justify-between' : 'justify-end'} w-full`}>
+                                    {choice === 'yes' && (
+                                        <NumberPlate
+                                            heading={`R${result ? formatNumberWithSpaces(result.lampSum) : ''}`}
+                                            content="Lump sum"
+                                            colorCode="#000000"
+                                            className="simple-plate"
+                                        />
+                                    )}
+                                    <NumberPlate heading={`R${result ? formatNumberWithSpaces(result.totalContributionPaid) : ''}`} content="Total contributions paid" colorCode="#00C0E8" className="custom-blue" />
                                 </div>
 
                             </div>

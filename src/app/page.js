@@ -105,7 +105,7 @@ export default function Home() {
       <ScrollableTabs tabs={tabsData} />
       <CardBlock cardsData={CardsData} />
       <section className="container">
-       <CallToAction heading={CallToActionData1.heading} subheading={CallToActionData1.subHeading} content={CallToActionData1.content} buttonLabel={CallToActionData1.buttonLabel} href={CallToActionData1.href} sectionClasses='bg-gradient-to-r from-[#F4F3F6] to-[#807c79]' headingClasses='text-transparent bg-gradient-to-l' buttonClasses='border-0 lg:border border-primary text-primary from-transparent to-transparent' img={CallToActionData1.img} imgBoxClasses="right-[-165px] lg:right-[60px]" imgClasses="w-[290px] lg:w-[444px]" />
+       <CallToAction heading={CallToActionData1.heading} subheading={CallToActionData1.subHeading} content={CallToActionData1.content} buttonLabel={CallToActionData1.buttonLabel} href={CallToActionData1.href} sectionClasses='bg-gradient-to-r from-[#F4F3F6] to-[#807c79]' headingClasses='text-transparent bg-gradient-to-l custom-gradient' buttonClasses='border-0 lg:border border-primary text-primary from-transparent to-transparent' img={CallToActionData1.img} imgBoxClasses="right-[-165px] lg:right-[60px]" imgClasses="w-[290px] lg:w-[444px]" />
       </section>
       <section className="container">
         <CallToAction heading={CallToActionData2.heading} subheading={CallToActionData2.subHeading} content={CallToActionData2.content} buttonLabel={CallToActionData2.buttonLabel} href={CallToActionData2.href} sectionClasses='custom-artwork' headingClasses='from-[#ED0080] to-[#F37021] text-transparent' buttonClasses='border-0 lg:border border-[#ED0080] text-[#ED0080] from-transparent to-transparent' artwork={CallToActionData2.artwork} img={CallToActionData2.img} />

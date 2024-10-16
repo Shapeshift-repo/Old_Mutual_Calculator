@@ -128,16 +128,7 @@ export default function RetirementAnnuityForm() {
             // If the minimum value changes, decrease LumpSum based on the new value
             const minValue = Math.min(newValue[0], value1[1] - minDistance);
             setValue1([minValue, value1[1]]);
-            
-            // Example: Decrease LumpSum based on the minimum slider value
-            const decreasedLumpSum = 250000 - minValue - 5000; // Decrease LumpSum as min value goes down
-            const updatedLumpSum = Math.max(decreasedLumpSum, 0); // Ensure LumpSum doesn't go negative
 
-            // Update investment details with the new LumpSum
-            setInvestmentDetails(prevDetails => ({
-                ...prevDetails,
-                LumpSum: updatedLumpSum
-            }));
         } else {
             setValue1([value1[0], Math.max(newValue[1], value1[0] + minDistance)]);
         }

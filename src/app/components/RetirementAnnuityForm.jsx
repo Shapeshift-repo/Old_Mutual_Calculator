@@ -75,7 +75,26 @@ export default function RetirementAnnuityForm() {
     const [choice, setChoice] = React.useState('no');
 
     const handleChoice = (event, newChoice) => {
-        setChoice(newChoice);
+        if (newChoice !== null) {
+            setChoice(newChoice);
+
+            // Clean the values by removing non-numeric characters
+            let { grossIncome, contribution, investment, saving, monthly } = formData;
+
+            const age = value; // Use the slider value as the age
+            grossIncome = parseFloat(grossIncome.replace(/[^\d]/g, '')); 
+            const annualIncome = grossIncome * 12;
+            contribution = parseFloat(contribution.replace(/[^\d]/g, ''));
+            const annualContribution = contribution * 12;
+
+            // Clean and set saving and monthly, defaulting to 0 if empty
+            saving = parseFloat((saving || '').replace(/[^\d]/g, '')) || "";
+            monthly = parseFloat((monthly || '').replace(/[^\d]/g, '')) || "";
+
+            // Calculate the investment and tax based on the cleaned formData
+            const result = calculateInvestmentAndTax(formData);
+            setResult(result);
+        }
     };
 
     const [value, setValue] = useState(45);
@@ -199,7 +218,8 @@ export default function RetirementAnnuityForm() {
     
         let D15 = D13 + D11; // Total Monthly Contributions
         
-        let J9 = 100000; // Initial investment
+        let J9 = choice === 'yes' ? 0 : 100000;
+
         let N5 = 0.05; // 5% as a decimal
     
         // Calculate effective return rate
@@ -612,8 +632,15 @@ export default function RetirementAnnuityForm() {
 
                                 <NumberPlate heading={`R${result ? formatNumberWithSpaces(result.investmentGrowth) : ''}`} content="Your investment growth" colorCode="#ED0080" />
 
-                                <div className="flex justify-between w-full">
-                                    <NumberPlate heading={`R${result ? formatNumberWithSpaces(result.lampSum) : ''}`} content="Lump sum" colorCode="#000000" className="simple-plate" />
+                                <div className={`flex ${choice === 'yes' ? 'justify-between' : 'justify-end'} w-full`}>
+                                    {choice === 'yes' && (
+                                        <NumberPlate
+                                            heading={`R${result ? formatNumberWithSpaces(result.lampSum) : ''}`}
+                                            content="Lump sum"
+                                            colorCode="#000000"
+                                            className="simple-plate"
+                                        />
+                                    )}
                                     <NumberPlate heading={`R${result ? formatNumberWithSpaces(result.totalContributionPaid) : ''}`} content="Total contributions paid" colorCode="#00C0E8" className="custom-blue" />
                                 </div>
 

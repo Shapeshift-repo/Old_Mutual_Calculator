@@ -201,6 +201,10 @@ body {
   @apply text-[37px] leading-[25px];
 }
 
+.third-banner .desktop-banner-image{
+  @apply object-top;
+}
+
 #main-banner.active{
   top: -300px;
 }

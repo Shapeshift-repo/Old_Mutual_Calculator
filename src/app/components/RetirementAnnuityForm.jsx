@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Banner from "./Banner";
 import Heading from "./Heading";
 import Slider from "@mui/material/Slider";
@@ -81,12 +81,12 @@ export default function RetirementAnnuityForm() {
             // Set J9 based on the new choice value
             const J9 = newChoice === 'yes' ? 100000 : 0;
 
-            console.log(`Choice: ${newChoice}, J9: ${J9}`);
-
             // Clean the values by removing non-numeric characters
             let { grossIncome, contribution, investment, saving, monthly } = formData;
 
-            const age = value; // Use the slider value as the age
+            const age = value;
+            const N8 = value1[1];
+
             grossIncome = parseFloat(grossIncome.replace(/[^\d]/g, '')); 
             const annualIncome = grossIncome * 12;
             contribution = parseFloat(contribution.replace(/[^\d]/g, ''));
@@ -99,41 +99,116 @@ export default function RetirementAnnuityForm() {
             // Calculate the investment and tax based on the cleaned formData
             const result = calculateInvestmentAndTax({
                 ...formData,
-                J9, // Pass the updated J9 value to the calculation function
+                age,
+                J9,
+                N8
             });
             setResult(result);
         }
     };
 
-    const [value, setValue] = useState(45);
+    const [value, setValue] = useState(25); // Slider 1 value (single value)
+    const [value1, setValue1] = useState([25, 65]); // Slider 2 range value [min, max]
 
+    const minDistance = 0; // Minimum distance between the two thumbs on Slider 2
+
+    // Ensure both sliders remain in sync when value1[0] changes
+    useEffect(() => {
+        if (value1[0] !== value) {
+            setValue(value1[0]); // Update Slider 1's value when Slider 2's min changes
+        }
+    }, [value1]);
+
+    useEffect(() => {
+        if (isFormValid()) {
+            const age = value;
+            const N8 = value1[1];
+            const J9 = choice === 'yes' ? 100000 : 0;
+            const result = calculateInvestmentAndTax({ ...formData, age, J9, N8 });
+            setResult(result);
+        }
+    }, [formData, value, value1, choice]);
+
+    // Handle change for Slider 1 (single value)
     const handleSlideChange = (event) => {
-        const newValue = event.target.value; // Get the new value from the slider
-        setValue(newValue); // Update the slider value
+        const newValue = parseInt(event.target.value); // Get the new value as an integer
+        setValue(newValue); // Update Slider 1's value
+        setValue1([newValue, Math.max(newValue, value1[1])]); // Adjust Slider 2's min value
+
+        // Clean the values by removing non-numeric characters
+        let { grossIncome, contribution, investment, saving, monthly } = formData;
+
+        const age = value; // Use the slider value as the age
+        const N8 = value1[1];
+
+        grossIncome = parseFloat(grossIncome.replace(/[^\d]/g, '')); 
+        const annualIncome = grossIncome * 12;
+        contribution = parseFloat(contribution.replace(/[^\d]/g, ''));
+        const annualContribution = contribution * 12;
+        
+        // Clean and set saving and monthly, defaulting to 0 if empty
+        saving = parseFloat((saving || '').replace(/[^\d]/g, '')) || "";
+        monthly = parseFloat((monthly || '').replace(/[^\d]/g, '')) || "";
+
+        const J9 = choice === 'yes' ? 100000 : 0;
+
+        const result = calculateInvestmentAndTax({
+            ...formData,
+            age,
+            J9,
+            N8
+        });
+        
+        setResult(result);
+
     };
 
+    // Handle change for Slider 2 (range value)
+    const handleSlide2Change = (event, newValue, activeThumb) => {
+        if (!Array.isArray(newValue)) return; // Ensure newValue is an array
+
+        if (activeThumb === 0) {
+            // Ensure Slider 2's min value cannot be less than Slider 1's value
+            const minValue = Math.max(newValue[0], 18); // Ensure minimum limit at 18
+            setValue1([minValue, value1[1]]);
+            setValue(minValue); // Synchronize Slider 1 with the new min value
+        } else {
+            // Ensure the max value is valid
+            setValue1([value1[0], Math.max(newValue[1], value1[0] + minDistance)]);
+        }
+
+        // Clean the values by removing non-numeric characters
+        let { grossIncome, contribution, investment, saving, monthly } = formData;
+
+        const age = value; // Use the slider value as the age
+        const N8 = value1[1];
+
+        grossIncome = parseFloat(grossIncome.replace(/[^\d]/g, '')); 
+        const annualIncome = grossIncome * 12;
+        contribution = parseFloat(contribution.replace(/[^\d]/g, ''));
+        const annualContribution = contribution * 12;
+        
+        // Clean and set saving and monthly, defaulting to 0 if empty
+        saving = parseFloat((saving || '').replace(/[^\d]/g, '')) || "";
+        monthly = parseFloat((monthly || '').replace(/[^\d]/g, '')) || "";
+
+        const J9 = choice === 'yes' ? 100000 : 0;
+
+        const result = calculateInvestmentAndTax({
+            ...formData,
+            age,
+            J9,
+            N8
+        });
+        
+        setResult(result);
+
+    };
+
+    // Display value as text for sliders
     function valuetext(value) {
         return `${value}`;
     }
-      
-    const minDistance = 5;
-
-    const [value1, setValue1] = React.useState([25, 55]);
-
-    const handleSlide2Change = (event, newValue, activeThumb) => {
-        if (!Array.isArray(newValue)) {
-            return;
-        }
-
-        if (activeThumb === 0) {
-            // If the minimum value changes, decrease LumpSum based on the new value
-            const minValue = Math.min(newValue[0], value1[1] - minDistance);
-            setValue1([minValue, value1[1]]);
-
-        } else {
-            setValue1([value1[0], Math.max(newValue[1], value1[0] + minDistance)]);
-        }
-    };
 
     const handleChange = (event, cleanValue) => {
         const { name, value, error } = event.target;
@@ -179,9 +254,8 @@ export default function RetirementAnnuityForm() {
     const calculateInvestmentAndTax = (formData) => {
         
         // Clean the values by removing non-numeric characters
-        let { grossIncome, contribution, investment, saving, monthly, J9 } = formData;
+        let { age, grossIncome, contribution, investment, saving, monthly, J9, N8 } = formData;
         
-        const age = value; // Use the slider value as the age
         grossIncome = parseFloat(grossIncome.replace(/[^\d]/g, '')); 
         const annualIncome = grossIncome * 12;
         contribution = parseFloat(contribution.replace(/[^\d]/g, ''));
@@ -196,18 +270,15 @@ export default function RetirementAnnuityForm() {
         let G9 = grossIncome;
         let D11 = contribution
         let investmentStrategyValue = investmentStrategyTable[0][investment] / 100;
-        let D13 = monthly;
+        let D13 = saving;
     
         let D15 = D13 + D11; // Total Monthly Contributions
-
-        //console.log("Choice:", choice, "J9:", J9);
-
+        
         let N5 = 0.05; // 5% as a decimal
     
         // Calculate effective return rate
         let N7 = (1 + N5) * (1 + investmentStrategyValue) - 1;
-    
-        let N8 = 65; // Target age
+
         let N9 = 0.05; // Rate again
     
         let N15 = N5 === 0
@@ -217,9 +288,12 @@ export default function RetirementAnnuityForm() {
         let N16 = J9; // Initial investment
     
         let Q5 = ((1 + N7) ** (1 / 12)) - 1;
-    
-        let N13 = (D15*((1+Q5) ** 12-1)/(Q5/(1+Q5)))*((1+N7) ** (N8-D9)-(1+N5)^(N8-D9))/(N7-N5)+J9*(1+N7) ** (N8-D9);
-        
+
+        let N13 = 
+        (D15 * ((1 + Q5) ** 12 - 1) / (Q5 / (1 + Q5))) * 
+        (((1 + N7) ** (N8 - D9) - (1 + N5) ** (N8 - D9)) / (N7 - N5)) + 
+        J9 * (1 + N7) ** (N8 - D9);
+
         let N14 = N13 - N15 - N16;
     
         // Function to calculate tax based on income
@@ -272,8 +346,8 @@ export default function RetirementAnnuityForm() {
 
         let U18 = U17+(U14-U16)*U15;
 
-        let U19 = U14 - D15 * 12 - J9; // Adjusted gross income after contributions
-
+        let U19 = U14 - D15 * 12 - J9;
+        
         let { startBracket: U21, previousBracket: U22, taxRate: U20 } = getBracketDetails(U19);
 
         U20 = U20 / 100;
@@ -283,7 +357,7 @@ export default function RetirementAnnuityForm() {
         let U24 = (U18 - U23) / (D15 * 12 + J9);
         
         let Q13 = U24 * (N16 + 12 * D15);
-
+        
         let V14 = G9 * 12;
         
         let { startBracket: V16, previousBracket: V17, taxRate: V15 } = getBracketDetails(V14);
@@ -292,7 +366,7 @@ export default function RetirementAnnuityForm() {
 
         let V18 = V17+(V14-V16)*V15;
         
-        let V19 = V14 - D15 * 12 - J9; // Adjusted gross income after contributions
+        let V19 = V14 - D15 * 12;
         
         let { startBracket: V21, previousBracket: V22, taxRate: V20 } = getBracketDetails(V19);
 
@@ -300,11 +374,11 @@ export default function RetirementAnnuityForm() {
 
         let V23 = V22+(V19-V21)*V20;
         
-        let V24 = (V18 - V23) / (D15 * 12 + J9);
+        let V24 = (V18 - V23) / (D15 * 12);
         
-        let Q14 = V24 * (N16 + 12 * D15);
-
-        let Q15 = Q13 + Q14;
+        let Q14 = V24 * (N15 - 12 * D15);
+        
+        let Q15 = Math.round(Q13 + Q14);
         
         const totalInvestment = N13.toFixed(0);
         const taxGetBack = Q15.toFixed(0);
@@ -324,6 +398,8 @@ export default function RetirementAnnuityForm() {
             let { grossIncome, contribution, investment, saving, monthly } = formData;
 
             const age = value; // Use the slider value as the age
+            const N8 = value1[1];
+
             grossIncome = parseFloat(grossIncome.replace(/[^\d]/g, '')); 
             const annualIncome = grossIncome * 12;
             contribution = parseFloat(contribution.replace(/[^\d]/g, ''));
@@ -337,7 +413,9 @@ export default function RetirementAnnuityForm() {
 
             const result = calculateInvestmentAndTax({
                 ...formData,
-                J9, // Include J9 in the formData object
+                age,
+                J9,
+                N8
             });
             
             setResult(result);
@@ -636,7 +714,7 @@ export default function RetirementAnnuityForm() {
                                 <PrimarySlider
                                     getAriaLabel={() => 'Age'}
                                     value={value1}
-                                    min={25} 
+                                    min={18} 
                                     max={65}
                                     onChange={handleSlide2Change}
                                     valueLabelDisplay="on"

@@ -25,12 +25,12 @@ export default function Banner({
         <img
           src={mobileImage || image || "https://via.placeholder.com/400x300"}
           alt="Banner Image"
-          className={`w-full h-full object-cover transition-transform duration-300 ease-in-out transform hover:scale-110 hover:rotate-3 block lg:hidden`} // Show mobile image only on mobile screens
+          className={`w-full h-full mobile-banner-image object-cover transition-transform duration-300 ease-in-out transform hover:scale-110 hover:rotate-3 block lg:hidden`} // Show mobile image only on mobile screens
         />
         <img
           src={image || "https://via.placeholder.com/400x300"}
           alt="Banner Image"
-          className={`w-full h-full object-cover transition-transform duration-300 ease-in-out transform hover:scale-110 hover:rotate-3 hidden lg:block`} // Show normal image on large screens
+          className={`w-full h-full desktop-banner-image object-cover transition-transform duration-300 ease-in-out transform hover:scale-110 hover:rotate-3 hidden lg:block`} // Show normal image on large screens
         />
       </div>
 

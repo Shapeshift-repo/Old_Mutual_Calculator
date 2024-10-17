@@ -119,6 +119,16 @@ export default function RetirementAnnuityForm() {
         }
     }, [value1]);
 
+    useEffect(() => {
+        if (isFormValid()) {
+            const age = value;
+            const N8 = value1[1];
+            const J9 = choice === 'yes' ? 100000 : 0;
+            const result = calculateInvestmentAndTax({ ...formData, age, J9, N8 });
+            setResult(result);
+        }
+    }, [formData, value, value1, choice]);
+
     // Handle change for Slider 1 (single value)
     const handleSlideChange = (event) => {
         const newValue = parseInt(event.target.value); // Get the new value as an integer
@@ -268,8 +278,6 @@ export default function RetirementAnnuityForm() {
     
         // Calculate effective return rate
         let N7 = (1 + N5) * (1 + investmentStrategyValue) - 1;
-
-        console.log(N8);
 
         let N9 = 0.05; // Rate again
     

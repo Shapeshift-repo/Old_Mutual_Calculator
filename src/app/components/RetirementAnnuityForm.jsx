@@ -312,7 +312,7 @@ export default function RetirementAnnuityForm() {
         // Step 5: Round to 2 decimal places (to match Excel)
         N13 = Math.round(N13 * 100) / 100;
 
-        console.log('D15 ='+D15);
+        /* console.log('D15 ='+D15);
         console.log('Q5 ='+Q5);
         console.log('J9 ='+J9);
         console.log('N5 ='+N5);
@@ -320,7 +320,7 @@ export default function RetirementAnnuityForm() {
         console.log('N8 ='+N8);
         console.log('D9 ='+D9);
         console.log('N13 ='+N13);
-
+ */
         let N14 = N13 - N15 - N16;
     
         // Function to calculate tax based on income

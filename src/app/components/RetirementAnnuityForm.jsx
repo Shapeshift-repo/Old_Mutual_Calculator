@@ -278,21 +278,48 @@ export default function RetirementAnnuityForm() {
     
         // Calculate effective return rate
         let N7 = (1 + N5) * (1 + investmentStrategyValue) - 1;
-
+        N7 = Math.round(N7 * 1000) / 1000;
+        
         let N9 = 0.05; // Rate again
-    
+
         let N15 = N5 === 0
             ? D15 * (N8 - D9) * 12
             : 12 * D15 * (((1 + N5) ** (N8 - D9) - 1) / N5);
 
+        N15 = Math.round(N15);
+
         let N16 = J9; // Initial investment
     
         let Q5 = ((1 + N7) ** (1 / 12)) - 1;
+        Q5 = Math.round(Q5 * 100000000) / 100000000;
 
-        let N13 = 
-        (D15 * ((1 + Q5) ** 12 - 1) / (Q5 / (1 + Q5))) * 
-        (((1 + N7) ** (N8 - D9) - (1 + N5) ** (N8 - D9)) / (N7 - N5)) + 
-        J9 * (1 + N7) ** (N8 - D9);
+        // Step 1: Calculate the first part of the formula
+        let part1 = (1 + Q5) ** 12 - 1; // (1 + 0.0079)^12 - 1
+        let part2 = Q5 / (1 + Q5); // 0.0079 / (1 + 0.0079)
+        let firstTerm = D15 * (part1 / part2); // First term calculation
+
+        // Step 2: Calculate the second part of the formula
+        let part3 = (1 + N7) ** (N8 - D9) - (1 + N5) ** (N8 - D9); 
+        let part4 = N7 - N5;
+        let secondTerm = firstTerm * (part3 / part4); // Second term calculation
+
+        // Step 3: Calculate the third term
+        let thirdTerm = J9 * (1 + N7) ** (N8 - D9); // J9 * (1 + 0.099)^(55 - 38)
+
+        // Step 4: Sum all terms to get the final result
+        let N13 = secondTerm + thirdTerm;
+
+        // Step 5: Round to 2 decimal places (to match Excel)
+        N13 = Math.round(N13 * 100) / 100;
+
+        console.log('D15 ='+D15);
+        console.log('Q5 ='+Q5);
+        console.log('J9 ='+J9);
+        console.log('N5 ='+N5);
+        console.log('N7 ='+N7);
+        console.log('N8 ='+N8);
+        console.log('D9 ='+D9);
+        console.log('N13 ='+N13);
 
         let N14 = N13 - N15 - N16;
     

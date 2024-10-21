@@ -13,7 +13,7 @@
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^6.1.4",
     "@mui/material": "^6.1.1",
-    "@types/react-pdf": "^6.2.0",
+    "@types/react-pdf": "^5.0.7",
     "lottie-react": "^2.4.0",
     "next": "14.2.11",
     "react": "^18",
@@ -22,6 +22,7 @@
     "react-pdf": "^9.1.1",
     "recharts": "^2.13.0",
     "sass": "^1.79.3",
+    "sharp": "^0.33.5",
     "tailwind-scrollbar-hide": "^1.1.7"
   },
   "devDependencies": {

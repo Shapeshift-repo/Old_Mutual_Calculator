@@ -61,7 +61,7 @@ const Report = ({
     <Document>
       <Page size="A4">
         <View>
-          <Image src="./saving_vs_loans_PDF_header.png" />
+          <Image src="./saving_vs_loans_PDF_header.png" alt="Saving vs Loans" />
         </View>
         <View style={{ paddingLeft: "20px", paddingRight: "20px" }}>
           <View style={{ paddingTop: "20px", paddingBottom: "10px" }}>
@@ -114,6 +114,7 @@ const Report = ({
               <Image
                 src="./saving-vs-loans-PDF-saving-header.png"
                 width={75}
+                alt="Saving vs Loans"
               ></Image>
               <View style={{ backgroundColor: "#F7F7F7", padding: "10px" }}>
                 <Text
@@ -220,11 +221,13 @@ const Report = ({
                 marginRight: "10px",
                 marginTop: "80px",
               }}
+                alt="Saving vs Loans"
             />
             <View style={{ width: "300px" }}>
               <Image
                 src="./saving-vs-loans-PDF-loans-header.png"
                 width={75}
+                alt="Saving vs Loans"
               ></Image>
               <View
                 style={{
@@ -440,7 +443,9 @@ const Report = ({
       </Page>
       <Page size="A4">
         <View>
-          <Image src="./cost-pdf-header.png" />
+          <Image src="./cost-pdf-header.png"
+                alt="Saving vs Loans"
+              ></Image>
         </View>
         <View
           style={{
@@ -463,6 +468,7 @@ const Report = ({
                   width: "40px",
                   margin: "0 auto",
                 }}
+                alt="Saving vs Loans"
               />
             </View>
             <View style={{ width: "80%", paddingLeft: "50px" }}>
@@ -516,6 +522,7 @@ const Report = ({
                   width: "60px",
                   margin: "0 auto",
                 }}
+                alt="Saving vs Loans"
               />
             </View>
             <View style={{ width: "80%", paddingLeft: "50px" }}>

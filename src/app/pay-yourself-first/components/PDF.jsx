@@ -39,6 +39,7 @@ const MyDoc = (graphImage) => {
           <Image
             src={graphImage.graphImage}
             style={{ width: 300, height: 200 }}
+            alt="Section 1"
           />
         </View>
       </Page>

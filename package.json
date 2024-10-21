@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^6.1.4",
     "@mui/material": "^6.1.1",
+    "@react-pdf/renderer": "^4.0.0",
     "@types/react-pdf": "^5.0.7",
     "lottie-react": "^2.4.0",
     "next": "14.2.11",

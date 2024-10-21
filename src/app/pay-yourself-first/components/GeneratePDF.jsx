@@ -15,11 +15,11 @@ import {
   View,
 } from "@react-pdf/renderer";
 import { useState } from "react";
-import PDFHeaderGraphic1 from "/public/pdf-graphic-1.png";
-import PDFHeaderGraphic2 from "/public/pdf-graphic-2.png";
-import PDFHeaderGraphic from "/public/pdf-header-graphic.png";
-import PDFLogo from "/public/pdf-logo.png";
-import PYFBanner from "/public/pdf-pyf.png";
+import PDFHeaderGraphic1 from "/public/images/pdf-graphic-1.png";
+import PDFHeaderGraphic2 from "/public/images/pdf-graphic-2.png";
+import PDFHeaderGraphic from "/public/images/pdf-header-graphic.png";
+import PDFLogo from "/public/images/pdf-logo.png";
+import PYFBanner from "/public/images/pdf-pyf.png";
 
 import MontserratLight from "/public/fonts/montserrat-v25-latin-200.ttf";
 import MontserratSemiBold from "/public/fonts/montserrat-v25-latin-600.ttf";

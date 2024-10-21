@@ -1,7 +1,7 @@
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { useEffect, useState } from "react";
-//import GeneratePDF from "./GeneratePDF";
+import GeneratePDF from "./GeneratePDF";
 import OMLineChart from "./Graph";
 import RangeSlider from "./RangeSlider";
 import ToolTip from "/public/images/tooltip.svg";

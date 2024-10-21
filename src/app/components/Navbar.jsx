@@ -91,7 +91,7 @@ export default function Navbar() {
                       <Link href="/retirement-income">Income Annuity</Link>
                     </li>
                     <li>
-                      <Link href="#">Pay Yourself First</Link>
+                      <Link href="/pay-yourself-first">Pay Yourself First</Link>
                     </li>
                   </ul>
                 </div>

@@ -94,7 +94,7 @@ export default function RetirementAnnuityForm() {
 
             // Clean and set saving and monthly, defaulting to 0 if empty
             saving = parseFloat((saving || '').replace(/[^\d]/g, '')) || 0;
-            monthly = parseFloat((monthly || '').replace(/[^\d]/g, '')) || "";
+            monthly = parseFloat((monthly || '').replace(/[^\d]/g, '')) || 0;
 
             // Calculate the investment and tax based on the cleaned formData
             const result = calculateInvestmentAndTax({
@@ -256,19 +256,18 @@ export default function RetirementAnnuityForm() {
         // Clean the values by removing non-numeric characters
         let { age, grossIncome, contribution, investment, saving, monthly, J9, N8 } = formData;
         
-        grossIncome = parseFloat(grossIncome.replace(/[^\d]/g, '')); 
+        grossIncome = parseFloat((grossIncome || '').replace(/R|\D/g, '')) || 0; 
         const annualIncome = grossIncome * 12;
-        contribution = parseFloat(contribution.replace(/[^\d]/g, ''));
+        contribution = parseFloat((contribution || '').replace(/R|\D/g, '')) || 0;
         const annualContribution = contribution * 12;
         
         // Clean and set saving and monthly, defaulting to 0 if empty
-        saving = parseFloat((saving || '').replace(/[^\d]/g, '')) || 0;
+        saving = parseFloat((saving || '').replace(/R|\D/g, '')) || 0;
         if(J9 == 1){
             J9 = saving;
-        
-        monthly = parseFloat((monthly || '').replace(/[^\d]/g, '')) || 0;}
-
-        console.log(J9);
+        }
+           
+        monthly = parseFloat((monthly || '').replace(/R|\D/g, '')) || 0;
         
         // Parsing inputs
         let D9 = age;
@@ -276,7 +275,7 @@ export default function RetirementAnnuityForm() {
         let D11 = contribution
         let investmentStrategyValue = investmentStrategyTable[0][investment] / 100;
         let D13 = monthly;
-    
+        console.log(D13);
         let D15 = D13 + D11; // Total Monthly Contributions
         
         let N5 = 0.05; // 5% as a decimal
@@ -293,7 +292,7 @@ export default function RetirementAnnuityForm() {
             : 12 * D15 * (((1 + N5) ** (N8 - D9) - 1) / N5);
 
         N15 = Math.round(N15);
-
+        
         let N16 = J9; // Initial investment
     
         let Q5 = ((1 + N7) ** (1 / 12)) - 1;

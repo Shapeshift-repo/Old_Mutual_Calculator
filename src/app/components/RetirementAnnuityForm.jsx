@@ -79,7 +79,7 @@ export default function RetirementAnnuityForm() {
             setChoice(newChoice);
 
             // Set J9 based on the new choice value
-            const J9 = newChoice === 'yes' ? 100000 : 0;
+            const J9 = newChoice === 'yes' ? 1 : 0;
 
             // Clean the values by removing non-numeric characters
             let { grossIncome, contribution, investment, saving, monthly } = formData;
@@ -93,8 +93,8 @@ export default function RetirementAnnuityForm() {
             const annualContribution = contribution * 12;
 
             // Clean and set saving and monthly, defaulting to 0 if empty
-            saving = parseFloat((saving || '').replace(/[^\d]/g, '')) || "";
-            monthly = parseFloat((monthly || '').replace(/[^\d]/g, '')) || "";
+            saving = parseFloat((saving || '').replace(/[^\d]/g, '')) || 0;
+            monthly = parseFloat((monthly || '').replace(/[^\d]/g, '')) || 0;
 
             // Calculate the investment and tax based on the cleaned formData
             const result = calculateInvestmentAndTax({
@@ -123,7 +123,7 @@ export default function RetirementAnnuityForm() {
         if (isFormValid()) {
             const age = value;
             const N8 = value1[1];
-            const J9 = choice === 'yes' ? 100000 : 0;
+            const J9 = choice === 'yes' ? 1 : 0;
             const result = calculateInvestmentAndTax({ ...formData, age, J9, N8 });
             setResult(result);
         }
@@ -147,10 +147,10 @@ export default function RetirementAnnuityForm() {
         const annualContribution = contribution * 12;
         
         // Clean and set saving and monthly, defaulting to 0 if empty
-        saving = parseFloat((saving || '').replace(/[^\d]/g, '')) || "";
+        saving = parseFloat((saving || '').replace(/[^\d]/g, '')) || 0;
         monthly = parseFloat((monthly || '').replace(/[^\d]/g, '')) || "";
 
-        const J9 = choice === 'yes' ? 100000 : 0;
+        const J9 = choice === 'yes' ? 1 : 0;
 
         const result = calculateInvestmentAndTax({
             ...formData,
@@ -189,10 +189,10 @@ export default function RetirementAnnuityForm() {
         const annualContribution = contribution * 12;
         
         // Clean and set saving and monthly, defaulting to 0 if empty
-        saving = parseFloat((saving || '').replace(/[^\d]/g, '')) || "";
+        saving = parseFloat((saving || '').replace(/[^\d]/g, '')) || 0;
         monthly = parseFloat((monthly || '').replace(/[^\d]/g, '')) || "";
 
-        const J9 = choice === 'yes' ? 100000 : 0;
+        const J9 = choice === 'yes' ? 1 : 0;
 
         const result = calculateInvestmentAndTax({
             ...formData,
@@ -256,38 +256,43 @@ export default function RetirementAnnuityForm() {
         // Clean the values by removing non-numeric characters
         let { age, grossIncome, contribution, investment, saving, monthly, J9, N8 } = formData;
         
-        grossIncome = parseFloat(grossIncome.replace(/[^\d]/g, '')); 
+        grossIncome = parseFloat((grossIncome || '').replace(/R|\D/g, '')) || 0; 
         const annualIncome = grossIncome * 12;
-        contribution = parseFloat(contribution.replace(/[^\d]/g, ''));
+        contribution = parseFloat((contribution || '').replace(/R|\D/g, '')) || 0;
         const annualContribution = contribution * 12;
         
         // Clean and set saving and monthly, defaulting to 0 if empty
-        saving = parseFloat((saving || '').replace(/[^\d]/g, '')) || 0;
-        monthly = parseFloat((monthly || '').replace(/[^\d]/g, '')) || 0;
+        saving = parseFloat((saving || '').replace(/R|\D/g, '')) || 0;
+        if(J9 == 1){
+            J9 = saving;
+        }
+           
+        monthly = parseFloat((monthly || '').replace(/R|\D/g, '')) || 0;
         
         // Parsing inputs
         let D9 = age;
         let G9 = grossIncome;
         let D11 = contribution
         let investmentStrategyValue = investmentStrategyTable[0][investment] / 100;
-        let D13 = saving;
-    
+        let D13 = monthly;
+        console.log(D13);
         let D15 = D13 + D11; // Total Monthly Contributions
         
         let N5 = 0.05; // 5% as a decimal
-    
-        // Calculate effective return rate
-        let N7 = (1 + N5) * (1 + investmentStrategyValue) - 1;
-        N7 = Math.round(N7 * 1000) / 1000;
         
         let N9 = 0.05; // Rate again
+    
+        // Calculate effective return rate
+        let N7 = (1 + N9) * (1 + investmentStrategyValue) - 1;
+
+        N7 = Math.round(N7 * 10000) / 10000;
 
         let N15 = N5 === 0
             ? D15 * (N8 - D9) * 12
             : 12 * D15 * (((1 + N5) ** (N8 - D9) - 1) / N5);
 
         N15 = Math.round(N15);
-
+        
         let N16 = J9; // Initial investment
     
         let Q5 = ((1 + N7) ** (1 / 12)) - 1;
@@ -433,10 +438,10 @@ export default function RetirementAnnuityForm() {
             const annualContribution = contribution * 12;
             
             // Clean and set saving and monthly, defaulting to 0 if empty
-            saving = parseFloat((saving || '').replace(/[^\d]/g, '')) || "";
+            saving = parseFloat((saving || '').replace(/[^\d]/g, '')) || 0;
             monthly = parseFloat((monthly || '').replace(/[^\d]/g, '')) || "";
 
-            const J9 = choice === 'yes' ? 100000 : 0;
+            const J9 = choice === 'yes' ? 1 : 0;
 
             const result = calculateInvestmentAndTax({
                 ...formData,
@@ -628,7 +633,7 @@ export default function RetirementAnnuityForm() {
                                 {choice === "yes" && (
                                     <div id="hidden-fields">
                                     <TextInput 
-                                        label="Your retirement savings to date"
+                                        label="Add lump-sum amount"
                                         required 
                                         className="mt-[28px]"
                                         value={formData.saving} 

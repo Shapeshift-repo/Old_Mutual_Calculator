@@ -275,7 +275,6 @@ export default function RetirementAnnuityForm() {
         let D11 = contribution
         let investmentStrategyValue = investmentStrategyTable[0][investment] / 100;
         let D13 = monthly;
-        console.log(D13);
         let D15 = D13 + D11; // Total Monthly Contributions
         
         let N5 = 0.05; // 5% as a decimal

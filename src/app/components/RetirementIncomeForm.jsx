@@ -71,8 +71,8 @@ export default function RetirementAnnuityForm() {
         setValue(newValue);
     };
 
-    const min = '2.5';
-    const max = '8';
+    const min = 2.5;
+    const max = 8;
 
     function valuetext(value) {
         return `${value}%`;

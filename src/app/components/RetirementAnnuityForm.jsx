@@ -467,7 +467,8 @@ export default function RetirementAnnuityForm() {
         return new Intl.NumberFormat('en-US', {
             useGrouping: true,
             minimumFractionDigits: 0,
-        }).format(number).replace(/,/g, ' ');  // Replace commas with spaces
+            maximumFractionDigits: 0,  // No decimal digits
+        }).format(Math.round(number)).replace(/,/g, ' ');
     };
 
     const contributionOptions = [

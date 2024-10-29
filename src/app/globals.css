@@ -166,7 +166,7 @@ body {
 }
 
 .fadeIn.active {
-  animation: fadeIn 2s ease-in-out forwards;
+  animation: fadeIn 2.5s ease-in-out forwards;
 }
 
 .custom-shadow{
@@ -207,4 +207,83 @@ body {
 
 #main-banner.active{
   top: -300px;
+}
+
+@media only screen and (max-width: 450px){
+  .small-btn{
+    @apply text-[14px];
+  }
+}
+
+@media only screen and (max-width: 350px){
+  .small-btn{
+    @apply w-[150px] text-[14px];
+  }
+}
+
+.move-right{
+  display: inline-block;
+  animation: moveRight 3s infinite ease-in-out;
+}
+
+@keyframes moveRight {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(20px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animated-line path {
+  stroke-dasharray: 3000;
+  stroke-dashoffset: 3000;
+  animation: drawLine 5s linear forwards;
+}
+
+.dot {
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+@keyframes drawLine {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.mobile-line path {
+  stroke-dasharray: 2500;
+  stroke-dashoffset: 2500;
+  animation: drawMobileLine 5s linear forwards;
+}
+
+.mobile-dot {
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+@keyframes drawMobileLine {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

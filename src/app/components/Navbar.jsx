@@ -100,7 +100,7 @@ export default function Navbar() {
           </nav>
           
           {/* Call me back button */}
-          <Button label="CALL ME BACK" onClick={toggleSideForm} className="text-white w-[185px] lg:w-[238px]" />
+          <Button label="CALL ME BACK" onClick={toggleSideForm} className="text-white max-w-[170px] lg:max-w-[238px] lg:w-[238px] small-btn" />
 
           {/* Menu button for mobile */}
           <button
@@ -148,7 +148,7 @@ export default function Navbar() {
                 </svg>
               </div>
               {/* Dropdown for mobile (on click) */}
-              <ul className={`mt-[10px] [&>li>a]:text-[18px] [&>li>a]:leading-[40px] [&>li>a]:text-white [&>li>a]:font-light ${isDropdownOpen ? 'block' : 'hidden'}`}>
+              <ul className={`mt-[10px] [&>li>a]:text-[18px] [&>li>a]:leading-[40px] [&>li>a]:text-white [&>li>a]:font-light ${isDropdownOpen ? 'hidden' : 'block'}`}>
                   <li>
                     <Link href="/tax-back" onClick={toggleMenu}>Tax Back</Link>
                   </li>

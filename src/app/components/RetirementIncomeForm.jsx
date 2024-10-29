@@ -82,6 +82,16 @@ export default function RetirementAnnuityForm() {
 
     const handleSlide2Change = (event, newValue) => {
         setValue2(newValue);
+        let { monthlyInvest } = formData;
+    
+        monthlyInvest = parseFloat(monthlyInvest.replace(/[^\d]/g, ''));
+    
+        // Ensure values are valid
+        if (isNaN(monthlyInvest)) return;
+           
+        const result = calculateInvestmentAndTax(formData);
+            
+        setResult(result);
     };
 
     const handleChange = (event, cleanValue) => {
@@ -312,6 +322,7 @@ export default function RetirementAnnuityForm() {
                                             max={max} 
                                             value={value2} 
                                             defaultValue={4.5} 
+                                            step={0.1}
                                             getAriaValueText={valuetext}
                                             onChange={handleSlide2Change} 
                                             valueLabelDisplay="on"

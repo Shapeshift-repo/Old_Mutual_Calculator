@@ -16,6 +16,7 @@ import animationData3 from "../animations/animation3.json";
 import CountUp from 'react-countup';
 
 
+
 const PrimarySlider = styled(Slider)(({ theme }) => ({
     '& .MuiSlider-thumb': {
         height: 29,
@@ -218,7 +219,8 @@ export default function TaxBackForm() {
         return new Intl.NumberFormat('en-US', {
             useGrouping: true,
             minimumFractionDigits: 0,
-        }).format(number).replace(/,/g, ' ');  // Replace commas with spaces
+            maximumFractionDigits: 0,  // No decimal digits
+        }).format(Math.round(number)).replace(/,/g, ' ');
     };
 
     const [hasPlayedAnimation2, setHasPlayedAnimation2] = useState(false);
@@ -507,7 +509,7 @@ export default function TaxBackForm() {
                                             <span className="text-[20px] leading-[26px] lg:text-[30px] lg:leading-[35px] font-light block">That means your</span>
                                             <strong className="text-[20px] leading-[26px] lg:text-[30px] lg:leading-[35px] font-semibold block">R{formatNumberWithSpaces(investmentDetails.annualInvest)} investment</strong>
                                             <span className="text-[20px] leading-[26px] lg:text-[30px] lg:leading-[35px] font-light block">only really costs you</span>
-                                            <strong className="text-[37px] leading-[25px] lg:text-[47px] font-semimedium block mt-[21px]">R{investmentDetails.cost}</strong>
+                                            <strong className="text-[37px] leading-[25px] lg:text-[47px] font-semimedium block mt-[21px]">R{formatNumberWithSpaces(investmentDetails.cost)}</strong>
                                         </p>
                                     </div>
                                 </div>

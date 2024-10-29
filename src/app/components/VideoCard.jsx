@@ -11,7 +11,7 @@ export default function VideoCard({ heading = null, videoID = null, image = null
 
   return (
     <div className="container px-[34px] lg:px-0">
-      <div className={`relative h-[223px] lg:h-[453px] w-full rounded-[30px] overflow-hidden transition-transform duration-300 ease-in-out transform ${className}`}>
+      <div className={`h-[223px] lg:h-[453px] w-full rounded-[30px] overflow-hidden transition-transform duration-300 ease-in-out transform ${className}`}>
         <div className="w-full h-full relative">
           <img
             src={image || "https://via.placeholder.com/400x300"} 
@@ -24,18 +24,9 @@ export default function VideoCard({ heading = null, videoID = null, image = null
           className="absolute flex flex-col gap-[20px] justify-center items-center bottom-0 w-full h-[100%] p-[20px]"
           style={{ background: 'linear-gradient(64.59deg, #009677 15.69%, rgba(67, 178, 80, 0.56) 48.19%, rgba(80, 184, 72, 0) 68.55%)' }}
         >
-
-          <ModalVideo
-              channel="youtube"
-              youtube={{ mute: 1, autoplay: 1 }}
-              isOpen={isOpen}
-              videoId={videoID || "L61p2uyiMSo"}
-              onClose={() => setOpen(false)} 
-          />
-
           <div>
               <button className="absolute top-0 left-0 w-full h-full flex justify-center items-center" onClick={() => setOpen(true)}>
-                  <svg className="absolute animate-ping motion-reduce:animate-spin" width="148" height="148" viewBox="0 0 148 148" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg className="absolute animate-[ping_4s_infinite]" width="148" height="148" viewBox="0 0 148 148" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <circle opacity="0.19" cx="74.4831" cy="74.0163" r="73.4967" fill="white"/>
                   </svg>
                   <svg className="absolute" width="148" height="148" viewBox="0 0 148 148" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -54,6 +45,15 @@ export default function VideoCard({ heading = null, videoID = null, image = null
           )}
         </div>
       </div>
+
+      <ModalVideo
+        channel="youtube"
+        youtube={{ mute: 1, autoplay: 1 }}
+        isOpen={isOpen}
+        videoId={videoID || "L61p2uyiMSo"}
+        onClose={() => setOpen(false)} 
+      />
+
     </div>
   );
 }

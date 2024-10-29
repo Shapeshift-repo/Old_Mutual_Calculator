@@ -55,13 +55,13 @@ export default function RetirementAnnuityForm() {
         }
     };
 
+    const [result, setResult] = useState(null);
+
     const [formData, setFormData] = useState({
-        grossIncome: "",
         monthlyInvest: ""
     });
 
     const [errors, setErrors] = useState({
-        grossIncome: "",
         monthlyInvest: ""
     });
 
@@ -102,13 +102,44 @@ export default function RetirementAnnuityForm() {
         return monthlyInvest && !errors.monthlyInvest;
     };
 
-    const [investmentDetails, setInvestmentDetails] = useState({
-        sum: 0,
-        tenYears: 0,
-        tenYearsGrowth: 0,
-        twientyFiveYears: 0,
-        twientyFiveYearsGrowth: 0
-    });
+    const roundDownThousand = value => Math.floor(value / 1000) * 1000;
+
+    const calculateRoundedValue = (G45, P50, E52) => Math.round(((G45 + P50) / E52) / 12);
+
+    const calculateInvestmentAndTax = (formData) => {
+        
+        // Clean the values by removing non-numeric characters
+        let { monthlyInvest } = formData;
+
+        monthlyInvest = parseFloat((monthlyInvest || '').replace(/[^\d]/g, '')) || 0;
+
+        let G45 = monthlyInvest;
+
+        let E64 = value2 / 100;
+
+        let E52 = roundDownThousand((G45 * E64) / 12);
+        
+        let J64 = .5;
+
+        let P47 = -0.01;
+
+        let P50 = G45*P47*(1-E64)/E64;
+        
+        let P53 = calculateRoundedValue(G45, P50, E52);
+
+        let P56 = P53 / J64;
+
+        let P48 = 0.03;
+
+        let P51 = (G45 * P48 * (1 - E64)) / E64;
+
+        let P54 = Math.round(((G45 + P51) / E52) / 12);
+
+        let P57 = P54 / J64;
+
+        return { E52, P53, P54 };
+
+    }
 
     // On submit
     const handleSubmit = (e) => {
@@ -123,21 +154,9 @@ export default function RetirementAnnuityForm() {
             // Ensure values are valid
             if (isNaN(monthlyInvest)) return;
            
-            // Calculate the final sum as the investment minus the tax back
-            const sum = Math.round(monthlyInvest + 5000);            
-            const tenYears = 50;
-            const tenYearsGrowth = 4;
-            const twientyFiveYears = 65;
-            const twientyFiveYearsGrowth = 8;
-    
-            // Update the investmentDetails state
-            setInvestmentDetails({
-                sum,
-                tenYears,
-                tenYearsGrowth,
-                twientyFiveYears,
-                twientyFiveYearsGrowth
-            });
+            const result = calculateInvestmentAndTax(formData);
+            
+            setResult(result);
     
             // Scroll to the output section
             const outputElement = document.getElementById('form-output');
@@ -198,7 +217,7 @@ export default function RetirementAnnuityForm() {
                                 </div>
 
                                 <PrimarySlider 
-                                    aria-label="Rate" 
+                                    aria-label="Age" 
                                     min={18} 
                                     max={65} 
                                     value={value} 
@@ -215,8 +234,6 @@ export default function RetirementAnnuityForm() {
                                     onlyNumber={true} 
                                     currencySign="R" 
                                     name="monthlyInvest"
-                                    maxValue={350000}
-                                    maxValueError="There is a limit on tax-free contributions of 27.5% or R350 000 per year."
                                 />
 
                                 <p className="text-[14px] leading-[19px] text-[#50B848] font-normal">
@@ -249,7 +266,7 @@ export default function RetirementAnnuityForm() {
                                     >
                                         <p className="text-[22px] leading-[19px] font-light text-white text-center w-full">Estimated monthly income</p>
                                         <Heading 
-                                            content={`R${formatNumberWithSpaces(investmentDetails.sum)}`}
+                                            content={`R${result ? formatNumberWithSpaces(result.E52) : ''}`}
                                             className="text-[47px] leading-[26px] font-semibold pt-[15px] text-white text-center w-full" 
                                             tag="h5"
                                         />
@@ -260,11 +277,11 @@ export default function RetirementAnnuityForm() {
                                             className="text-[20px] leading-[19px] font-medium text-primary w-full" 
                                             tag="h5"
                                         />
-
+                                        
                                         <ProgressBar 
                                             label="10 Years" 
-                                            hint={`Poor markets (${investmentDetails.tenYearsGrowth}% growth)`} 
-                                            progress={investmentDetails.tenYears}
+                                            hint={`Poor markets (${result ? formatNumberWithSpaces(result.P53) : 0}% growth)`}
+                                            progress={`${result ? result.P53 : 0}`}
                                             labelClasses="mt-[42px] from-[#ED0080] to-[#F37021]" 
                                             trackClasses=""
                                             progressClasses="from-[#ED0080] to-[#F37021]"
@@ -273,8 +290,8 @@ export default function RetirementAnnuityForm() {
 
                                         <ProgressBar 
                                             label="25 Years" 
-                                            hint={`Average markets (${investmentDetails.twientyFiveYearsGrowth}% growth)`} 
-                                            progress={investmentDetails.twientyFiveYears}
+                                            hint={`Average markets (${result ? formatNumberWithSpaces(result.P54) : 0}% growth)`}
+                                            progress={`${result ? result.P54 : 0}`}
                                             labelClasses="mt-[37px]" 
                                             trackClasses=""
                                             progressClasses=""

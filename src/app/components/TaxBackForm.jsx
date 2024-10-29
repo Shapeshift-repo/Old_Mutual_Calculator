@@ -13,6 +13,7 @@ import Lottie from "lottie-react";
 import animationData1 from "../animations/animation1.json";
 import animationData2 from "../animations/animation2.json";
 import animationData3 from "../animations/animation3.json";
+import CountUp from 'react-countup';
 
 
 const PrimarySlider = styled(Slider)(({ theme }) => ({
@@ -180,7 +181,8 @@ export default function TaxBackForm() {
                 cost
             });
     
-            // Scroll to the output section
+            // Scroll to the output section\
+            const viewSection = document.getElementById('view-section');
             const outputElement1 = document.getElementById('form-output1');
             const outputElement2 = document.getElementById('form-output2');
             const fadeInBoxes = document.querySelectorAll('.fadeIn');
@@ -188,11 +190,10 @@ export default function TaxBackForm() {
             // Show the elements and scroll into view if they exist
             if (outputElement1) {
                 outputElement1.classList.remove('invisible');
-                outputElement1.scrollIntoView({ behavior: 'smooth' });
+                viewSection.scrollIntoView({ behavior: 'smooth' });
             }
             if (outputElement2) {
                 outputElement2.classList.remove('hidden');
-                outputElement2.scrollIntoView({ behavior: 'smooth' });
             }
     
             // IntersectionObserver to handle fadeIn class activation
@@ -317,6 +318,8 @@ export default function TaxBackForm() {
                                     defaultValue={40} 
                                     onChange={handleSlideChange} 
                                 />
+
+                                <div id="view-section"></div>
                                 
                                 <TextInput 
                                     label="Gross income per month" 
@@ -372,11 +375,9 @@ export default function TaxBackForm() {
                                         tag="h5"
                                     />
 
-                                    <Heading 
-                                        content={`R${formatNumberWithSpaces(investmentDetails.annualInvest)}`}
-                                        className="text-[47px] leading-[25px] font-semibold pt-[22px] text-primary text-center w-full" 
-                                        tag="h3"
-                                    />
+                                    <h3 className="font-extrabold inline-block bg-gradient-to-r from-[#50B848] to-[#009677] bg-clip-text text-[47px] leading-[25px] font-semibold pt-[22px] text-primary text-center w-full">
+                                        R<CountUp end={investmentDetails.annualInvest} />
+                                    </h3>
 
                                     <div className="note-icon mt-[17px] flex justify-center">
                                         <svg width="54" height="43" viewBox="0 0 54 43" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -417,21 +418,51 @@ export default function TaxBackForm() {
                         <div id="form-output2" className="form-output hidden relative">
                             <div className="bg-holder w-full absolute top-0 right-[50px] lg:right-0 lg:top-[50px] flex justify-center lg:justify-start text-center">
                                 
-                                <svg className="hidden lg:block desktop-line" width="477" height="2286" viewBox="0 0 477 2286" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M280.062 1C172.594 33.8635 10.8279 163.5 1.20593 478.008C-10.6055 864.085 487.828 1339 475.331 1720.85C465.589 2018.53 303.856 2220.27 243.01 2285.5" stroke="#A3A3A3"/>
-                                    <circle cx="31.0625" cy="286" r="5.5" fill="#009677"/>
-                                    <circle cx="117.062" cy="879" r="5.5" fill="#009677"/>
-                                    <circle cx="397.062" cy="2052" r="5.5" fill="#009677"/>
-                                </svg>
+                                <svg
+                                    className="hidden lg:block desktop-line animated-line"
+                                    width="477"
+                                    height="2270"
+                                    viewBox="0 0 477 2270"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                    <path
+                                        id="linePath"
+                                        d="M280.062 1C172.594 33.8635 10.8279 163.5 1.20593 478.008C-10.6055 864.085 487.828 1339 475.331 1720.85C465.589 2018.53 303.856 2220.27 243.01 2285.5"
+                                        stroke="#A3A3A3"
+                                        stroke-width="1"
+                                        fill="transparent"
+                                    />
 
+                                    <circle class="dot" r="5.5" fill="#009677">
+                                        <animateMotion repeatCount="indefinite" dur="5s">
+                                        <mpath href="#linePath" />
+                                        </animateMotion>
+                                    </circle>
+                                </svg>
                                 
-                                <svg className="block lg:hidden mobile-line" width="178" height="1939" viewBox="0 0 178 1939" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M143.878 1C104.636 28.8341 21.4787 149.027 2.78122 407.125C-20.5906 729.747 194.084 1147.26 175.906 1459.76C161.363 1709.76 113.292 1882.75 91.0748 1938" stroke="#A3A3A3"/>
-                                    <circle cx="46.5" cy="170.5" r="5.5" fill="#009677"/>
-                                    <circle cx="16.5" cy="628.5" r="5.5" fill="#009677"/>
-                                    <circle cx="170.5" cy="1318.5" r="5.5" fill="#009677"/>
-                                </svg>
+                                <svg
+                                    className="block lg:hidden mobile-line"
+                                    width="178"
+                                    height="1939"
+                                    viewBox="0 0 178 1939"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                    <path
+                                        id="mobileLinePath"
+                                        d="M143.878 1C104.636 28.8341 21.4787 149.027 2.78122 407.125C-20.5906 729.747 194.084 1147.26 175.906 1459.76C161.363 1709.76 113.292 1882.75 91.0748 1938"
+                                        stroke="#A3A3A3"
+                                        stroke-width="1"
+                                        fill="transparent"
+                                    />
 
+                                    <circle class="mobile-dot" r="5.5" fill="#009677">
+                                        <animateMotion repeatCount="indefinite" dur="5s">
+                                        <mpath href="#mobileLinePath" />
+                                        </animateMotion>
+                                    </circle>
+                                </svg>
 
                             </div>
                             <div className="output-holder relative z-10">
@@ -440,7 +471,7 @@ export default function TaxBackForm() {
                                     <div class="pr-0 lg:pr-[105px]">
                                         <div
                                             ref={animation2Ref}
-                                            className="flex justify-center items-center max-w-[200px] lg:max-w-[241px] fadeIn"
+                                            className="flex justify-center items-center max-w-[200px] lg:max-w-[320px] fadeIn"
                                         >
                                             {hasPlayedAnimation2 && (
                                             <Lottie animationData={animationData2} loop={false} />
@@ -462,7 +493,7 @@ export default function TaxBackForm() {
                                 <div class="means flex justify-center mt-[130px] lg:mt-[265px]">
                                     <div
                                         ref={animation3Ref}
-                                        className="flex justify-center items-center max-w-[240px] lg:max-w-[284px] fadeIn"
+                                        className="flex justify-center items-center max-w-[240px] lg:max-w-[385px] fadeIn"
                                     >
                                         {hasPlayedAnimation3 && (
                                         <Lottie animationData={animationData3} loop={false} />
@@ -470,7 +501,7 @@ export default function TaxBackForm() {
                                     </div>
                                 </div>
 
-                                <div class="after-means flex justify-center mt-[74px]">
+                                <div class="after-means flex justify-center mt-[25px]">
                                     <div class="inline-block min-w-[308px] fadeIn">
                                         <p>
                                             <span className="text-[20px] leading-[26px] lg:text-[30px] lg:leading-[35px] font-light block">That means your</span>

@@ -14,8 +14,18 @@ import animationData1 from "../animations/animation1.json";
 import animationData2 from "../animations/animation2.json";
 import animationData3 from "../animations/animation3.json";
 import CountUp from 'react-countup';
+import { Font, Page, Text, Link, View, Image, Document, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer';
 
-
+Font.register({
+    family: 'Montserrat',
+    fonts: [
+      { src: '/fonts/Montserrat-Regular.ttf', fontWeight: 'normal' },
+      { src: '/fonts/Montserrat-Medium.ttf', fontWeight: 'medium' },
+      { src: '/fonts/Montserrat-SemiBold.ttf', fontWeight: 'semibold' },
+      { src: '/fonts/Montserrat-Bold.ttf', fontWeight: 'bold' },
+      { src: '/fonts/Montserrat-Light.ttf', fontWeight: 'light' },
+    ],
+});
 
 const PrimarySlider = styled(Slider)(({ theme }) => ({
     '& .MuiSlider-thumb': {
@@ -182,7 +192,7 @@ export default function TaxBackForm() {
                 cost
             });
     
-            // Scroll to the output section\
+            // Scroll to the output section
             const viewSection = document.getElementById('view-section');
             const outputElement1 = document.getElementById('form-output1');
             const outputElement2 = document.getElementById('form-output2');
@@ -191,10 +201,10 @@ export default function TaxBackForm() {
             // Show the elements and scroll into view if they exist
             if (outputElement1) {
                 outputElement1.classList.remove('invisible');
-                viewSection.scrollIntoView({ behavior: 'smooth' });
             }
             if (outputElement2) {
                 outputElement2.classList.remove('hidden');
+                viewSection.scrollIntoView({ behavior: 'smooth' });
             }
     
             // IntersectionObserver to handle fadeIn class activation
@@ -273,6 +283,264 @@ export default function TaxBackForm() {
                     <path d="M49.2695 36.0217C49.0833 36.2091 48.9787 36.4625 48.9787 36.7267C48.9787 36.9909 49.0833 37.2443 49.2695 37.4317L53.8295 42.0717L30.2695 42.0717C30.0043 42.0717 29.75 42.1771 29.5624 42.3646C29.3749 42.5521 29.2695 42.8065 29.2695 43.0717C29.2695 43.3369 29.3749 43.5913 29.5624 43.7788C29.75 43.9664 30.0043 44.0717 30.2695 44.0717L53.7995 44.0717L49.2695 48.6017C49.1758 48.6947 49.1014 48.8053 49.0506 48.9271C48.9999 49.049 48.9737 49.1797 48.9737 49.3117C48.9737 49.4437 48.9999 49.5744 49.0506 49.6963C49.1014 49.8181 49.1758 49.9287 49.2695 50.0217C49.4569 50.208 49.7103 50.3125 49.9745 50.3125C50.2387 50.3125 50.4922 50.208 50.6795 50.0217L57.0495 43.6517C57.2175 43.483 57.3117 43.2547 57.3117 43.0167C57.3117 42.7787 57.2175 42.5504 57.0495 42.3817L50.6795 36.0217C50.4922 35.8355 50.2387 35.7309 49.9745 35.7309C49.7103 35.7309 49.4569 35.8355 49.2695 36.0217Z" fill="#009677"/>
                 </svg>);
 
+    // Create styles
+    const styles = StyleSheet.create({
+        page: {
+            padding: 0,
+            backgroundColor: '#FFFFFF',
+            fontFamily: 'Montserrat',
+        },
+        headerContainer: {
+            flexDirection: 'row', // Mimic `flex` and `justify-between`
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%',
+            height: 91,
+            backgroundColor: '#EDEDED',
+            paddingTop: 10,
+            paddingLeft: 25,
+            paddingRight: 35,
+        },
+        imageContainer: {
+            width: '50%',
+        },
+        textContainer: {
+            width: '50%',
+            alignItems: 'flex-end',
+        },
+        headerStrong: {
+            fontWeight: 'semibold',
+            fontSize: 16,
+            marginBottom: 0,
+            color: '#009677',
+        },
+        headerSpan: {
+            fontSize: 16,
+            fontWeight: 'light',
+            color: '#009677',
+        },
+        contentTop1: {
+            marginTop: 20,
+            paddingLeft: 30,
+            paddingRight: 30,
+            fontWeight: 'light',
+        },
+        contentHi: {
+            fontSize: 12,
+            fontWeight: 'semibold',
+            marginBottom: 10,
+        },
+        contentAfterHi: {
+            fontSize: 10,
+            lineHeight: 1.1,
+        },
+        contentTop2: {
+            marginTop: 8,
+            paddingLeft: 30,
+            paddingRight: 30,
+            fontSize: 12,
+            fontWeight: 'light',
+            lineHeight: 1.2,
+        },
+        boldGreen: {
+            fontWeight: 'semibold',
+            color: '#009677',
+        },
+        imageBoxes: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: '100%',
+            backgroundColor: '#F9F9F9',
+            paddingTop: 10,
+            paddingBottom: 10,
+            paddingLeft: 30,
+            paddingRight: 30,
+            marginTop: 10,
+            marginBottom: 10,
+        },
+        box: {
+            width: '30%',
+            alignItems: 'center',
+        },
+        boxBold: {
+            fontSize: 14,
+            fontWeight: 'semibold',
+            marginBottom: 5,
+        },
+        text: {
+            fontSize: 10,
+            textAlign: 'center',
+        },
+        image1: {
+            width: 38,
+            height: 'auto',
+        },
+        image2: {
+            width: 40,
+            height: 'auto',
+        },
+        image3: {
+            width: 90,
+            height: 'auto',
+        },
+        contentBottom: {
+            paddingLeft: 30,
+            paddingRight: 30,
+            fontSize: 10,
+            fontWeight: 'light',
+            lineHeight: 1.2,
+        },
+        bottomHeading1: {
+            fontSize: 13,
+            fontWeight: 'semibold',
+            marginBottom: 8,
+        },
+        bottomHeading2: {
+            fontSize: 10,
+            fontWeight: 'semibold',
+            marginTop: 10,
+            marginBottom: 2,
+        },
+        greenText: {
+            color: '#009677',
+            textDecoration: 'none',
+        },
+        bottomBold: {
+            fontWeight: 'medium',
+        },
+        bottomList: {
+            flexDirection: 'row',
+            alignItems: 'flex-center',
+        },
+        footer: {
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: '#F9F9F9',
+            paddingLeft: 30,
+            paddingRight: 30,
+            paddingTop: 10,
+            paddingBottom: 10,
+            fontSize: 7,
+            fontWeight: 'light',
+        },
+        footerText: {
+            marginBottom: 3,
+        },
+        footerBold: {
+            fontWeight: 'medium',
+        }
+    });
+
+    const MyDocument = () => (
+        <Document>
+            <Page size="A4" style={styles.page}>
+                <View style={styles.headerContainer}>
+                    <View style={styles.imageContainer}>
+                        <Image 
+                            src="/images/pdf-logo.png" 
+                            style={{ width: 204, height: 56 }} 
+                        />
+                    </View>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.headerStrong}>Tax Back</Text>
+                        <Text style={styles.headerSpan}>Report</Text>
+                    </View>
+                </View>
+                <View>
+                    <Image
+                        src="/images/pdf-border.png" 
+                        style={{ width: '100%', height: 4 }} 
+                    />
+                </View>
+                <View style={styles.contentTop1}>
+                    <Text style={styles.contentHi}>Hi</Text>
+                    <Text style={styles.contentAfterHi}>Saving for your future is important for financial security and peace of mind. This report shows you how much tax you can get back every year if you contribute regularly towards a retirement annuity. Getting money back from a tax refund means you're actually paying less for your investment. </Text>
+                </View>
+                
+                <View style={styles.contentTop2}>
+                    <Text>
+                        With your yearly contribution of <Text style={styles.boldGreen}>R{formatNumberWithSpaces(investmentDetails.annualInvest)}, </Text>
+                        (which is <Text style={styles.boldGreen}>R{formatNumberWithSpaces(investmentDetails.annualInvest / 12)} </Text>
+                        a month), you’ll get <Text style={styles.boldGreen}>R{investmentDetails.taxBack} </Text>
+                        TAX BACK at the end of the tax year.
+                    </Text>
+                </View>
+                
+                <View style={styles.contentTop2}>
+                    <Text>
+                        That means that your 
+                        <Text style={styles.boldGreen}> R{formatNumberWithSpaces(investmentDetails.annualInvest)} </Text>
+                        investment only really costs you <Text style={styles.boldGreen}>R{formatNumberWithSpaces(investmentDetails.cost)}</Text>. Now that’s a great investment!
+                    </Text>
+                </View>
+
+                <View style={styles.imageBoxes}>
+                    <View style={styles.box}>
+                        <Image 
+                            src="/images/icon-1.png" 
+                            style={styles.image1}
+                        />
+                        <Text style={{ height: 50 }}></Text>
+                        <Text style={styles.boxBold}>R{formatNumberWithSpaces(investmentDetails.annualInvest)}</Text>
+                        <Text style={styles.text}>Total yearly</Text>
+                        <Text style={styles.text}>investment</Text>
+                    </View>
+
+                    <View style={styles.box}>
+                        <Image 
+                            src="/images/icon-2.png" 
+                            style={styles.image2}
+                        />
+                        <Text style={{ height: 30 }}></Text>
+                        <Text style={styles.boxBold}>R{formatNumberWithSpaces(investmentDetails.taxBack)}</Text>
+                        <Text style={styles.text}>Tax Back</Text>
+                    </View>
+
+                    <View style={styles.box}>
+                        <Image 
+                            src="/images/icon-3.png" 
+                            style={styles.image3} 
+                        />
+                        <Text style={{ height: 10 }}></Text>
+                        <Text style={styles.boxBold}>R{formatNumberWithSpaces(investmentDetails.cost)}</Text>
+                        <Text style={styles.text}>is the actual cost of your</Text>
+                        <Text style={styles.text}>R{formatNumberWithSpaces(investmentDetails.annualInvest)} investment.</Text>
+                    </View>
+                </View>
+
+                <View style={styles.contentBottom}>
+                    <Text style={styles.bottomHeading1}>HOW IT WORKS</Text>
+                    <Text>You receive a tax certificate at the end of the tax year, which shows how much you contributed to your retirement annuity. You’ll receive a rebate from SARS, based on your income tax rates, your contributions and any income that you may have. Visit the <Link style={styles.greenText} src="https://www.sars.gov.za">SARS website</Link> to see the income tax rates.</Text>
+                    <Text style={styles.bottomHeading2}>More benefits of a retirement annuity</Text>
+                    <Text style={styles.bottomList}><Text>.</Text> <Text>Your investment grows tax free, you don’t pay income tax on interest, and no dividends or capital gains tax.</Text></Text>
+                    <Text style={styles.bottomList}><Text>.</Text> <Text>When you die, any benefits paid to your beneficiaries as an income or a lump sum are free of estate duty.</Text></Text>
+                    <Text style={styles.bottomList}><Text>.</Text> <Text>Your investment is protected against claims from creditors.</Text></Text>
+                    <Text style={styles.bottomList}><Text>.</Text> <Text>You have a wide range of underlying investment funds to choose from.</Text></Text>
+                    <Text style={styles.bottomList}><Text>.</Text> <Text>You can transfer a pension or provident fund withdrawal into your retirement annuity, tax free.</Text></Text>
+                    <Text style={styles.bottomList}><Text>.</Text> <Text>At retirement you can withdraw R550 000 tax free, if you haven’t made any withdrawals.</Text></Text>
+                    <Text style={{ height: 3}}></Text>
+                    <Text style={styles.bottomBold}>For more information, <Link style={styles.greenText} src="#">watch this video</Link>.</Text>
+                    <Text style={styles.bottomHeading2}>How you use your TAX BACK is up to you</Text>
+                    <Text>Reinvest your tax back into your retirement annuity and grow your retirement savings even more. You can also settle any debt that you may have or use it to save for your child’s education. Or you could invest it in a tax-free savings plan, to save even more on tax!</Text>
+                    <Text style={styles.bottomHeading2}>It really is smart to contribute towards a retirement annuity and get TAX BACK</Text>
+                    <Text>Knowing how much tax savings you can get is great, but the most important step is taking action today. 
+                    Contact your financial adviser to help you choose the best investment for your future. If you don’t have a financial adviser, call <Text style={styles.bottomBold}>0860 66 66 59</Text> and we will gladly assist you.</Text>
+                </View>
+
+                <View style={styles.footer}>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>DISCLAIMER:</Text> The information in this tool is intended for illustrative purposes only and the values shown aren't guaranteed. This isn't an offer and it's not part of a contractual undertaking by Old Mutual Limited, Old Mutual Life Assurance Company (South Africa) Ltd or any of Old Mutual Limited's subsidiaries. The tool also doesn't represent financial advice by any of the companies in the Old Mutual Limited Group. The personal information provided will only be used to generate a report and no personal information provided will be stored during this process.</Text>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>ASSUMPTIONS:</Text> Input age is the age at next tax year end. Calculated assuming your salary is your only income. You have not exceeded the limit of 27.5% of your yearly taxable income (or R350 000) which includes your pension or provident fund yearly contributions. You don’t skip any contributions throughout the year. Fees are not taken into account. The calculation is based on the 2024/25 SARS income tax tables.</Text>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>IMPORTANT:</Text> The yearly tax deduction on a retirement annuity is limited to 27.5% of your income, up to a maximum of R350 000. Any amount above this is treated as deduction in the following year.</Text>
+                    <Text style={styles.footerText}>Old Mutual Life Assurance Company (SA) Limited is a licensed FSP and life insurer.</Text>               
+                </View>
+
+            </Page>
+        
+        </Document>
+    );
+
     return (
         <section className="tax-back-section pt-0 lg:pt-[118px] pb-[100px]">
             <div className="container px-0 lg:px-[15px]">
@@ -320,8 +588,6 @@ export default function TaxBackForm() {
                                     defaultValue={40} 
                                     onChange={handleSlideChange} 
                                 />
-
-                                <div id="view-section"></div>
                                 
                                 <TextInput 
                                     label="Gross income per month" 
@@ -369,18 +635,17 @@ export default function TaxBackForm() {
                                         tooltipText={errors.monthlyInvest}  // Set error tooltip dynamically
                                     />
                                 </div>
-
-                                <div id="form-output1" className="invisible">
+                                <div id="form-output1" className="invisible mt-[43px] lg:mt-[62px]">
+                                    <div id="view-section" className="pt-[30px]"></div>
                                     <Heading 
                                         content="Total yearly investment"
-                                        className="text-[22px] leading-[24px] mt-[73px] lg:mt-[92px] font-light text-primary text-center w-full" 
+                                        className="text-[22px] leading-[24px] font-light text-primary text-center w-full" 
                                         tag="h5"
                                     />
-
                                     <h3 className="font-extrabold inline-block bg-gradient-to-r from-[#50B848] to-[#009677] bg-clip-text text-[47px] leading-[25px] font-semibold pt-[22px] text-primary text-center w-full">
                                         R<CountUp end={investmentDetails.annualInvest} />
                                     </h3>
-
+                                    
                                     <div className="note-icon mt-[17px] flex justify-center">
                                         <svg width="54" height="43" viewBox="0 0 54 43" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M0.890625 8.90637C0.399 8.90637 0 8.50737 0 8.01575C0 7.52412 0.399 7.12512 0.890625 7.12512C26.5121 7.12512 41.9769 7.12512 46.4621 0.397342C46.6812 0.0695919 47.0873 -0.076471 47.4614 0.0393102C47.8355 0.151529 48.0938 0.497092 48.0938 0.890748V5.34387C48.0938 5.8355 47.6948 6.2345 47.2031 6.2345C46.7115 6.2345 46.3125 5.8355 46.3125 5.34387V3.25269C39.973 8.90637 24.7273 8.90637 0.890625 8.90637Z" fill="#009677"/>
@@ -545,7 +810,11 @@ export default function TaxBackForm() {
                                         </div>
 
                                         <div className="flex flex-col items-center gap-[20px] justify-center mt-[35px]">
-                                            <Button label="GENERATE REPORT" className="text-primary w-full max-w-[255px] lg:max-w-[310px] border border-primary bg-transparent from-transparent to-transparent" />
+                                            <PDFDownloadLink document={<MyDocument />} fileName="tax-back-form.pdf"  className="relative site-btn flex items-center justify-center w-[238px] h-[49px] lg:h-[52px] rounded-[30px] text-[16px] lg:text-[18px] leading-[18px] transition-transform duration-200 ease-in-out from-[#009677] to-[#50B848] text-primary w-full max-w-[255px] lg:max-w-[310px] border border-primary bg-transparent from-transparent to-transparent hover:scale-105 active:scale-100">
+                                                {({ loading }) =>
+                                                    loading ? 'Generating PDF...' : 'GENERATE REPORT'
+                                                }
+                                            </PDFDownloadLink>
                                             <Button label="CALL ME BACK" onClick={toggleSideForm} className="text-white w-full max-w-[255px] lg:max-w-[310px]" />
                                         </div>
 

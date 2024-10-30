@@ -240,30 +240,28 @@ export default function TaxBackForm() {
 
     useEffect(() => {
         const observer = new IntersectionObserver(
-        ([entry]) => {
+          ([entry]) => {
             if (entry.target === animation2Ref.current && entry.isIntersecting && !hasPlayedAnimation2) {
-            setHasPlayedAnimation2(true); // Set to true after the first play
+              // Add 1-second delay before setting the state
+              setTimeout(() => setHasPlayedAnimation2(true), 1000);
             }
-
+    
             if (entry.target === animation3Ref.current && entry.isIntersecting && !hasPlayedAnimation3) {
-            setHasPlayedAnimation3(true); // Set to true after the first play
+              setHasPlayedAnimation3(true); // Immediately play animation 3
             }
-        },
-        {
+          },
+          {
             threshold: 0.5, // Trigger when 50% of the animation is in view
-        }
+          }
         );
-
-        if (animation2Ref.current) {
-        observer.observe(animation2Ref.current);
-        }
-        if (animation3Ref.current) {
-        observer.observe(animation3Ref.current);
-        }
-
+    
+        if (animation2Ref.current) observer.observe(animation2Ref.current);
+        if (animation3Ref.current) observer.observe(animation3Ref.current);
+    
+        // Cleanup the observer when the component unmounts
         return () => {
-        if (animation2Ref.current) observer.unobserve(animation2Ref.current);
-        if (animation3Ref.current) observer.unobserve(animation3Ref.current);
+          if (animation2Ref.current) observer.unobserve(animation2Ref.current);
+          if (animation3Ref.current) observer.unobserve(animation3Ref.current);
         };
     }, [hasPlayedAnimation2, hasPlayedAnimation3]);
 
@@ -625,7 +623,7 @@ export default function TaxBackForm() {
                                         maxValueError="There is a limit on tax-free contributions of 27.5% or R350 000 per year."
                                     />
                                 </div>
-
+                                <div id="view-section" className="mt-[30px]"></div>
                                 <div className="flex justify-center">
                                     <Button
                                         label="CALCULATE"
@@ -636,7 +634,6 @@ export default function TaxBackForm() {
                                     />
                                 </div>
                                 <div id="form-output1" className="invisible mt-[43px] lg:mt-[62px]">
-                                    <div id="view-section" className="pt-[30px]"></div>
                                     <Heading 
                                         content="Total yearly investment"
                                         className="text-[22px] leading-[24px] font-light text-primary text-center w-full" 
@@ -735,7 +732,7 @@ export default function TaxBackForm() {
                             <div className="output-holder relative z-10">
 
                                 <div className="notes-icon pt-[95px] lg:pt-[260px] pl-[45px] lg:pl-0 flex justify-center">
-                                    <div class="pr-0 lg:pr-[105px]">
+                                    <div class="pr-0 lg:pr-[105px] min-h-[200px] lg:min-h-[320px]">
                                         <div
                                             ref={animation2Ref}
                                             className="flex justify-center items-center max-w-[200px] lg:max-w-[320px] fadeIn"

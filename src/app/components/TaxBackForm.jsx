@@ -360,6 +360,12 @@ export default function TaxBackForm() {
             width: '30%',
             alignItems: 'center',
         },
+        boxBorder: {
+            borderLeftWidth: 1,
+            borderLeftColor: '#009677',
+            borderRightWidth: 1,
+            borderRightColor: '#009677',
+        },
         boxBold: {
             fontSize: 14,
             fontWeight: 'semibold',
@@ -428,11 +434,67 @@ export default function TaxBackForm() {
         },
         footerBold: {
             fontWeight: 'medium',
-        }
+        },
+        infoBox1: {
+            width: '100%',
+            height: 200,
+            position: 'relative',
+            overflow: 'hidden',
+            marginTop: 40,
+        },
+        infoBox2: {
+            width: '100%',
+            height: 300,
+            position: 'relative',
+            overflow: 'hidden',
+            marginTop: 40,
+        },
+        backgroundImage: {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+        },
+        infoContent: {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            paddingLeft: 40,
+        },
+        infoText: {
+            fontSize: 10,
+            fontWeight: 'light',
+            lineHeight: 1.2,
+            width: 400,
+        },
+        infoTextSmall: {
+            fontSize: 8,
+            fontWeight: 'light',
+            lineHeight: 1,
+            width: 400,
+        },
+        infoHeading1: {
+            fontSize: 14,
+            fontWeight: 'semibold',
+            color: '#009677',
+            marginBottom: 4,
+        },
+        infoHeading2: {
+            fontSize: 14,
+            fontWeight: 'semibold',
+            color: '#ED0080',
+            marginBottom: 4,
+        },
     });
 
     const MyDocument = () => (
-        <Document>
+        <Document title="Tax Back">
             <Page size="A4" style={styles.page}>
                 <View style={styles.headerContainer}>
                     <View style={styles.imageContainer}>
@@ -442,7 +504,7 @@ export default function TaxBackForm() {
                         />
                     </View>
                     <View style={styles.textContainer}>
-                        <Text style={styles.headerStrong}>Tax Back</Text>
+                        <Text style={styles.headerStrong}>TAX BACK</Text>
                         <Text style={styles.headerSpan}>Report</Text>
                     </View>
                 </View>
@@ -486,14 +548,14 @@ export default function TaxBackForm() {
                         <Text style={styles.text}>investment</Text>
                     </View>
 
-                    <View style={styles.box}>
+                    <View style={[styles.box, styles.boxBorder]}>
                         <Image 
                             src="/images/icon-2.png" 
                             style={styles.image2}
                         />
                         <Text style={{ height: 30 }}></Text>
                         <Text style={styles.boxBold}>R{formatNumberWithSpaces(investmentDetails.taxBack)}</Text>
-                        <Text style={styles.text}>Tax Back</Text>
+                        <Text style={styles.text}>TAX BACK</Text>
                     </View>
 
                     <View style={styles.box}>
@@ -525,6 +587,75 @@ export default function TaxBackForm() {
                     <Text style={styles.bottomHeading2}>It really is smart to contribute towards a retirement annuity and get TAX BACK</Text>
                     <Text>Knowing how much tax savings you can get is great, but the most important step is taking action today. 
                     Contact your financial adviser to help you choose the best investment for your future. If you don’t have a financial adviser, call <Text style={styles.bottomBold}>0860 66 66 59</Text> and we will gladly assist you.</Text>
+                </View>
+
+                <View style={styles.footer}>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>DISCLAIMER:</Text> The information in this tool is intended for illustrative purposes only and the values shown aren't guaranteed. This isn't an offer and it's not part of a contractual undertaking by Old Mutual Limited, Old Mutual Life Assurance Company (South Africa) Ltd or any of Old Mutual Limited's subsidiaries. The tool also doesn't represent financial advice by any of the companies in the Old Mutual Limited Group. The personal information provided will only be used to generate a report and no personal information provided will be stored during this process.</Text>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>ASSUMPTIONS:</Text> Input age is the age at next tax year end. Calculated assuming your salary is your only income. You have not exceeded the limit of 27.5% of your yearly taxable income (or R350 000) which includes your pension or provident fund yearly contributions. You don’t skip any contributions throughout the year. Fees are not taken into account. The calculation is based on the 2024/25 SARS income tax tables.</Text>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>IMPORTANT:</Text> The yearly tax deduction on a retirement annuity is limited to 27.5% of your income, up to a maximum of R350 000. Any amount above this is treated as deduction in the following year.</Text>
+                    <Text style={styles.footerText}>Old Mutual Life Assurance Company (SA) Limited is a licensed FSP and life insurer.</Text>               
+                </View>
+
+            </Page>
+
+            <Page size="A4" style={styles.page}>
+                <View style={styles.headerContainer}>
+                    <View style={styles.imageContainer}>
+                        <Image 
+                            src="/images/pdf-logo.png" 
+                            style={{ width: 204, height: 56 }} 
+                        />
+                    </View>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.headerStrong}>Tax Back</Text>
+                        <Text style={styles.headerSpan}>Report</Text>
+                    </View>
+                </View>
+                <View>
+                    <Image
+                        src="/images/pdf-border.png" 
+                        style={{ width: '100%', height: 4 }} 
+                    />
+                </View>
+                
+                <View style={styles.infoBox1}>
+                    <Image src="/images/info-box-1.png" style={styles.backgroundImage} />
+
+                    <View style={styles.infoContent}>
+                        <Text style={styles.infoHeading1}>PROTECT YOUR RETIREMENT SAVINGS </Text>
+                        <Text style={styles.infoText}>
+                            It is important to save for your retirement, but it’s equally important to protect your savings.
+                            Our life and disability insurance options ensure that you can still achieve your savings goals if anything happens to you.
+                            Ask your adviser about the right life and disability cover for you and your family. Click here for more information.
+                        </Text>
+                    </View>
+                </View>
+                
+                <View style={styles.infoBox2}>
+                    <Image src="/images/info-box-2.png" style={styles.backgroundImage} />
+
+                    <View style={styles.infoContent}>
+                        <Text style={styles.infoHeading2}>PROTECT YOUR RETIREMENT SAVINGS </Text>
+                        <Text style={styles.infoText}>
+                            Old Mutual Rewards is a free-to-join financial wellness programme designed to partner with you on your savings journey.
+                        </Text>
+                        <Text style={{ height: 5 }} ></Text>
+                        <Text style={styles.infoText}>
+                            You can earn a percentage of your contributions on qualifying financial products in Rewards points monthly. You also earn points for learning how to take control of your finances using our online financial  education content, online assessments, Rewards calculators and tools. Your Rewards tier determines the rate at which you earn points and other discounted benefits, such as discounts on domestic and international flights.
+                        </Text>
+                        <Text style={{ height: 5 }} ></Text>
+                        <Text style={styles.infoText}>
+                            Redeem your points at over 50 partners – buy groceries and fuel, watch a movie, and treat the family to a meal. Or save your Old Mutual Rewards points for the future ­– save points in qualifying Old Mutual products, or even donate your points to a charity. Plus, get up to 100% off with TaxTim to simplify tax filing and boost your chances of a refund!
+                        </Text>
+                        <Text style={{ height: 5 }} ></Text>
+                        <Text style={styles.infoText}>
+                            Register today on <Link style={styles.greenText} src="https://www.sars.gov.za">oldmutual.co.za/rewards</Link> and explore the many ways that you can earn and spend your points.
+                        </Text>
+                        <Text style={{ height: 5 }} ></Text>
+                        <Text style={styles.infoTextSmall}>
+                            Old Mutual Rewards (Pty) Ltd. is a company in the Old Mutual Group. Terms, Conditions and Programme Rules apply.
+                        </Text>
+                    </View>
                 </View>
 
                 <View style={styles.footer}>
@@ -807,7 +938,7 @@ export default function TaxBackForm() {
                                         </div>
 
                                         <div className="flex flex-col items-center gap-[20px] justify-center mt-[35px]">
-                                            <PDFDownloadLink document={<MyDocument />} fileName="tax-back-form.pdf"  className="relative site-btn flex items-center justify-center w-[238px] h-[49px] lg:h-[52px] rounded-[30px] text-[16px] lg:text-[18px] leading-[18px] transition-transform duration-200 ease-in-out from-[#009677] to-[#50B848] text-primary w-full max-w-[255px] lg:max-w-[310px] border border-primary bg-transparent from-transparent to-transparent hover:scale-105 active:scale-100">
+                                            <PDFDownloadLink document={<MyDocument />} fileName="tax-back.pdf"  className="relative site-btn flex items-center justify-center w-[238px] h-[49px] lg:h-[52px] rounded-[30px] text-[16px] lg:text-[18px] leading-[18px] transition-transform duration-200 ease-in-out from-[#009677] to-[#50B848] text-primary w-full max-w-[255px] lg:max-w-[310px] border border-primary bg-transparent from-transparent to-transparent hover:scale-105 active:scale-100">
                                                 {({ loading }) =>
                                                     loading ? 'Generating PDF...' : 'GENERATE REPORT'
                                                 }

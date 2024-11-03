@@ -14,7 +14,7 @@ import animationData1 from "../animations/animation1.json";
 import animationData2 from "../animations/animation2.json";
 import animationData3 from "../animations/animation3.json";
 import CountUp from 'react-countup';
-import { Font, Page, Text, Link, View, Image, Document, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer';
+import { Font, Page, Text, Link, View, Image, Document, StyleSheet, PDFDownloadLink, pdf } from '@react-pdf/renderer';
 
 Font.register({
     family: 'Montserrat',
@@ -280,6 +280,19 @@ export default function TaxBackForm() {
                     <circle cx="43" cy="43" r="26" fill="white"/>
                     <path d="M49.2695 36.0217C49.0833 36.2091 48.9787 36.4625 48.9787 36.7267C48.9787 36.9909 49.0833 37.2443 49.2695 37.4317L53.8295 42.0717L30.2695 42.0717C30.0043 42.0717 29.75 42.1771 29.5624 42.3646C29.3749 42.5521 29.2695 42.8065 29.2695 43.0717C29.2695 43.3369 29.3749 43.5913 29.5624 43.7788C29.75 43.9664 30.0043 44.0717 30.2695 44.0717L53.7995 44.0717L49.2695 48.6017C49.1758 48.6947 49.1014 48.8053 49.0506 48.9271C48.9999 49.049 48.9737 49.1797 48.9737 49.3117C48.9737 49.4437 48.9999 49.5744 49.0506 49.6963C49.1014 49.8181 49.1758 49.9287 49.2695 50.0217C49.4569 50.208 49.7103 50.3125 49.9745 50.3125C50.2387 50.3125 50.4922 50.208 50.6795 50.0217L57.0495 43.6517C57.2175 43.483 57.3117 43.2547 57.3117 43.0167C57.3117 42.7787 57.2175 42.5504 57.0495 42.3817L50.6795 36.0217C50.4922 35.8355 50.2387 35.7309 49.9745 35.7309C49.7103 35.7309 49.4569 35.8355 49.2695 36.0217Z" fill="#009677"/>
                 </svg>);
+
+const handleDownload = async () => {
+    const blob = await pdf(<MyDocument />).toBlob(); // Generate PDF as a blob
+    const url = URL.createObjectURL(blob); // Create a URL for the blob
+
+    // Create a link element and trigger a download
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'tax-back.pdf');
+    document.body.appendChild(link);
+    link.click(); // Programmatically click the link to trigger the download
+    document.body.removeChild(link); // Clean up the DOM
+};
 
     // Create styles
     const styles = StyleSheet.create({
@@ -938,11 +951,12 @@ export default function TaxBackForm() {
                                         </div>
 
                                         <div className="flex flex-col items-center gap-[20px] justify-center mt-[35px]">
-                                            <PDFDownloadLink document={<MyDocument />} fileName="tax-back.pdf"  className="relative site-btn flex items-center justify-center w-[238px] h-[49px] lg:h-[52px] rounded-[30px] text-[16px] lg:text-[18px] leading-[18px] transition-transform duration-200 ease-in-out from-[#009677] to-[#50B848] text-primary w-full max-w-[255px] lg:max-w-[310px] border border-primary bg-transparent from-transparent to-transparent hover:scale-105 active:scale-100">
-                                                {({ loading }) =>
-                                                    loading ? 'Generating PDF...' : 'GENERATE REPORT'
-                                                }
-                                            </PDFDownloadLink>
+                                            <button
+                                                onClick={handleDownload}
+                                                className="relative site-btn flex items-center justify-center w-[238px] h-[49px] lg:h-[52px] rounded-[30px] text-[16px] lg:text-[18px] leading-[18px] transition-transform duration-200 ease-in-out from-[#009677] to-[#50B848] text-primary w-full max-w-[255px] lg:max-w-[310px] border border-primary bg-transparent from-transparent to-transparent hover:scale-105 active:scale-100"
+                                            >
+                                                GENERATE REPORT
+                                            </button>
                                             <Button label="CALL ME BACK" onClick={toggleSideForm} className="text-white w-full max-w-[255px] lg:max-w-[310px]" />
                                         </div>
 

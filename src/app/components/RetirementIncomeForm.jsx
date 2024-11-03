@@ -12,7 +12,7 @@ import VideoCard from "./VideoCard";
 import StepButton from "./StepButton";
 import ProgressBar from "./ProgressBar";
 import ColorCard from "./ColorCard";
-import { Font, Page, Text, Link as PDFLink, View, Image, Document, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer';
+import { Font, Page, Text, Link as PDFLink, View, Image, Document, StyleSheet, PDFDownloadLink, pdf } from '@react-pdf/renderer';
 
 Font.register({
     family: 'Montserrat',
@@ -477,6 +477,19 @@ export default function RetirementAnnuityForm() {
         },
     });
 
+    const handleDownload = async () => {
+        const blob = await pdf(<MyDocument />).toBlob(); // Generate PDF as a blob
+        const url = URL.createObjectURL(blob); // Create a URL for the blob
+
+        // Create a link element and trigger a download
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'retirement-income.pdf');
+        document.body.appendChild(link);
+        link.click(); // Programmatically click the link to trigger the download
+        document.body.removeChild(link); // Clean up the DOM
+    };
+
     const MyDocument = () => (
         <Document title="Retirement Income">
             <Page  size={{ width: 595.28, height: 920 }} style={styles.page}>
@@ -669,7 +682,7 @@ export default function RetirementAnnuityForm() {
                             />
                         </div>
                     </div>
-                    <div id="calculator-form" className="w-full relative">
+                    <div id="calculator-form" className="w-full relative min-h-[400px] 2xl:min-h-[900px]">
                         <form className="mt-[155px] lg:mt-0 px-[34px] lg:px-0">
 
                             <div className="form-field-holder max-w-[570px]">
@@ -809,11 +822,12 @@ export default function RetirementAnnuityForm() {
                                 <div className="generate-report bg-transparent rounded-[15px] pt-[90px] pb-[54px] px-[15px]">
                                     
                                     <div className="flex flex-col items-center gap-[20px] justify-center mt-[35px]">
-                                        <PDFDownloadLink document={<MyDocument />} fileName="retirement-income.pdf"  className="relative site-btn flex items-center justify-center w-[238px] h-[49px] lg:h-[52px] rounded-[30px] text-[16px] lg:text-[18px] leading-[18px] transition-transform duration-200 ease-in-out from-[#009677] to-[#50B848] text-primary w-full max-w-[255px] lg:max-w-[310px] border border-primary bg-transparent from-transparent to-transparent hover:scale-105 active:scale-100">
-                                            {({ loading }) =>
-                                                loading ? 'Generating PDF...' : 'GENERATE REPORT'
-                                            }
-                                        </PDFDownloadLink>
+                                        <button
+                                            onClick={handleDownload}
+                                            className="relative site-btn flex items-center justify-center w-[238px] h-[49px] lg:h-[52px] rounded-[30px] text-[16px] lg:text-[18px] leading-[18px] transition-transform duration-200 ease-in-out from-[#009677] to-[#50B848] text-primary w-full max-w-[255px] lg:max-w-[310px] border border-primary bg-transparent from-transparent to-transparent hover:scale-105 active:scale-100"
+                                        >
+                                            GENERATE REPORT
+                                        </button>
                                         <Button label="CALL ME BACK" onClick={toggleSideForm} className="text-white w-full max-w-[310px]" />
                                     </div>
 

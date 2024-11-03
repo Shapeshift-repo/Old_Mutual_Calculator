@@ -14,7 +14,7 @@ import VideoCard from "./VideoCard";
 import StepButton from "./StepButton";
 import ColorCard from "./ColorCard";
 import NumberPlate from "./NumberPlate";
-import { Font, Page, Text, Link as PDFLink, View, Image, Document, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer';
+import { Font, Page, Text, Link as PDFLink, View, Image, Document, StyleSheet, PDFDownloadLink, pdf } from '@react-pdf/renderer';
 
 Font.register({
     family: 'Montserrat',
@@ -492,6 +492,19 @@ export default function RetirementAnnuityForm() {
             <path d="M14.2908 20C14.1034 19.8137 13.85 19.7092 13.5858 19.7092C13.3216 19.7092 13.0682 19.8137 12.8808 20L8.24079 24.56V1C8.24079 0.734784 8.13544 0.48043 7.9479 0.292893C7.76036 0.105357 7.50601 0 7.24079 0C6.97558 0 6.72122 0.105357 6.53369 0.292893C6.34615 0.48043 6.24079 0.734784 6.24079 1V24.53L1.71079 20C1.61783 19.9063 1.50723 19.8319 1.38537 19.7811C1.26351 19.7303 1.1328 19.7042 1.00079 19.7042C0.868781 19.7042 0.738075 19.7303 0.616216 19.7811C0.494356 19.8319 0.383755 19.9063 0.290792 20C0.104542 20.1874 0 20.4408 0 20.705C0 20.9692 0.104542 21.2226 0.290792 21.41L6.66079 27.78C6.82946 27.9479 7.05778 28.0422 7.29579 28.0422C7.5338 28.0422 7.76213 27.9479 7.93079 27.78L14.2908 21.41C14.477 21.2226 14.5816 20.9692 14.5816 20.705C14.5816 20.4408 14.477 20.1874 14.2908 20Z" fill="white"/>
         </svg>
     );
+
+    const handleDownload = async () => {
+        const blob = await pdf(<MyDocument />).toBlob(); // Generate PDF as a blob
+        const url = URL.createObjectURL(blob); // Create a URL for the blob
+
+        // Create a link element and trigger a download
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'retirement-annuity.pdf');
+        document.body.appendChild(link);
+        link.click(); // Programmatically click the link to trigger the download
+        document.body.removeChild(link); // Clean up the DOM
+    };
 
     // Create styles
     const styles = StyleSheet.create({
@@ -1117,11 +1130,7 @@ export default function RetirementAnnuityForm() {
                         </div>
                     </div>
                     <div id="calculator-form" className="w-full relative">
-                        <PDFDownloadLink document={<MyDocument />} fileName="retirement-annuity.pdf"  className="relative site-btn flex items-center justify-center w-[238px] h-[49px] lg:h-[52px] rounded-[30px] text-[16px] lg:text-[18px] leading-[18px] transition-transform duration-200 ease-in-out from-[#009677] to-[#50B848] text-primary w-full max-w-[255px] lg:max-w-[310px] border border-primary bg-transparent from-transparent to-transparent hover:scale-105 active:scale-100">
-                            {({ loading }) =>
-                                loading ? 'Generating PDF...' : 'GENERATE REPORT'
-                            }
-                        </PDFDownloadLink>
+                        
                         <form className="relative mt-[-110px] pt-[30px] pb-[48px] lg:pb-0 lg:pt-0 lg:mt-0 bg-white px-[34px] lg:px-0 rounded-[64px] lg:rounded-0 z-10 lg:z-2 shadow-[0_4px_29px_0_rgba(0,0,0,0.24)] lg:shadow-none">
                             <div className="flex justify-center mb-[60px] block lg:hidden">
                                 <span className="w-[66px] h-[7px] rounded-[4px] bg-[#028F72]"></span>
@@ -1401,11 +1410,12 @@ export default function RetirementAnnuityForm() {
                                 <div className="generate-report bg-transparent rounded-[15px] pt-[90px] pb-[54px] px-[15px]">
                                     
                                     <div className="flex flex-col items-center gap-[20px] justify-center mt-[35px]">
-                                        <PDFDownloadLink document={<MyDocument />} fileName="retirement-annuity.pdf"  className="relative site-btn flex items-center justify-center w-[238px] h-[49px] lg:h-[52px] rounded-[30px] text-[16px] lg:text-[18px] leading-[18px] transition-transform duration-200 ease-in-out from-[#009677] to-[#50B848] text-primary w-full max-w-[255px] lg:max-w-[310px] border border-primary bg-transparent from-transparent to-transparent hover:scale-105 active:scale-100">
-                                            {({ loading }) =>
-                                                loading ? 'Generating PDF...' : 'GENERATE REPORT'
-                                            }
-                                        </PDFDownloadLink>
+                                        <button
+                                            onClick={handleDownload}
+                                            className="relative site-btn flex items-center justify-center w-[238px] h-[49px] lg:h-[52px] rounded-[30px] text-[16px] lg:text-[18px] leading-[18px] transition-transform duration-200 ease-in-out from-[#009677] to-[#50B848] text-primary w-full max-w-[255px] lg:max-w-[310px] border border-primary bg-transparent from-transparent to-transparent hover:scale-105 active:scale-100"
+                                        >
+                                            GENERATE REPORT
+                                        </button>
                                         <Button label="CALL ME BACK" onClick={toggleSideForm} className="text-white w-full max-w-[310px]" />
                                     </div>
 

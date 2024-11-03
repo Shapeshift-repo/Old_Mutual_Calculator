@@ -505,7 +505,7 @@ export default function TaxBackForm() {
                     </View>
                     <View style={styles.textContainer}>
                         <Text style={styles.headerStrong}>TAX BACK</Text>
-                        <Text style={styles.headerSpan}>Report</Text>
+                        <Text style={styles.headerSpan}>REPORT</Text>
                     </View>
                 </View>
                 <View>
@@ -608,7 +608,7 @@ export default function TaxBackForm() {
                     </View>
                     <View style={styles.textContainer}>
                         <Text style={styles.headerStrong}>Tax Back</Text>
-                        <Text style={styles.headerSpan}>Report</Text>
+                        <Text style={styles.headerSpan}>REPORT</Text>
                     </View>
                 </View>
                 <View>

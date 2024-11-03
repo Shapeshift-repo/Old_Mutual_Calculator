@@ -489,7 +489,7 @@ export default function RetirementAnnuityForm() {
                     </View>
                     <View style={styles.textContainer}>
                         <Text style={styles.headerStrong}>RETIREMENT INCOME</Text>
-                        <Text style={styles.headerSpan}>Report</Text>
+                        <Text style={styles.headerSpan}>REPORT</Text>
                     </View>
                 </View>
                 <View>
@@ -585,7 +585,7 @@ export default function RetirementAnnuityForm() {
                     </View>
                     <View style={styles.textContainer}>
                         <Text style={styles.headerStrong}>RETIREMENT INCOME</Text>
-                        <Text style={styles.headerSpan}>Report</Text>
+                        <Text style={styles.headerSpan}>REPORT</Text>
                     </View>
                 </View>
                 <View>

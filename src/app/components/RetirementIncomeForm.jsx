@@ -12,6 +12,18 @@ import VideoCard from "./VideoCard";
 import StepButton from "./StepButton";
 import ProgressBar from "./ProgressBar";
 import ColorCard from "./ColorCard";
+import { Font, Page, Text, Link as PDFLink, View, Image, Document, StyleSheet, PDFDownloadLink, pdf } from '@react-pdf/renderer';
+
+Font.register({
+    family: 'Montserrat',
+    fonts: [
+      { src: '/fonts/Montserrat-Regular.ttf', fontWeight: 'normal' },
+      { src: '/fonts/Montserrat-Medium.ttf', fontWeight: 'medium' },
+      { src: '/fonts/Montserrat-SemiBold.ttf', fontWeight: 'semibold' },
+      { src: '/fonts/Montserrat-Bold.ttf', fontWeight: 'bold' },
+      { src: '/fonts/Montserrat-Light.ttf', fontWeight: 'light' },
+    ],
+});
 
 const PrimarySlider = styled(Slider)(({ theme }) => ({
     '& .MuiSlider-thumb': {
@@ -147,7 +159,7 @@ export default function RetirementAnnuityForm() {
 
         let P57 = P54 / J64;
 
-        return { E52, P53, P54 };
+        return { E52, P53, P54, G45 };
 
     }
 
@@ -191,6 +203,463 @@ export default function RetirementAnnuityForm() {
         </svg>
     );
 
+    // Create styles
+    const styles = StyleSheet.create({
+        page: {
+            padding: 0,
+            backgroundColor: '#FFFFFF',
+            fontFamily: 'Montserrat',
+        },
+        headerContainer: {
+            flexDirection: 'row', // Mimic `flex` and `justify-between`
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%',
+            height: 91,
+            backgroundColor: '#EDEDED',
+            paddingTop: 10,
+            paddingLeft: 25,
+            paddingRight: 35,
+        },
+        imageContainer: {
+            width: '50%',
+        },
+        textContainer: {
+            width: '50%',
+            alignItems: 'flex-end',
+        },
+        headerStrong: {
+            fontWeight: 'semibold',
+            fontSize: 16,
+            marginBottom: 0,
+            color: '#009677',
+        },
+        headerSpan: {
+            fontSize: 16,
+            fontWeight: 'light',
+            color: '#009677',
+        },
+        contentTop1: {
+            marginTop: 20,
+            paddingLeft: 30,
+            paddingRight: 30,
+            fontWeight: 'light',
+        },
+        contentHi: {
+            fontSize: 12,
+            fontWeight: 'semibold',
+            marginBottom: 10,
+        },
+        contentAfterHi: {
+            fontSize: 10,
+            lineHeight: 1.1,
+        },
+        contentTop2: {
+            marginTop: 8,
+            paddingLeft: 30,
+            paddingRight: 30,
+            fontSize: 12,
+            fontWeight: 'light',
+            lineHeight: 1.2,
+        },
+        boldGreen: {
+            fontWeight: 'semibold',
+            color: '#009677',
+        },
+        imageBoxes: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: '100%',
+            backgroundColor: '#F9F9F9',
+            paddingTop: 10,
+            paddingBottom: 10,
+            paddingLeft: 30,
+            paddingRight: 30,
+            marginTop: 10,
+            marginBottom: 5,
+        },
+        box: {
+            width: '35%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingLeft: 20,
+            paddingRight: 20,
+            display: 'flex',
+        },
+        boxBorder: {
+            width: '65%',
+            borderLeftWidth: 1,
+            borderLeftColor: '#009677',
+            alignItems: 'start',
+        },
+        boxBold: {
+            fontSize: 20,
+            fontWeight: 'semibold',
+            color: '#009677',
+        },
+        boxText: {
+            fontSize: 14,
+            fontWeight: 'medium',
+            color: '#009677',
+            textAlign: 'center',
+            marginBottom: 5,
+        },
+        boxBorderHeading: {
+            fontSize: 14,
+            fontWeight: 'semibold',
+            color: '#009677',
+        },
+        boxBorderLabel: {
+            fontSize: 16,
+            fontWeight: 'semibold',
+            color: '#ED0080',
+            marginBottom: 2,
+            marginTop: 6,
+        },
+        boxBorderLabelGreen: {
+            color: '#009677',
+        },
+        barBox: {
+            width: '100%',
+            position: 'relative',
+            overflow: 'hidden',
+            height: 12,
+            borderRadius: 15,
+            marginBottom: 3,
+        },
+        barGray: {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: '#DADADA',
+        },
+        barRed: {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '30%',
+            height: '100%',
+            backgroundColor: '#ED0080',
+            borderRadius: 15,
+        },
+        barGreen: {
+            width: '56%',
+            backgroundColor: '#009677',
+        },
+        barInfo: {
+            fontSize: 10,
+            fontWeight: 'normal',
+            color: '#818181',
+        },
+        smallTextWrapper: {
+            paddingLeft: 30,
+            paddingRight: 30,
+            marginBottom: 15,
+        },
+        smallText: {
+            fontSize: 8,
+            fontWeight: 'light',
+            color: '#323232',
+        },
+        contentBottom: {
+            paddingLeft: 30,
+            paddingRight: 30,
+            fontSize: 10,
+            fontWeight: 'light',
+            lineHeight: 1.2,
+        },
+        bottomHeading1: {
+            fontSize: 13,
+            fontWeight: 'semibold',
+            marginBottom: 8,
+        },
+        bottomHeading2: {
+            fontSize: 10,
+            fontWeight: 'semibold',
+            marginTop: 10,
+            marginBottom: 2,
+        },
+        bottomHeading3: {
+            fontSize: 9,
+            fontWeight: 'bold',
+            marginTop: 10,
+        },
+        phone: {
+            fontWeight: 'medium',
+        },
+        greenText: {
+            color: '#009677',
+            textDecoration: 'none',
+        },
+        bottomBold: {
+            fontWeight: 'medium',
+        },
+        bottomList: {
+            flexDirection: 'row',
+            alignItems: 'flex-center',
+        },
+        footer: {
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: '#F9F9F9',
+            paddingLeft: 30,
+            paddingRight: 30,
+            paddingTop: 10,
+            paddingBottom: 10,
+            fontSize: 7,
+            fontWeight: 'light',
+        },
+        footerText: {
+            marginBottom: 3,
+        },
+        footerBold: {
+            fontWeight: 'medium',
+        },
+        infoBox1: {
+            width: '100%',
+            height: 200,
+            position: 'relative',
+            overflow: 'hidden',
+            marginTop: 40,
+        },
+        infoBox2: {
+            width: '100%',
+            height: 300,
+            position: 'relative',
+            overflow: 'hidden',
+            marginTop: 40,
+        },
+        backgroundImage: {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+        },
+        infoContent: {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            paddingLeft: 40,
+        },
+        infoText: {
+            fontSize: 10,
+            fontWeight: 'light',
+            lineHeight: 1.2,
+            width: 400,
+        },
+        infoTextSmall: {
+            fontSize: 8,
+            fontWeight: 'light',
+            lineHeight: 1,
+            width: 400,
+        },
+        infoHeading1: {
+            fontSize: 14,
+            fontWeight: 'semibold',
+            color: '#009677',
+            marginBottom: 4,
+        },
+        infoHeading2: {
+            fontSize: 14,
+            fontWeight: 'semibold',
+            color: '#ED0080',
+            marginBottom: 4,
+        },
+    });
+
+    const handleDownload = async () => {
+        const blob = await pdf(<MyDocument />).toBlob(); // Generate PDF as a blob
+        const url = URL.createObjectURL(blob); // Create a URL for the blob
+
+        // Create a link element and trigger a download
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'retirement-income.pdf');
+        document.body.appendChild(link);
+        link.click(); // Programmatically click the link to trigger the download
+        document.body.removeChild(link); // Clean up the DOM
+    };
+
+    const MyDocument = () => (
+        <Document title="Retirement Income">
+            <Page  size={{ width: 595.28, height: 920 }} style={styles.page}>
+                <View style={styles.headerContainer}>
+                    <View style={styles.imageContainer}>
+                        <Image 
+                            src="/images/pdf-logo.png" 
+                            style={{ width: 204, height: 56 }} 
+                        />
+                    </View>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.headerStrong}>RETIREMENT INCOME</Text>
+                        <Text style={styles.headerSpan}>REPORT</Text>
+                    </View>
+                </View>
+                <View>
+                    <Image
+                        src="/images/pdf-border.png" 
+                        style={{ width: '100%', height: 4 }} 
+                    />
+                </View>
+
+                <View style={styles.contentTop1}>
+                    <Text style={styles.contentHi}>Hi</Text>
+                    <Text style={styles.contentAfterHi}>When you retire (from the age of 55), your retirement savings will need to provide an income so that you can support yourself and your family. You have to invest a minimum of two thirds of your retirement savings to buy an income annuity. This is an investment that will pay you a regular income during your retirement. You may withdraw the rest of your retirement savings as a lump sum when you retire. This will depend on how much you have withdrawn before retirement. For more information visit <PDFLink style={styles.greenText} src="https://www.oldmutual.co.za/two-pot-retirement-system">www.oldmutual.co.za/two-pot-retirement-system</PDFLink>.</Text>
+                </View>
+                
+                <View style={styles.contentTop2}>
+                    <Text>
+                        If you manage to save up a capital amount of <Text style={styles.boldGreen}>R{result && formatNumberWithSpaces(result.G45)}</Text> by your retirement age of <Text style={styles.boldGreen}>{value}</Text> years, you can expect an income of <Text style={styles.boldGreen}>R{result ? formatNumberWithSpaces(result.E52) : ''}</Text> per month at a drawdown rate of <Text style={styles.boldGreen}>{value2}%</Text>.
+                    </Text>
+                    <Text>
+                        In poor markets ({result ? formatNumberWithSpaces(result.P53) : 0}% growth), your income will last about <Text style={styles.boldGreen}>10</Text> years. If you experience {result ? formatNumberWithSpaces(result.P54) : 0}% growth, your income could last up to <Text style={styles.boldGreen}>25</Text> years.
+                    </Text>
+                </View>
+
+                <View style={styles.imageBoxes}>
+                    <View style={styles.box}>                    
+                        <Text style={styles.boxText}>You can expect a monthly income of</Text>
+                        <Text style={styles.boxBold}>R{result ? formatNumberWithSpaces(result.E52) : 0}</Text>
+                    </View>
+
+                    <View style={[styles.box, styles.boxBorder]}>
+                        
+                        <Text style={styles.boxBorderHeading}>Your income will last</Text>
+                        <Text style={styles.boxBorderLabel}>10 Years</Text>
+
+                        <View style={styles.barBox}>
+                            <View style={styles.barGray}></View>
+                            <View style={[styles.barRed, { width: `${result ? formatNumberWithSpaces(result.P53) : 0}%` }]}></View>
+                        </View>
+
+                        <View>
+                            <Text style={styles.barInfo}>Poor markets ({result ? formatNumberWithSpaces(result.P53) : 0}% growth)</Text>
+                        </View>
+
+                        <Text style={[styles.boxBorderLabel, styles.boxBorderLabelGreen]}>10 Years</Text>
+
+                        <View style={styles.barBox}>
+                            <View style={styles.barGray}></View>
+                            <View style={[styles.barRed, styles.barGreen, , { width: `${result ? formatNumberWithSpaces(result.P54) : 0}%` }]}></View>
+                        </View>
+
+                        <View>
+                            <Text style={styles.barInfo}>Average markets ({result ? formatNumberWithSpaces(result.P54) : 0}% growth)</Text>
+                        </View>
+
+                    </View>
+                </View>
+
+                <View style={styles.smallTextWrapper}>
+                    <Text style={styles.smallText}>The income illustration above is for a living annuity.</Text>
+                </View>
+
+                <View style={styles.contentBottom}>
+                    <Text style={styles.bottomHeading1}>Your different income annuity options at retirement</Text>
+                    <Text style={styles.bottomHeading2}>Living annuity</Text>
+                    <Text>A living annuity is a flexibility plan where you decide how your savings are invested and you choose an income level that suits your needs. You can withdraw an income between 2.5% and 17.5% of your investment a year, allowing you to adapt your income when needed. You can adjust your income every year, but if your investment underperforms or you withdraw too much, you could run out of retirement savings.</Text>
+                    <Text style={styles.bottomHeading2}>Guaranteed (or life) annuity</Text>
+                    <Text>A guaranteed annuity ensures that you receive a regular income for as long as you live. You can choose an escalation option that determines how the purchasing power of your income will increase or decrease over time.</Text>
+                    <Text style={styles.bottomHeading2}>Composite (or compound) annuity</Text>
+                    <Text>By combining the features of a living annuity and a guaranteed annuity, a composite annuity ensures that you receive an income for life and allows you to keep a portion of your capital invested in the markets.</Text>
+                    <Text style={{ height: 10 }}></Text>
+                    <Text>For more information, <PDFLink style={styles.greenText} src="#">watch this video</PDFLink>.</Text>
+                    <Text style={styles.bottomHeading3}>Knowing what your income will be when you retire is great, but the most important step is taking action today.</Text>
+                    <Text>It really is smart to contribute to a retirement annuity and have peace of mind when you retire.</Text>
+                    <Text>Contact your financial adviser to help you choose the best investment for your future. If you don’t have a financial adviser, call <Text style={styles.phone}>0860 66 66 59</Text> and we will gladly assist you.</Text>
+                </View>
+                
+                <View style={styles.footer}>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>DISCLAIMER:</Text> The information in this tool is intended for illustrative purposes only and the values shown aren&lsquo;t guaranteed. This isn&lsquo;t an offer and it&lsquo;s not part of a contractual undertaking by Old Mutual Limited, Old Mutual Life Assurance Company (South Africa) Ltd or any of Old Mutual Limited&lsquo;s subsidiaries. The tool also doesn&lsquo;t represent financial advice by any of the companies in the Old Mutual Limited Group. The personal information provided will only be used to generate a report and no personal information provided will be stored during this process.</Text>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>ASSUMPTIONS:</Text> Input age is the age at next tax year end. Calculated assuming your salary is your only income. You have not exceeded the limit of 27.5% of your yearly taxable income (or R350 000) which includes your pension or provident fund yearly contributions. You don’t skip any contributions throughout the year. Fees are not taken into account. The calculation is based on the 2024/25 SARS income tax tables.</Text>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>IMPORTANT:</Text> The yearly tax deduction on a retirement annuity is limited to 27.5% of your income, up to a maximum of R350 000. Any amount above this is treated as deduction in the following year.</Text>
+                    <Text style={styles.footerText}>Old Mutual Life Assurance Company (SA) Limited is a licensed FSP and life insurer.</Text>               
+                </View>
+
+            </Page>
+
+            <Page size="A4" style={styles.page}>
+                <View style={styles.headerContainer}>
+                    <View style={styles.imageContainer}>
+                        <Image 
+                            src="/images/pdf-logo.png" 
+                            style={{ width: 204, height: 56 }} 
+                        />
+                    </View>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.headerStrong}>RETIREMENT INCOME</Text>
+                        <Text style={styles.headerSpan}>REPORT</Text>
+                    </View>
+                </View>
+                <View>
+                    <Image
+                        src="/images/pdf-border.png" 
+                        style={{ width: '100%', height: 4 }} 
+                    />
+                </View>
+                
+                <View style={styles.infoBox1}>
+                    <Image src="/images/info-box-1.png" style={styles.backgroundImage} />
+
+                    <View style={styles.infoContent}>
+                        <Text style={styles.infoHeading1}>PROTECT YOUR RETIREMENT SAVINGS </Text>
+                        <Text style={styles.infoText}>
+                            It is important to save for your retirement, but it’s equally important to protect your savings.
+                            Our life and disability insurance options ensure that you can still achieve your savings goals if anything happens to you.
+                            Ask your adviser about the right life and disability cover for you and your family. Click here for more information.
+                        </Text>
+                    </View>
+                </View>
+                
+                <View style={styles.infoBox2}>
+                    <Image src="/images/info-box-2.png" style={styles.backgroundImage} />
+
+                    <View style={styles.infoContent}>
+                        <Text style={styles.infoHeading2}>PROTECT YOUR RETIREMENT SAVINGS </Text>
+                        <Text style={styles.infoText}>
+                            Old Mutual Rewards is a free-to-join financial wellness programme designed to partner with you on your savings journey.
+                        </Text>
+                        <Text style={{ height: 5 }} ></Text>
+                        <Text style={styles.infoText}>
+                            You can earn a percentage of your contributions on qualifying financial products in Rewards points monthly. You also earn points for learning how to take control of your finances using our online financial  education content, online assessments, Rewards calculators and tools. Your Rewards tier determines the rate at which you earn points and other discounted benefits, such as discounts on domestic and international flights.
+                        </Text>
+                        <Text style={{ height: 5 }} ></Text>
+                        <Text style={styles.infoText}>
+                            Redeem your points at over 50 partners – buy groceries and fuel, watch a movie, and treat the family to a meal. Or save your Old Mutual Rewards points for the future ­– save points in qualifying Old Mutual products, or even donate your points to a charity. Plus, get up to 100% off with TaxTim to simplify tax filing and boost your chances of a refund!
+                        </Text>
+                        <Text style={{ height: 5 }} ></Text>
+                        <Text style={styles.infoText}>
+                            Register today on <PDFLink style={styles.greenText} src="https://www.sars.gov.za">oldmutual.co.za/rewards</PDFLink> and explore the many ways that you can earn and spend your points.
+                        </Text>
+                        <Text style={{ height: 5 }} ></Text>
+                        <Text style={styles.infoTextSmall}>
+                            Old Mutual Rewards (Pty) Ltd. is a company in the Old Mutual Group. Terms, Conditions and Programme Rules apply.
+                        </Text>
+                    </View>
+                </View>
+
+                <View style={styles.footer}>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>DISCLAIMER:</Text> The information in this tool is intended for illustrative purposes only and the values shown aren&lsquo;t guaranteed. This isn&lsquo;t an offer and it&lsquo;s not part of a contractual undertaking by Old Mutual Limited, Old Mutual Life Assurance Company (South Africa) Ltd or any of Old Mutual Limited&lsquo;s subsidiaries. The tool also doesn&lsquo;t represent financial advice by any of the companies in the Old Mutual Limited Group. The personal information provided will only be used to generate a report and no personal information provided will be stored during this process.</Text>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>ASSUMPTIONS:</Text> Input age is the age at next tax year end. Calculated assuming your salary is your only income. You have not exceeded the limit of 27.5% of your yearly taxable income (or R350 000) which includes your pension or provident fund yearly contributions. You don’t skip any contributions throughout the year. Fees are not taken into account. The calculation is based on the 2024/25 SARS income tax tables.</Text>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>IMPORTANT:</Text> The yearly tax deduction on a retirement annuity is limited to 27.5% of your income, up to a maximum of R350 000. Any amount above this is treated as deduction in the following year.</Text>
+                    <Text style={styles.footerText}>Old Mutual Life Assurance Company (SA) Limited is a licensed FSP and life insurer.</Text>               
+                </View>
+
+            </Page>
+        
+        </Document>
+    );
+
     return (
         <section className="tax-back-section pt-0 lg:pt-[118px] pb-[100px]">
             <div className="container px-0 lg:px-[15px]">
@@ -213,7 +682,7 @@ export default function RetirementAnnuityForm() {
                             />
                         </div>
                     </div>
-                    <div id="calculator-form" className="w-full relative">
+                    <div id="calculator-form" className="w-full relative min-h-[400px] 2xl:min-h-[900px]">
                         <form className="mt-[155px] lg:mt-0 px-[34px] lg:px-0">
 
                             <div className="form-field-holder max-w-[570px]">
@@ -353,7 +822,12 @@ export default function RetirementAnnuityForm() {
                                 <div className="generate-report bg-transparent rounded-[15px] pt-[90px] pb-[54px] px-[15px]">
                                     
                                     <div className="flex flex-col items-center gap-[20px] justify-center mt-[35px]">
-                                        <Button label="GENERATE REPORT" className="text-primary w-full max-w-[310px] border border-primary bg-transparent from-transparent to-transparent" />
+                                        <button
+                                            onClick={handleDownload}
+                                            className="relative site-btn flex items-center justify-center w-[238px] h-[49px] lg:h-[52px] rounded-[30px] text-[16px] lg:text-[18px] leading-[18px] transition-transform duration-200 ease-in-out from-[#009677] to-[#50B848] text-primary w-full max-w-[255px] lg:max-w-[310px] border border-primary bg-transparent from-transparent to-transparent hover:scale-105 active:scale-100"
+                                        >
+                                            GENERATE REPORT
+                                        </button>
                                         <Button label="CALL ME BACK" onClick={toggleSideForm} className="text-white w-full max-w-[310px]" />
                                     </div>
 

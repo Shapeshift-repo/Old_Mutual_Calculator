@@ -14,6 +14,18 @@ import VideoCard from "./VideoCard";
 import StepButton from "./StepButton";
 import ColorCard from "./ColorCard";
 import NumberPlate from "./NumberPlate";
+import { Font, Page, Text, Link as PDFLink, View, Image, Document, StyleSheet, PDFDownloadLink, pdf } from '@react-pdf/renderer';
+
+Font.register({
+    family: 'Montserrat',
+    fonts: [
+      { src: '/fonts/Montserrat-Regular.ttf', fontWeight: 'normal' },
+      { src: '/fonts/Montserrat-Medium.ttf', fontWeight: 'medium' },
+      { src: '/fonts/Montserrat-SemiBold.ttf', fontWeight: 'semibold' },
+      { src: '/fonts/Montserrat-Bold.ttf', fontWeight: 'bold' },
+      { src: '/fonts/Montserrat-Light.ttf', fontWeight: 'light' },
+    ],
+});
 
 const PrimarySlider = styled(Slider)(({ theme }) => ({
     '& .MuiSlider-thumb': {
@@ -272,7 +284,7 @@ export default function RetirementAnnuityForm() {
         // Parsing inputs
         let D9 = age;
         let G9 = grossIncome;
-        let D11 = contribution
+        let D11 = contribution;
         let investmentStrategyValue = investmentStrategyTable[0][investment] / 100;
         let D13 = monthly;
         let D15 = D13 + D11; // Total Monthly Contributions
@@ -316,15 +328,6 @@ export default function RetirementAnnuityForm() {
         // Step 5: Round to 2 decimal places (to match Excel)
         N13 = Math.round(N13 * 100) / 100;
 
-        /* console.log('D15 ='+D15);
-        console.log('Q5 ='+Q5);
-        console.log('J9 ='+J9);
-        console.log('N5 ='+N5);
-        console.log('N7 ='+N7);
-        console.log('N8 ='+N8);
-        console.log('D9 ='+D9);
-        console.log('N13 ='+N13);
- */
         let N14 = N13 - N15 - N16;
     
         // Function to calculate tax based on income
@@ -417,7 +420,10 @@ export default function RetirementAnnuityForm() {
         const totalContributionPaid = (N15 + N16).toFixed(0);
         const lampSum = J9.toFixed(0);
 
-        return { totalInvestment, taxGetBack, investmentGrowth, totalContributionPaid, lampSum };
+        const investmentOption = contributionOptions.find(option => option.value === investment);
+        const investmentLabel = investmentOption ? investmentOption.label.split(' - ')[1] : 'inflation plus 3%-4%';
+
+        return { totalInvestment, taxGetBack, investmentGrowth, totalContributionPaid, lampSum, grossIncome, contribution, monthly, age, investmentLabel };
     };
 
     // On submit
@@ -487,6 +493,621 @@ export default function RetirementAnnuityForm() {
         </svg>
     );
 
+    const handleDownload = async () => {
+        const blob = await pdf(<MyDocument />).toBlob(); // Generate PDF as a blob
+        const url = URL.createObjectURL(blob); // Create a URL for the blob
+
+        // Create a link element and trigger a download
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'retirement-annuity.pdf');
+        document.body.appendChild(link);
+        link.click(); // Programmatically click the link to trigger the download
+        document.body.removeChild(link); // Clean up the DOM
+    };
+
+    // Create styles
+    const styles = StyleSheet.create({
+        page: {
+            padding: 0,
+            backgroundColor: '#FFFFFF',
+            fontFamily: 'Montserrat',
+        },
+        headerContainer: {
+            flexDirection: 'row', // Mimic `flex` and `justify-between`
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%',
+            height: 91,
+            backgroundColor: '#EDEDED',
+            paddingTop: 10,
+            paddingLeft: 25,
+            paddingRight: 35,
+        },
+        imageContainer: {
+            width: '50%',
+        },
+        textContainer: {
+            width: '50%',
+            alignItems: 'flex-end',
+        },
+        headerStrong: {
+            fontWeight: 'semibold',
+            fontSize: 16,
+            marginBottom: 0,
+            color: '#009677',
+        },
+        headerSpan: {
+            fontSize: 16,
+            fontWeight: 'light',
+            color: '#009677',
+        },
+        contentTop1: {
+            marginTop: 20,
+            paddingLeft: 30,
+            paddingRight: 30,
+            fontWeight: 'light',
+        },
+        contentHi: {
+            fontSize: 12,
+            fontWeight: 'semibold',
+            marginBottom: 10,
+        },
+        contentAfterHi: {
+            fontSize: 10,
+            lineHeight: 1.1,
+        },
+        contentTop2: {
+            marginTop: 8,
+            paddingLeft: 30,
+            paddingRight: 30,
+            fontSize: 12,
+            fontWeight: 'light',
+            lineHeight: 1.2,
+        },
+        boldGreen: {
+            fontWeight: 'semibold',
+            color: '#009677',
+        },
+        barWrapper: {
+            position: 'relative',
+            width: '100%',
+            fontSize: 10,
+            fontWeight: 'light',
+            lineHeight: 1.1,
+        },
+        barWrapperHeading: {
+            fontSize: 16,
+            fontWeight: 'semibold',
+        },
+        barWrapperHeadingGreen: {
+            color: '#009677',
+        },
+        barWrapperHeadingRed: {
+            color: '#ED0080',
+        },
+        barWrapperHeadingBlue: {
+            color: '#00C0E8',
+        },
+        tagBox: {
+            width: 161,
+            height: 48,
+            position: 'absolute',
+            top: 16,
+            right: 70,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+            justifyContent: 'center',
+            paddingRight: 15,
+            textAlign: 'right',
+            paddingBottom: 10,
+        }, 
+        tagBox2: {
+            top: 85,
+        },          
+        tagBox3: {
+            top: 170,
+        },          
+        tagBox4: {
+            right: 'auto',
+            left: 58,
+            top: 170,
+            textAlign: 'left',
+            alignItems: 'flex-start',
+        },           
+        tagBoxImage: {
+            width: '100%',
+            height: '100%',
+            position: 'absolute',
+            top: 0,
+            right: 0,
+        },        
+        imageBoxes: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: '100%',
+            backgroundColor: '#F9F9F9',
+            paddingTop: 10,
+            paddingBottom: 10,
+            paddingLeft: 30,
+            paddingRight: 30,
+            marginTop: 10,
+            marginBottom: 5,
+        },
+        box: {
+            width: '55%',
+            display: 'flex',
+        },
+        graphBox: {
+            width: '45%',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'flex-end',
+            paddingLeft: 20,
+            justifyContent: 'space-between',
+            fontSize: 10,
+            fontWeight: 'light',
+            lineHeight: 1.1,
+        },
+        graphCol: {
+            width: '47%',
+        },
+        graphBar: {
+            width: '100%',
+            position: 'relative',
+            overflow: 'hidden',
+            height: 250,
+            backgroundColor: '#009677',
+            padding: 8,
+            display: 'flex',
+            justifyContent: 'flex-end',
+        },
+        lightBar: {
+            backgroundColor: '#50B848',
+            height: 210,
+        },
+        beforeWhiteBox: {
+            color: '#FFFFFF',
+            marginBottom: 80,
+        },
+        beforeWhiteBoxLarge: {
+            marginBottom: 60,
+        },
+        whiteBox: {
+            backgroundColor: '#FFFFFF',
+            padding: 10,
+        },
+        whiteBoxLarge: {
+            paddingTop: 20,
+            paddingBottom: 20,
+        },
+        graphStrong: {
+            fontWeight: 'semibold',
+        },
+        graphGreen: {
+            color: '#009677',
+        },
+        graphLightGreen: {
+            color: '#50B848',
+        },
+        boxHeading: {
+            fontSize: 18,
+            fontWeight: 'medium',
+            marginBottom: 10,
+        },
+        boxText: {
+            fontSize: 10,
+            fontWeight: 'light',
+            lineHeight: 1.1,
+        },
+        boxBold: {
+            fontSize: 10,
+            fontWeight: 'bold',
+            lineHeight: 1.1,
+        },
+        boxGreen: {
+            color: '#009677',
+            fontWeight: 'medium',
+        },
+        boxLightGreen: {
+            color: '#50B848',
+            fontWeight: 'medium',
+        },
+        boxStrong: {
+            fontWeight: 'medium',
+        },
+        boxBorderHeading: {
+            fontSize: 14,
+            fontWeight: 'semibold',
+            color: '#009677',
+        },
+        boxBorderLabel: {
+            fontSize: 16,
+            fontWeight: 'semibold',
+            color: '#ED0080',
+            marginBottom: 2,
+            marginTop: 6,
+        },
+        boxBorderLabelGreen: {
+            color: '#009677',
+        },
+        barBox: {
+            width: '100%',
+            position: 'relative',
+            overflow: 'hidden',
+            height: 12,
+            borderRadius: 15,
+            marginBottom: 3,
+        },
+        barGray: {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: '#DADADA',
+        },
+        barRed: {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '30%',
+            height: '100%',
+            backgroundColor: '#ED0080',
+            borderRadius: 15,
+        },
+        barGreen: {
+            width: '56%',
+            backgroundColor: '#009677',
+        },
+        barInfo: {
+            fontSize: 10,
+            fontWeight: 'normal',
+            color: '#818181',
+        },
+        smallTextWrapper: {
+            paddingLeft: 30,
+            paddingRight: 30,
+            marginBottom: 15,
+        },
+        smallText: {
+            fontSize: 8,
+            fontWeight: 'light',
+            color: '#323232',
+        },
+        contentBottom: {
+            paddingLeft: 30,
+            paddingRight: 30,
+            fontSize: 10,
+            fontWeight: 'light',
+            lineHeight: 1.2,
+        },
+        bottomHeading1: {
+            fontSize: 13,
+            fontWeight: 'semibold',
+            marginBottom: 8,
+        },
+        bottomHeading2: {
+            fontSize: 10,
+            fontWeight: 'semibold',
+            marginTop: 10,
+            marginBottom: 2,
+        },
+        bottomHeading3: {
+            fontSize: 9,
+            fontWeight: 'bold',
+            marginTop: 10,
+        },
+        phone: {
+            fontWeight: 'medium',
+        },
+        greenText: {
+            color: '#009677',
+            textDecoration: 'none',
+        },
+        bottomBold: {
+            fontWeight: 'medium',
+        },
+        bottomList: {
+            flexDirection: 'row',
+            alignItems: 'flex-center',
+        },
+        footer: {
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: '#F9F9F9',
+            paddingLeft: 30,
+            paddingRight: 30,
+            paddingTop: 10,
+            paddingBottom: 10,
+            fontSize: 7,
+            fontWeight: 'light',
+        },
+        footerText: {
+            marginBottom: 3,
+        },
+        footerBold: {
+            fontWeight: 'medium',
+        },
+        infoBox1: {
+            width: '100%',
+            height: 200,
+            position: 'relative',
+            overflow: 'hidden',
+            marginTop: 40,
+        },
+        infoBox2: {
+            width: '100%',
+            height: 300,
+            position: 'relative',
+            overflow: 'hidden',
+            marginTop: 40,
+        },
+        backgroundImage: {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+        },
+        infoContent: {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            paddingLeft: 40,
+        },
+        infoText: {
+            fontSize: 10,
+            fontWeight: 'light',
+            lineHeight: 1.2,
+            width: 400,
+        },
+        infoTextSmall: {
+            fontSize: 8,
+            fontWeight: 'light',
+            lineHeight: 1,
+            width: 400,
+        },
+        infoHeading1: {
+            fontSize: 14,
+            fontWeight: 'semibold',
+            color: '#009677',
+            marginBottom: 4,
+        },
+        infoHeading2: {
+            fontSize: 14,
+            fontWeight: 'semibold',
+            color: '#ED0080',
+            marginBottom: 4,
+        },
+    });
+
+    const MyDocument = () => (
+        <Document title="Retirement Annuity">
+            <Page size={{ width: 595.28, height: 980 }} style={styles.page}>
+                <View style={styles.headerContainer}>
+                    <View style={styles.imageContainer}>
+                        <Image 
+                            src="/images/pdf-logo.png" 
+                            style={{ width: 204, height: 56 }} 
+                        />
+                    </View>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.headerStrong}>RETIREMENT ANNUITY</Text>
+                        <Text style={styles.headerSpan}>REPORT</Text>
+                    </View>
+                </View>
+                <View>
+                    <Image
+                        src="/images/pdf-border.png" 
+                        style={{ width: '100%', height: 4 }} 
+                    />
+                </View>
+
+                <View style={styles.contentTop1}>
+                    <Text style={styles.contentHi}>Hi</Text>
+                    <Text style={styles.contentAfterHi}>Saving for the future might be the most important thing you ever do for you and your family. And the earlier you start, the less money it will take. The longer your money is invested, the more it can grow.  See how much your investment will grow if you invest consistently and into your retirement annuity.</Text>
+                </View>
+                
+                <View style={styles.contentTop2}>
+                    <Text>
+                        With your monthly contribution of <Text style={styles.boldGreen}>R{result ? formatNumberWithSpaces(result.grossIncome) : 0}</Text> and your current retirement savings of <Text style={styles.boldGreen}>R{result ? formatNumberWithSpaces(result.contribution) : 0}</Text>, with an investment strategy of <Text style={styles.boldGreen}>{result ? result.investmentLabel : 'inflation plus 3%-4%'}</Text>, your total savings at age <Text style={styles.boldGreen}>{result ? result.age : 25}</Text> will be <Text style={styles.boldGreen}>R{result ? formatNumberWithSpaces(result.taxGetBack) : 0}.</Text> Your cost of delay is <Text style={styles.boldGreen}>R{result ? formatNumberWithSpaces(result.lampSum) : 0}</Text>
+                    </Text>
+                </View>
+
+                <View style={styles.barWrapper}>
+                    <Image
+                        src="/images/bar-box.png" 
+                        style={{ width: '100%', height: 'auto' }} 
+                    />
+                    <View style={styles.tagBox}>
+                        <Image
+                            src="/images/tag-box1.png" 
+                            style={styles.tagBoxImage} 
+                        />
+                        <Text style={[styles.barWrapperHeading, styles.barWrapperHeadingGreen]}>R{result ? formatNumberWithSpaces(result.totalInvestment) : 0}</Text>
+                        <Text>Total investment value</Text>
+                    </View>
+                    
+                    <View style={[styles.tagBox, styles.tagBox2]}>
+                        <Image
+                            src="/images/tag-box2.png" 
+                            style={styles.tagBoxImage} 
+                        />
+                        <Text style={[styles.barWrapperHeading, styles.barWrapperHeadingRed]}>R{result ? formatNumberWithSpaces(result.investmentGrowth) : 0}</Text>
+                        <Text>Your investment growth</Text>
+                    </View>
+                    
+                    <View style={[styles.tagBox, styles.tagBox3]}>
+                        <Image
+                            src="/images/tag-box3.png" 
+                            style={styles.tagBoxImage} 
+                        />
+                        <Text style={[styles.barWrapperHeading, styles.barWrapperHeadingBlue]}>R{result ? formatNumberWithSpaces(result.totalContributionPaid) : 0}</Text>
+                        <Text>Total contributions paid</Text>
+                    </View>
+                    {choice === 'yes' && (
+                        <View style={[styles.tagBox, styles.tagBox4]}>
+                            <Text style={styles.barWrapperHeading}>R{result ? formatNumberWithSpaces(result.lampSum) : 0}</Text>
+                            <Text>Lump sum</Text>
+                        </View>
+                    )}
+
+                </View>
+
+                <View style={styles.imageBoxes}>
+                    <View style={styles.box}>                    
+                        <Text style={styles.boxHeading}>What is compound growth?</Text>
+                        <Text style={styles.boxText}>Compound growth is the process of earning returns on both your original investment and the interest or gains that accumulate over time. The earlier you start investing, the more you benefit from compound growth.</Text>
+                        <Text style={styles.boxText}>For more information, see the example below or <PDFLink style={styles.greenText} src="#">watch this video.</PDFLink></Text>
+                        <Text style={{ height: 5 }}></Text>
+                        <Text style={styles.boxBold}>Example</Text>
+                        <Text style={{ height: 2 }}></Text>
+                        <Text style={styles.boxText}>Take a look at the benefits of starting early and using the power of compound growth to grow your money over time. Two friends, Lebo and Sibo. invest R1 000 a month at 10% growth.</Text>
+                        <Text style={{ height: 10 }}></Text>
+                        <Text style={styles.boxText}><Text style={styles.boxGreen}>Lebo</Text> saves R1 000 a month from age 25 to age 35. He then stops investing and leaves the money to grow.</Text>
+                        <Text style={styles.boxText}><Text style={styles.boxLightGreen}>Sibo</Text> saves R1 000 a month, but only starts at age 35 and saves all the way to 70.</Text>
+                        <Text style={{ height: 10 }}></Text>
+                        <Text style={styles.boxText}>Sibo will never catch up to Lebo, even though she invests 25 years longer. Now, that’s the power of compound growth!</Text>
+                        <Text style={{ height: 10 }}></Text>
+                        <Text style={styles.boxBold}>It really is smart to contribute to a retirement annuity as soon as possible and let your money grow.</Text>
+                        <Text style={styles.boxText}>Knowing how your money will grow over time is great, but the most important step is taking action <Text style={styles.boxStrong}>today</Text>.  Contact your financial adviser to help you choose the best investment for your future. </Text>
+                        <Text style={styles.boxText}>If you don’t have a financial adviser, call <Text style={styles.boxStrong}>0860 66 66 59</Text> and we will gladly assist you.</Text>
+                    </View>
+
+                    <View style={styles.graphBox}>
+                        
+                        <View style={styles.graphCol}>
+                            <Text>Total return</Text>
+                            <Text style={styles.graphStrong}>R3 961 860</Text>
+                            <Text style={{ height: 5 }}></Text>
+                            <View style={styles.graphBar}>
+                                <View style={styles.beforeWhiteBox}>
+                                    <Text>Compound</Text>
+                                    <Text>Growth</Text>
+                                </View>
+                                <View style={styles.whiteBox}>
+                                    <Text style={styles.graphStrong}>R120 000</Text>
+                                    <Text>Contributed</Text>
+                                </View>
+                            </View>
+                            <Text style={{ height: 8 }}></Text>
+                            <Text style={[styles.graphStrong, styles.graphGreen]}>Lebo</Text>
+                            <Text style={styles.graphGreen}>Saves for 10 years</Text>
+                        </View>
+
+                        <View style={styles.graphCol}>
+                            <Text>Total return</Text>
+                            <Text style={styles.graphStrong}>R3 961 860</Text>
+                            <Text style={{ height: 5 }}></Text>
+                            <View style={[styles.graphBar, styles.lightBar]}>
+                                <View style={[styles.beforeWhiteBox, styles.beforeWhiteBoxLarge]}>
+                                    <Text>Compound</Text>
+                                    <Text>Growth</Text>
+                                </View>
+                                <View style={[styles.whiteBox, styles.whiteBoxLarge]}>
+                                    <Text style={styles.graphStrong}>R120 000</Text>
+                                    <Text>Contributed</Text>
+                                </View>
+                            </View>
+                            <Text style={{ height: 8 }}></Text>
+                            <Text style={[styles.graphStrong, styles.graphLightGreen]}>Sibo</Text>
+                            <Text style={styles.graphLightGreen}>Saves for 35 years</Text>
+                        </View>
+
+                    </View>
+
+                </View>
+                
+                <View style={styles.footer}>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>DISCLAIMER:</Text> The information in this tool is intended for illustrative purposes only and the values shown aren&lsquo;t guaranteed. This isn&lsquo;t an offer and it&lsquo;s not part of a contractual undertaking by Old Mutual Limited, Old Mutual Life Assurance Company (South Africa) Ltd or any of Old Mutual Limited&lsquo;s subsidiaries. The tool also doesn&lsquo;t represent financial advice by any of the companies in the Old Mutual Limited Group. The personal information provided will only be used to generate a report and no personal information provided will be stored during this process.</Text>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>ASSUMPTIONS:</Text> Input age is the age at next tax year end. Calculated assuming your salary is your only income. You have not exceeded the limit of 27.5% of your yearly taxable income (or R350 000) which includes your pension or provident fund yearly contributions. You don’t skip any contributions throughout the year. Fees are not taken into account. The calculation is based on the 2024/25 SARS income tax tables.</Text>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>IMPORTANT:</Text> The yearly tax deduction on a retirement annuity is limited to 27.5% of your income, up to a maximum of R350 000. Any amount above this is treated as deduction in the following year.</Text>
+                    <Text style={styles.footerText}>Old Mutual Life Assurance Company (SA) Limited is a licensed FSP and life insurer.</Text>               
+                </View>
+
+            </Page>
+
+            <Page size="A4" style={styles.page}>
+                <View style={styles.headerContainer}>
+                    <View style={styles.imageContainer}>
+                        <Image 
+                            src="/images/pdf-logo.png" 
+                            style={{ width: 204, height: 56 }} 
+                        />
+                    </View>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.headerStrong}>RETIREMENT INCOME</Text>
+                        <Text style={styles.headerSpan}>REPORT</Text>
+                    </View>
+                </View>
+                <View>
+                    <Image
+                        src="/images/pdf-border.png" 
+                        style={{ width: '100%', height: 4 }} 
+                    />
+                </View>
+                
+                <View style={styles.infoBox1}>
+                    <Image src="/images/info-box-1.png" style={styles.backgroundImage} />
+
+                    <View style={styles.infoContent}>
+                        <Text style={styles.infoHeading1}>PROTECT YOUR RETIREMENT SAVINGS </Text>
+                        <Text style={styles.infoText}>
+                            It is important to save for your retirement, but it’s equally important to protect your savings.
+                            Our life and disability insurance options ensure that you can still achieve your savings goals if anything happens to you.
+                            Ask your adviser about the right life and disability cover for you and your family. Click here for more information.
+                        </Text>
+                    </View>
+                </View>
+                
+                <View style={styles.infoBox2}>
+                    <Image src="/images/info-box-2.png" style={styles.backgroundImage} />
+
+                    <View style={styles.infoContent}>
+                        <Text style={styles.infoHeading2}>PROTECT YOUR RETIREMENT SAVINGS </Text>
+                        <Text style={styles.infoText}>
+                            Old Mutual Rewards is a free-to-join financial wellness programme designed to partner with you on your savings journey.
+                        </Text>
+                        <Text style={{ height: 5 }} ></Text>
+                        <Text style={styles.infoText}>
+                            You can earn a percentage of your contributions on qualifying financial products in Rewards points monthly. You also earn points for learning how to take control of your finances using our online financial education content, online assessments, Rewards calculators and tools. Your Rewards tier determines the rate at which you earn points and other discounted benefits, such as discounts on domestic and international flights.
+                        </Text>
+                        <Text style={{ height: 5 }} ></Text>
+                        <Text style={styles.infoText}>
+                            Redeem your points at over 50 partners – buy groceries and fuel, watch a movie, and treat the family to a meal. Or save your Old Mutual Rewards points for the future ­– save points in qualifying Old Mutual products, or even donate your points to a charity. Plus, get up to 100% off with TaxTim to simplify tax filing and boost your chances of a refund!
+                        </Text>
+                        <Text style={{ height: 5 }} ></Text>
+                        <Text style={styles.infoText}>
+                            Register today on <PDFLink style={styles.greenText} src="https://www.sars.gov.za">oldmutual.co.za/rewards</PDFLink> and explore the many ways that you can earn and spend your points.
+                        </Text>
+                        <Text style={{ height: 5 }} ></Text>
+                        <Text style={styles.infoTextSmall}>
+                            Old Mutual Rewards (Pty) Ltd. is a company in the Old Mutual Group. Terms, Conditions and Programme Rules apply.
+                        </Text>
+                    </View>
+                </View>
+
+                <View style={styles.footer}>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>DISCLAIMER:</Text> The information in this tool is intended for illustrative purposes only and the values shown aren&lsquo;t guaranteed. This isn&lsquo;t an offer and it&lsquo;s not part of a contractual undertaking by Old Mutual Limited, Old Mutual Life Assurance Company (South Africa) Ltd or any of Old Mutual Limited&lsquo;s subsidiaries. The tool also doesn&lsquo;t represent financial advice by any of the companies in the Old Mutual Limited Group. The personal information provided will only be used to generate a report and no personal information provided will be stored during this process.</Text>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>ASSUMPTIONS:</Text> Input age is the age at next tax year end. Calculated assuming your salary is your only income. You have not exceeded the limit of 27.5% of your yearly taxable income (or R350 000) which includes your pension or provident fund yearly contributions. You don’t skip any contributions throughout the year. Fees are not taken into account. The calculation is based on the 2024/25 SARS income tax tables.</Text>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>IMPORTANT:</Text> The yearly tax deduction on a retirement annuity is limited to 27.5% of your income, up to a maximum of R350 000. Any amount above this is treated as deduction in the following year.</Text>
+                    <Text style={styles.footerText}>Old Mutual Life Assurance Company (SA) Limited is a licensed FSP and life insurer.</Text>               
+                </View>
+
+            </Page>
+        
+        </Document>
+    );
+
     return (
         <section className="tax-back-section pt-0 lg:pt-[118px] pb-[100px]">
             <div className="container px-0 lg:px-[15px]">
@@ -509,6 +1130,7 @@ export default function RetirementAnnuityForm() {
                         </div>
                     </div>
                     <div id="calculator-form" className="w-full relative">
+                        
                         <form className="relative mt-[-110px] pt-[30px] pb-[48px] lg:pb-0 lg:pt-0 lg:mt-0 bg-white px-[34px] lg:px-0 rounded-[64px] lg:rounded-0 z-10 lg:z-2 shadow-[0_4px_29px_0_rgba(0,0,0,0.24)] lg:shadow-none">
                             <div className="flex justify-center mb-[60px] block lg:hidden">
                                 <span className="w-[66px] h-[7px] rounded-[4px] bg-[#028F72]"></span>
@@ -788,7 +1410,12 @@ export default function RetirementAnnuityForm() {
                                 <div className="generate-report bg-transparent rounded-[15px] pt-[90px] pb-[54px] px-[15px]">
                                     
                                     <div className="flex flex-col items-center gap-[20px] justify-center mt-[35px]">
-                                        <Button label="GENERATE REPORT" className="text-primary w-full max-w-[310px] border border-primary bg-transparent from-transparent to-transparent" />
+                                        <button
+                                            onClick={handleDownload}
+                                            className="relative site-btn flex items-center justify-center w-[238px] h-[49px] lg:h-[52px] rounded-[30px] text-[16px] lg:text-[18px] leading-[18px] transition-transform duration-200 ease-in-out from-[#009677] to-[#50B848] text-primary w-full max-w-[255px] lg:max-w-[310px] border border-primary bg-transparent from-transparent to-transparent hover:scale-105 active:scale-100"
+                                        >
+                                            GENERATE REPORT
+                                        </button>
                                         <Button label="CALL ME BACK" onClick={toggleSideForm} className="text-white w-full max-w-[310px]" />
                                     </div>
 

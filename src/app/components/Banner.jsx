@@ -18,7 +18,7 @@ export default function Banner({
   return (
     <div
       id={id}
-      className={`relative lg:fixed min-h-[750px] lg:min-h-[600px] lg:h-[calc(100vh-30px)] w-full lg:w-[600px] rounded-bl-[214px] rounded-br-[214px] lg:rounded-bl-[317px] lg:rounded-br-[317px] overflow-hidden ${className}`}
+      className={`relative min-h-[750px] lg:min-h-[600px] lg:h-[calc(100vh-30px)] w-full lg:w-[600px] rounded-bl-[214px] rounded-br-[214px] lg:rounded-bl-[317px] lg:rounded-br-[317px] overflow-hidden ${className}`}
     >
       <div className="w-full h-full relative">
         {/* Show mobile image on small screens and normal image on larger screens */}

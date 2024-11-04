@@ -34,9 +34,9 @@ export default function Footer() {
         if (!mainBanner) return;
 
         if (entry.isIntersecting) {
-            mainBanner.classList.add('active');
+            //mainBanner.classList.add('active');
         } else {
-            mainBanner.classList.remove('active');
+            //mainBanner.classList.remove('active');
         }
     };
 

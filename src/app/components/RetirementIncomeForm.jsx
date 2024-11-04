@@ -9,7 +9,6 @@ import { alpha, styled } from '@mui/material/styles';
 import TextInput from "./TextInput";
 import Button from "./Button";
 import VideoCard from "./VideoCard";
-import StepButton from "./StepButton";
 import ProgressBar from "./ProgressBar";
 import ColorCard from "./ColorCard";
 import { Font, Page, Text, Link as PDFLink, View, Image, Document, StyleSheet, PDFDownloadLink, pdf } from '@react-pdf/renderer';
@@ -182,9 +181,10 @@ export default function RetirementAnnuityForm() {
     
             // Scroll to the output section
             const outputElement = document.getElementById('form-output');
+            const anchorPoint = document.getElementById('anchor-point');
             if (outputElement) {
                 outputElement.classList.remove('hidden');
-                outputElement.scrollIntoView({ behavior: 'smooth' });
+                anchorPoint.scrollIntoView({ behavior: 'smooth' });
             }
         }
     };
@@ -664,8 +664,8 @@ export default function RetirementAnnuityForm() {
         <section className="tax-back-section pt-0 lg:pt-[118px] pb-[100px]">
             <div className="container px-0 lg:px-[15px]">
                 <div className="flex flex-col lg:flex-row gap-0 lg:gap-[150px] items-start">
-                    <div className="w-full relative">
-                    <div className="relative lg:absolute top-0 lg:top-[-230px] left-0 w-full">
+                    <div className="w-full relative lg:sticky top-0  mt-[-230px] z-10 rounded-bl-[62px] rounded-br-[62px] lg:rounded-bl-[62px] lg:rounded-br-[62px]">
+                    <div className="relative lg:static top-0 lg:top-[-230px] left-0 w-full">
                             <Banner 
                                 id="main-banner"
                                 heading="RETIREMENT INCOME"
@@ -734,11 +734,11 @@ export default function RetirementAnnuityForm() {
                                 
                             </div>
                         </form>
-
+                        
                         <div id="form-output" className="form-output hidden relative">
                             
-                            <div className="output-holder relative z-10 mt-[169px] lg:mt-[209px]">
-
+                            <div id="anchor-point" className="pt-[110px] mt-[59px] lg:mt-[99px]"></div>
+                            <div className="output-holder relative z-10">
                                 <div className="estimate-box">
                                     <div 
                                         className="estimate-head relative py-[44px] px-[15px] rounded-tl-[62px] rounded-tr-[62px] lg:rounded-tl-[20px] lg:rounded-tr-[20px] shadow-[0_4px_29px_0_rgba(0,0,0,0.25)] lg:shadow-none"

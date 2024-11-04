@@ -687,8 +687,8 @@ const handleDownload = async () => {
         <section className="tax-back-section pt-0 lg:pt-[118px] pb-[100px]">
             <div className="container px-0 lg:px-[15px]">
                 <div className="flex flex-col lg:flex-row gap-0 lg:gap-[150px] items-start">
-                    <div className="w-full relative z-10">
-                        <div className="relative lg:absolute top-0 lg:top-[-230px] left-0 w-full">
+                    <div className="w-full relative lg:sticky top-0 mt-[-230px] z-10 rounded-bl-[214px] rounded-br-[214px] lg:rounded-bl-[317px] lg:rounded-br-[317px]">
+                        <div className="relative lg:static w-full">
                             <Banner 
                                 id="main-banner"
                                 heading="TAX BACK"

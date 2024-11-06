@@ -34,9 +34,9 @@ export default function Footer() {
         if (!mainBanner) return;
 
         if (entry.isIntersecting) {
-            mainBanner.classList.add('active');
+            //mainBanner.classList.add('active');
         } else {
-            mainBanner.classList.remove('active');
+            //mainBanner.classList.remove('active');
         }
     };
 
@@ -108,8 +108,7 @@ export default function Footer() {
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                         <div className='text-[16px] leading-[24px] [&>h6]:mb-[30px] [&>h6]:font-bold'>
-                            <h6>Lorem ipsum dolor sit amet</h6>
-                            <p>Consectetur adipiscing elit. Vivamus pretium egestas aliquam...</p>
+                            <p>Input age is the age at next tax year end. Calculated assuming your salary is your only income. You have not exceeded the limit of 27.5% of your yearly taxable income (or R350 000) which includes your pension or provident fund yearly contributions. You don’t skip any contributions throughout the year. Fees are not taken into account. The calculation is based on the 2024/25 SARS income tax tables.</p>
                         </div>
                     </Typography>
                 </Box>

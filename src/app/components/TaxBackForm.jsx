@@ -130,24 +130,32 @@ export default function TaxBackForm() {
             let annualIncome = grossIncome * 12;
             monthlyInvest = parseFloat(monthlyInvest.replace(/[^\d]/g, ''));
             let annualInvest = monthlyInvest * 12;
+
+            let annualIncomeNet = annualIncome - annualInvest;
             
             // Ensure values are valid
             if (isNaN(grossIncome) || isNaN(annualIncome) || isNaN(monthlyInvest) || isNaN(annualInvest)) return;
             
             let startBracket = 0;
+            let startBracketNet = 0;
             let taxRate = 0;
+            let taxRateNet = 0;
             let previousBracket = 0;
+            let previousBracketNet = 0;
             let taxPrior = 0;
             let annualSalaryNet = 0;
             let taxAfterContribution = 0;
             let taxBack = 0;
             let cost = 0;
-
+            
             if (annualIncome >= taxBrackets[7].startBracket) {
                 // Income is above the highest bracket
                 startBracket = taxBrackets[7].startBracket;
+                startBracketNet = taxBrackets[7].startBracket;
                 taxRate = taxBrackets[7].taxRate;
+                taxRateNet = taxBrackets[7].taxRate;
                 previousBracket = taxBrackets[7].previousBracket;
+                previousBracketNet = taxBrackets[7].previousBracket;
                 taxPrior = previousBracket + (annualIncome - startBracket) * (taxRate / 100);
                 annualSalaryNet = annualIncome - annualInvest;
                 taxAfterContribution = previousBracket + (annualSalaryNet - startBracket) * (taxRate / 100);
@@ -163,18 +171,31 @@ export default function TaxBackForm() {
                     }
                 });
 
+                const taxBracketNet = taxBrackets.find((bracket, index) => {
+                    const nextBracketNet = taxBrackets[index + 1];
+                    // Make sure to check if `nextBracket` exists for all but the last bracket
+                    if (nextBracketNet) {
+                        return annualIncomeNet >= bracket.startBracket && annualIncomeNet < nextBracketNet.startBracket;
+                    }
+                });
+
                 // If a valid tax bracket is found, set the values
-                if (taxBracket) {
+                if (taxBracket && taxBracketNet) {
                     startBracket = taxBracket.startBracket;
+                    startBracketNet = taxBracketNet.startBracket;
                     taxRate = taxBracket.taxRate;
+                    taxRateNet = taxBracketNet.taxRate;
                     previousBracket = taxBracket.previousBracket;
+                    previousBracketNet = taxBracketNet.previousBracket;
                     taxPrior = previousBracket + (annualIncome - startBracket) * (taxRate / 100);
                     annualSalaryNet = annualIncome - annualInvest;
-                    taxAfterContribution = previousBracket + (annualSalaryNet - startBracket) * (taxRate / 100);
+                    taxAfterContribution = previousBracketNet + (annualIncomeNet - startBracketNet) * (taxRateNet / 100);
                     taxBack = Math.round(taxPrior - taxAfterContribution);
                     cost = annualInvest - taxBack;
                 }
             }  
+
+            console.log(previousBracketNet+' - '+annualIncomeNet+' - '+startBracketNet+' - '+taxRateNet);
     
             // Update the investmentDetails state
             setInvestmentDetails({

@@ -194,8 +194,6 @@ export default function TaxBack() {
                     cost = annualInvest - taxBack;
                 }
             }  
-
-            console.log(previousBracketNet+' - '+annualIncomeNet+' - '+startBracketNet+' - '+taxRateNet);
     
             // Update the investmentDetails state
             setInvestmentDetails({

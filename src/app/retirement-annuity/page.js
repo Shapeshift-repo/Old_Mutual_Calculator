@@ -415,6 +415,7 @@ export default function RetirementAnnuity() {
         let Q15 = Math.round(Q13 + Q14);
         
         const totalInvestment = N13.toFixed(0);
+        localStorage.setItem('totalInvestment', totalInvestment);
         const taxGetBack = Q15.toFixed(0);
         const investmentGrowth = N14.toFixed(0);
         const totalContributionPaid = (N15 + N16).toFixed(0);

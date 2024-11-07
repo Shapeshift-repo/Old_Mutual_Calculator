@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Banner from "../components/Banner";
 import Heading from "../components/Heading";
@@ -71,6 +71,15 @@ export default function RetirementAnnuity() {
     const [formData, setFormData] = useState({
         monthlyInvest: ""
     });
+
+    // Use useEffect to retrieve the stored value when the component mounts
+    useEffect(() => {
+        const savedInvestment = localStorage.getItem('totalInvestment');
+        setFormData((prevData) => ({
+            ...prevData,
+            monthlyInvest: savedInvestment ? `R${formatNumberWithSpaces(savedInvestment)}` : ''
+        }));
+    }, []);
 
     const [errors, setErrors] = useState({
         monthlyInvest: ""

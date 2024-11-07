@@ -42,7 +42,7 @@ export default function ProgressBar({label, hint, progress = 0, labelClasses, tr
             return () => clearInterval(interval);  // Cleanup the interval
         }
     }, [visible, progress]);
-    console.log('Progress:', progress);
+    
     return (
         <div className="progress-bar" ref={progressRef}>
             <Heading 

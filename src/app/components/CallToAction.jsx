@@ -8,19 +8,19 @@ export default function CallToAction({ heading = null, subheading = null, conten
         <div className={`container bg-[#F5F4F7] rounded-[30px] ${sectionClasses}`}>
             <div className="flex flex-col lg:flex-row gap:0 lg:gap-[30px] items-start">
                 <div className="relative z-[1] w-full pt-[85px] pb-[96px] lg:py-[86px] pl-[34px] lg:pl-[107px]">
-                    <div className={`content max-w-[277px] lg:max-w-[553px] ${sectionContentClasses}`}>
+                    <div className={`content max-w-[277px] w-[600px] lg:max-w-[700px] ${sectionContentClasses}`}>                    
+                        {subheading && (
+                            <Heading 
+                                content={subheading} 
+                                className="text-[18px] leading-[26px] lg:text-[23px] mb-0 lg:mb-[12px] lg:leading-[32px] font-normal text-black w-full" 
+                                tag="h5"
+                            />
+                        )}
                         {heading && (
                             <Heading 
                                 content={heading} 
                                 className={`text-[20px] leading-[25px] lg:text-[27px] lg:leading-[45px] mb-0 lg:mb-[8px] font-semibold w-full ${headingClasses}`} 
                                 tag="h3"
-                            />
-                        )}
-                        {heading && (
-                            <Heading 
-                                content={subheading} 
-                                className="text-[18px] leading-[26px] lg:text-[25px] mb-0 lg:mb-[12px] lg:leading-[32px] font-normal text-black w-full" 
-                                tag="h5"
                             />
                         )}
                         {content && (

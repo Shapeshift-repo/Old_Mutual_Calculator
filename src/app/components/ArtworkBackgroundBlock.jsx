@@ -22,7 +22,7 @@ export default function ArtworkBackgroundBlock({artwork = null, heading = null, 
                     tag="h3"
                 />
                 <Heading 
-                    content="It's about investing in the future. <br>For you, & your family."
+                    content="It's about investing in the future. <br>For you, and your <br>family."
                     className="text-[35px] leading-[40px] lg:text-[72px] lg:leading-[72px] max-w-[940px] font-extrabold px-[15px] lg:px-0 pb-[5px] text-transparent" 
                     tag="h2"
                 />

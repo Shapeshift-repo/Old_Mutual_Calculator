@@ -59,7 +59,7 @@ export default function ScrollableTabs({ tabs }){
   };
 
   return (
-    <section className="shadow-box py-[80px] pb-[51px] lg:pb-[80px]">
+    <section id="steps-section" className="shadow-box py-[80px] pb-[51px] lg:pb-[80px]">
         <div className="container">
             <div className="shadow-box-holder bg-white pt-[24px] lg:pt-[52px] pb-0 px-[27px] lg:px-[70px] rounded-[30px] shadow-[0_4px_64px_0_rgba(0,0,0,0.12)] lg:shadow-[0_0_12px_0_rgba(0,0,0,0.12)]">
               <div className="relative overflow-hidden">
@@ -99,7 +99,7 @@ export default function ScrollableTabs({ tabs }){
                       />
                       <Heading 
                         content={tab.subTitle} 
-                        className={`text-[15px] hidden lg:block leading-[20px] font-normal max-w-[160px] ${activeTabIndex === index ? 'text-[#009677]' : 'text-[#323232]'}`} 
+                        className={`text-[15px] hidden lg:block leading-[20px] font-normal max-w-[175px] ${activeTabIndex === index ? 'text-[#009677]' : 'text-[#323232]'}`} 
                         tag="span"
                       />
                       
@@ -120,8 +120,8 @@ export default function ScrollableTabs({ tabs }){
                 )}
                 <div className="pt-[35px] px-0 pb-[100px] lg:p-[85px]">
                   <Heading 
-                    content={tabs[activeTabIndex]?.subTitle} 
-                    className={`text-[18px] leading-[35px] lg:text-[25px] font-semibold text-[#323232] w-full mb-[9px]`} 
+                    content={tabs[activeTabIndex]?.heading} 
+                    className={`text-[18px] leading-[35px] lg:text-[35px] font-semibold text-primary w-full mb-[34px]`} 
                     tag="h3"
                   />
                   <div 

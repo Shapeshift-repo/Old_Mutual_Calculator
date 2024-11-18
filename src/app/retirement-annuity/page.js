@@ -1151,7 +1151,7 @@ export default function RetirementAnnuity() {
                                 <PrimarySlider 
                                     aria-label="Age" 
                                     min={18} 
-                                    max={65} 
+                                    max={64} 
                                     value={value} 
                                     defaultValue={45} 
                                     onChange={handleSlideChange} 

@@ -85,7 +85,7 @@ export default function RetirementAnnuity() {
         monthlyInvest: ""
     });
 
-    const [value, setValue] = useState(45);
+    const [value, setValue] = useState(60);
 
     const handleSlideChange = (event, newValue) => {
         setValue(newValue);
@@ -701,16 +701,16 @@ export default function RetirementAnnuity() {
                                     tag="h3"
                                 />
                                 <div className="flex justify-between items-center">
-                                    <label>Age</label>
+                                    <label>Select your retirement age</label>
                                     <span>{value}</span>
                                 </div>
 
                                 <PrimarySlider 
                                     aria-label="Age" 
-                                    min={18} 
+                                    min={55} 
                                     max={65} 
                                     value={value} 
-                                    defaultValue={45} 
+                                    defaultValue={60} 
                                     onChange={handleSlideChange} 
                                 />
 
@@ -790,7 +790,7 @@ export default function RetirementAnnuity() {
                                     </div>
                                     <div className="estimate-footer pt-[35px] pb-[69px] px-[34px] lg:px-[75px] bg-[#E9E9E9] rounded-bl-[62px] rounded-br-[62px] lg:rounded-bl-[20px] lg:rounded-br-[20px]">
                                         <Heading 
-                                            content="Adjust your drawdown rate"
+                                            content="Adjust your yearly drawdown rate"
                                             className="text-[20px] leading-[25px] mb-[44px] font-light text-black w-full" 
                                             tag="h5"
                                         />

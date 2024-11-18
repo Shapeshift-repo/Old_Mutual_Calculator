@@ -542,7 +542,7 @@ export default function RetirementAnnuity() {
                     <View style={[styles.box, styles.boxBorder]}>
                         
                         <Text style={styles.boxBorderHeading}>Your income will last</Text>
-                        <Text style={styles.boxBorderLabel}>10 Years</Text>
+                        <Text style={styles.boxBorderLabel}>{result ? formatNumberWithSpaces(result.P53) : 0} Years</Text>
 
                         <View style={styles.barBox}>
                             <View style={styles.barGray}></View>
@@ -550,10 +550,10 @@ export default function RetirementAnnuity() {
                         </View>
 
                         <View>
-                            <Text style={styles.barInfo}>Poor markets ({result ? formatNumberWithSpaces(result.P53) : 0}% growth)</Text>
+                            <Text style={styles.barInfo}>Poor markets (4% growth)</Text>
                         </View>
 
-                        <Text style={[styles.boxBorderLabel, styles.boxBorderLabelGreen]}>10 Years</Text>
+                        <Text style={[styles.boxBorderLabel, styles.boxBorderLabelGreen]}>{result ? formatNumberWithSpaces(result.P54) : 0} Years</Text>
 
                         <View style={styles.barBox}>
                             <View style={styles.barGray}></View>
@@ -561,7 +561,7 @@ export default function RetirementAnnuity() {
                         </View>
 
                         <View>
-                            <Text style={styles.barInfo}>Average markets ({result ? formatNumberWithSpaces(result.P54) : 0}% growth)</Text>
+                            <Text style={styles.barInfo}>Average markets (8% growth)</Text>
                         </View>
 
                     </View>

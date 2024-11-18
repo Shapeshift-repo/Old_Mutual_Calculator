@@ -23,9 +23,9 @@ export default function Tooltip({ text }){
         ?
       </span>
       {isVisible && (
-        <div className="absolute min-w-[264px] max-w-[370px] right-0 top-[-75px] bg-[#252525] text-white rounded-[5px] text-[14px] leading-[25px] font-light py-2 px-4 z-10">
+        <div className="tooltip-content absolute min-w-[264px] max-w-[370px] right-0 top-[-75px] bg-[#252525] text-white rounded-[5px] text-[14px] leading-[25px] font-light py-2 px-4 z-10">
           {text}
-          <div className="absolute bottom-[-6px] right-0 transform -translate-x-1/2 w-3 h-3 bg-[#252525] rotate-45"></div>
+          <div className="tooltip-arrow absolute bottom-[-6px] right-0 transform -translate-x-1/2 w-3 h-3 bg-[#252525] rotate-45"></div>
         </div>
       )}
     </div>

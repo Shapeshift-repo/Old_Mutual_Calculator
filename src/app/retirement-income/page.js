@@ -11,6 +11,7 @@ import Button from "../components/Button";
 import VideoCard from "../components/VideoCard";
 import ProgressBar from "../components/ProgressBar";
 import ColorCard from "../components/ColorCard";
+import Tooltip from "../components/Tooltip";
 import { Font, Page, Text, Link as PDFLink, View, Image, Document, StyleSheet, PDFDownloadLink, pdf } from '@react-pdf/renderer';
 
 Font.register({
@@ -101,18 +102,18 @@ export default function RetirementAnnuity() {
     const [value2, setValue2] = useState(4.5);
 
     const handleSlide2Change = (event, newValue) => {
-        setValue2(newValue);
+        setValue2(newValue); // Update the slider value
+    
+        // Safely convert `monthlyInvest` to a string and clean it
         let { monthlyInvest } = formData;
+        monthlyInvest = parseFloat(String(monthlyInvest || '').replace(/[^\d]/g, '')); // Convert to string before replace
     
-        monthlyInvest = parseFloat(monthlyInvest.replace(/[^\d]/g, ''));
-    
-        // Ensure values are valid
-        if (isNaN(monthlyInvest)) return;
-           
-        const result = calculateInvestmentAndTax(formData);
-            
-        setResult(result);
-    };
+        // Ensure the value is valid before calculation
+        if (!isNaN(monthlyInvest)) {
+            const result = calculateInvestmentAndTax({ ...formData, monthlyInvest }, newValue); // Pass the updated slider value
+            setResult(result);
+        }
+    };    
 
     const handleChange = (event, cleanValue) => {
         const { name, value, error } = event.target;
@@ -136,40 +137,37 @@ export default function RetirementAnnuity() {
 
     const calculateRoundedValue = (G45, P50, E52) => Math.round(((G45 + P50) / E52) / 12);
 
-    const calculateInvestmentAndTax = (formData) => {
-        
-        // Clean the values by removing non-numeric characters
+    const calculateInvestmentAndTax = (formData, currentValue2) => {
+        // Safely convert `monthlyInvest` to a string and clean it
         let { monthlyInvest } = formData;
-
-        monthlyInvest = parseFloat((monthlyInvest || '').replace(/[^\d]/g, '')) || 0;
-
+        monthlyInvest = parseFloat(String(monthlyInvest || '').replace(/[^\d]/g, '')) || 0; // Convert to string before replace
+    
         let G45 = monthlyInvest;
-
-        let E64 = value2 / 100;
-
+    
+        let E64 = (currentValue2 || value2) / 100; // Use passed slider value or fallback to state
+        
         let E52 = roundDownThousand((G45 * E64) / 12);
-        
-        let J64 = .5;
-
+    
+        let J64 = 0.5;
+    
         let P47 = -0.01;
-
-        let P50 = G45*P47*(1-E64)/E64;
-        
+    
+        let P50 = G45 * P47 * (1 - E64) / E64;
+    
         let P53 = calculateRoundedValue(G45, P50, E52);
-
+    
         let P56 = P53 / J64;
-
+    
         let P48 = 0.03;
-
+    
         let P51 = (G45 * P48 * (1 - E64)) / E64;
-
+    
         let P54 = Math.round(((G45 + P51) / E52) / 12);
-
+    
         let P57 = P54 / J64;
-
+    
         return { E52, P53, P54, G45 };
-
-    }
+    };        
 
     // On submit
     const handleSubmit = (e) => {
@@ -544,7 +542,7 @@ export default function RetirementAnnuity() {
                     <View style={[styles.box, styles.boxBorder]}>
                         
                         <Text style={styles.boxBorderHeading}>Your income will last</Text>
-                        <Text style={styles.boxBorderLabel}>10 Years</Text>
+                        <Text style={styles.boxBorderLabel}>{result ? formatNumberWithSpaces(result.P53) : 0} Years</Text>
 
                         <View style={styles.barBox}>
                             <View style={styles.barGray}></View>
@@ -552,10 +550,10 @@ export default function RetirementAnnuity() {
                         </View>
 
                         <View>
-                            <Text style={styles.barInfo}>Poor markets ({result ? formatNumberWithSpaces(result.P53) : 0}% growth)</Text>
+                            <Text style={styles.barInfo}>Poor markets (4% growth)</Text>
                         </View>
 
-                        <Text style={[styles.boxBorderLabel, styles.boxBorderLabelGreen]}>10 Years</Text>
+                        <Text style={[styles.boxBorderLabel, styles.boxBorderLabelGreen]}>{result ? formatNumberWithSpaces(result.P54) : 0} Years</Text>
 
                         <View style={styles.barBox}>
                             <View style={styles.barGray}></View>
@@ -563,7 +561,7 @@ export default function RetirementAnnuity() {
                         </View>
 
                         <View>
-                            <Text style={styles.barInfo}>Average markets ({result ? formatNumberWithSpaces(result.P54) : 0}% growth)</Text>
+                            <Text style={styles.barInfo}>Average markets (8% growth)</Text>
                         </View>
 
                     </View>
@@ -768,8 +766,8 @@ export default function RetirementAnnuity() {
                                         />
                                         
                                         <ProgressBar 
-                                            label="10 Years" 
-                                            hint={`Poor markets (${result ? formatNumberWithSpaces(result.P53) : 0}% growth)`}
+                                            label={`${result ? formatNumberWithSpaces(result.P53) : 0} Years`} 
+                                            hint={`Poor markets 4% growth)`}
                                             progress={`${result ? result.P53 : 0}`}
                                             labelClasses="mt-[42px] from-[#ED0080] to-[#F37021]" 
                                             trackClasses=""
@@ -778,8 +776,8 @@ export default function RetirementAnnuity() {
                                         />
 
                                         <ProgressBar 
-                                            label="25 Years" 
-                                            hint={`Average markets (${result ? formatNumberWithSpaces(result.P54) : 0}% growth)`}
+                                            label={`${result ? formatNumberWithSpaces(result.P54) : 0} Years`} 
+                                            hint={`Average markets 8% growth)`}
                                             progress={`${result ? result.P54 : 0}`}
                                             labelClasses="mt-[37px]" 
                                             trackClasses=""
@@ -789,11 +787,15 @@ export default function RetirementAnnuity() {
 
                                     </div>
                                     <div className="estimate-footer pt-[35px] pb-[69px] px-[34px] lg:px-[75px] bg-[#E9E9E9] rounded-bl-[62px] rounded-br-[62px] lg:rounded-bl-[20px] lg:rounded-br-[20px]">
-                                        <Heading 
-                                            content="Adjust your yearly drawdown rate"
-                                            className="text-[20px] leading-[25px] mb-[44px] font-light text-black w-full" 
-                                            tag="h5"
-                                        />
+
+                                        <div className="relative flex justify-between custom-tooltip">
+                                            <Heading 
+                                                content="Adjust your yearly drawdown rate"
+                                                className="text-[20px] leading-[25px] mb-[44px] font-light text-black w-full" 
+                                                tag="h5"
+                                            />
+                                            <Tooltip text="The drawdown rate, in the context of living annuities, refers to the percentage of the total value of funds in your retirement income annuity that is withdrawn to provide you with retirement income. This rate, which can be set each year, determines how much money you'll receive regularly, typically monthly. Setting an appropriate drawdown rate is important to balance your income needs with the goal of making the retirement fund last for your lifetime." />
+                                        </div>
 
                                         <PrimarySlider 
                                             aria-label="Rate" 
@@ -819,9 +821,10 @@ export default function RetirementAnnuity() {
                                     <ColorCard 
                                         heading="" 
                                         content={`
-                                            <p>There are other annuities to consider such as a <strong>Guaranteed Annuity</strong> and a <strong>Composite Annuity</strong>.</p>
-                                            <p>There are other annuities to consider such as a <strong>Guaranteed Annuity</strong> and a <strong>Composite Annuity</strong>.</p>
-                                            <p>There are other annuities to consider such as a <strong>Guaranteed Annuity</strong> and a <strong>Composite Annuity</strong>.</p>
+                                            <p>Your different income annuity options at retirement</p>
+                                            <p><strong>Living annuity</strong><br><br>A living annuity is a flexibility plan where you decide how your savings are invested and you choose an income level that suits your needs.</p>
+                                            <p><strong>Guaranteed (or life) annuity</strong><br><br>A guaranteed annuity ensures that you receive a regular income for as long as you live.</p>
+                                            <p><strong>Composite (or compound) annuity</strong><br><br>By combining the features of a living annuity and a guaranteed annuity, a composite annuity ensures that you receive an income for life and allows you to keep a portion of your capital invested in the markets.</p>
                                         `}
                                         className="rounded-[15px] px-[25px] lg:px-[65px] py-[45px] lg:py-[60px] mt-[78px] [&>div>div>div>div>p]:mb-[32px]" 
                                         showShadow={false} 

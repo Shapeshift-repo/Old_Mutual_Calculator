@@ -1,0 +1,32 @@
+{
+  "name": "om-retirement",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.1.1",
+    "@react-pdf/renderer": "^4.0.0",
+    "lottie-react": "^2.4.0",
+    "next": "14.2.11",
+    "react": "^18",
+    "react-countup": "^6.5.3",
+    "react-dom": "^18",
+    "react-modal-video": "^2.0.2",
+    "sass": "^1.79.3",
+    "tailwind-scrollbar-hide": "^1.1.7"
+  },
+  "devDependencies": {
+    "eslint": "^8",
+    "eslint-config-next": "14.2.11",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.15",
+    "tailwindcss-dotted-background": "^1.1.0"
+  }
+}

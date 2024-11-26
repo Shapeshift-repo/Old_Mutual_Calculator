@@ -1,0 +1,347 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+}
+
+.submenu:hover > .submenu-holder {
+  @apply block w-[266px];
+}
+
+.submenu-icon {
+  @apply absolute top-[10px] right-[-20px];
+}
+
+.site-btn svg {
+  @apply absolute top-[18px] right-[20px];
+}
+
+.down-bounce svg {
+  @apply animate-bounce;
+}
+
+.custom-tooltip .tooltip-content{
+  @apply w-[265px] lg:w-[400px] right-[25px];
+}
+
+.custom-tooltip .tooltip-arrow{
+  @apply right-[-10px] top-[80px];
+}
+
+@keyframes stroke-animation {
+  0% {
+    stroke-dasharray: 0 1000;
+  }
+  100% {
+    stroke-dasharray: 1000 0;
+  }
+}
+
+/* Fill animation */
+@keyframes fill-animation {
+  0% {
+    fill: transparent;
+  }
+  100% {
+    fill: url(#paint0_linear_1_66382);
+  }
+}
+
+#animated-path {
+  stroke: url(#paint0_linear_1_66382);
+  stroke-width: 2;
+  animation: stroke-animation 2s forwards, fill-animation 2s 2s forwards;
+}
+
+/* Fill animation */
+@keyframes fill-animation-2 {
+  0% {
+    fill: #6c6c6c;
+  }
+  100% {
+    fill: #ababab;
+  }
+}
+
+#animated-path-2 {
+  stroke: #ababab;
+  stroke-width: 2;
+  animation: stroke-animation 2s forwards, fill-animation-2 2s 2s forwards;
+}
+
+.range-holder {
+  position: relative;
+}
+
+.tab-item:before {
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+  -ms-transition: 0.5s;
+  transition: 0.5s;
+}
+.tab-item.active:before {
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+  -ms-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.multi-range-holder .MuiSlider-root .css-cp2j25-MuiSlider-thumb:nth-child(3) {
+  @apply bg-[#F37021];
+}
+
+.css-14gyywz-MuiSlider-valueLabel.MuiSlider-valueLabelOpen {
+  @apply bg-transparent text-black text-[20px] leading-[25px] font-medium;
+}
+
+.estimate-footer .css-14gyywz-MuiSlider-valueLabel.MuiSlider-valueLabelOpen {
+  @apply text-[17px] leading-[25px] font-medium;
+}
+
+.animated-line {
+  stroke-dasharray: 1000; /* Length of the dash array (can be adjusted) */
+  stroke-dashoffset: 1000; /* Initially set dash offset to hide the path */
+  animation: draw 3s ease forwards; /* Apply the animation */
+}
+
+/* Keyframes for the drawing effect */
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0; /* Draw the path by reducing the dash offset */
+  }
+}
+
+.graph-line svg {
+  @apply w-full;
+}
+
+.color-card-content p {
+  @apply mb-[32px];
+}
+.color-card-content p:last-child {
+  @apply mb-0;
+}
+.color-card-content strong {
+  @apply font-semibold;
+}
+.custom-artwork .artwork svg {
+  @apply w-[226px] lg:w-[583px] h-auto;
+}
+
+.custom-blue {
+  @apply text-[#00C0E8];
+}
+
+.simple-plate {
+  @apply shadow-none bg-transparent text-left;
+}
+
+@keyframes zoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Apply the animation with a 3-second delay */
+.animate-zoom-in {
+  animation: zoomIn 0.7s ease-in-out 2s forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fadeIn.active {
+  animation: fadeIn 2.5s ease-in-out forwards;
+}
+
+.custom-shadow {
+  box-shadow: 0px 15px 30px -15px rgba(80, 184, 71, 1);
+}
+
+.tabs-title {
+  @apply to-[#50B848] via-[#50B848] from-[#009677] !important;
+}
+
+.card-section-heading {
+  @apply from-[#50B848] from-30% to-[#009677] to-70% !important;
+}
+
+.custom-gradient {
+  @apply from-[#009677] to-[#50B848];
+}
+
+.custom-gradient-long {
+  @apply from-[#009677] from-40% to-[#50B848] to-55%;
+}
+
+.custom-bold {
+  @apply font-bold;
+}
+
+.card-box:hover img {
+  @apply scale-110;
+}
+
+#sideform.active {
+  @apply right-0;
+}
+
+.third-banner .banner-content h3 {
+  @apply text-[40px] leading-[40px] mb-[7px];
+}
+
+.third-banner .banner-content h3 + h3 {
+  @apply text-[37px] leading-[25px];
+}
+
+.third-banner .desktop-banner-image {
+  @apply object-top;
+}
+
+#main-banner.active {
+  top: -300px;
+}
+
+@media only screen and (max-width: 450px) {
+  .small-btn {
+    @apply text-[14px];
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .small-btn {
+    @apply w-[150px] text-[14px];
+  }
+}
+
+.move-right {
+  display: inline-block;
+  animation: moveRight 3s infinite ease-in-out;
+}
+
+@keyframes moveRight {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(20px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animated-line path {
+  stroke-dasharray: 3000;
+  stroke-dashoffset: 3000;
+  animation: drawLine 5s linear forwards;
+}
+
+.dot {
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+@keyframes drawLine {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.mobile-line path {
+  stroke-dasharray: 2500;
+  stroke-dashoffset: 2500;
+  animation: drawMobileLine 5s linear forwards;
+}
+
+.mobile-dot {
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+@keyframes drawMobileLine {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+header {
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+  -ms-transition: 0.5s;
+  transition: 0.5s;
+}
+
+header.active {
+  background: #ffffff;
+  box-shadow: 0 4px 7px 0 rgba(00, 00, 00, 0.1);
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+  -ms-transition: 0.5s;
+  transition: 0.5s;
+}
+
+header.active.small-header {
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+  -ms-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.navbar-holder {
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+  -ms-transition: 0.5s;
+  transition: 0.5s;
+}
+
+header.active.small-header .navbar-holder {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+  -ms-transition: 0.5s;
+  transition: 0.5s;
+}

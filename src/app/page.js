@@ -20,7 +20,7 @@ export default function Home() {
       content: (
         <>
           Did you know the taxman (SARS) gives you money back for investing in a retirement annuity? Pay less tax or get a tax refund every year, based on your income and retirement annuity contributions. Getting a tax refund means you&lsquo;re paying less for your investment. Now that&lsquo;s powerful! Use our &nbsp; 
-          <Link href="/">Tax Back calculator</Link> 
+          <Link href="/tax-back">Tax Back calculator</Link> 
           &nbsp;to see your potential savings. Download the comprehensive report to review or share with your financial adviser.
         </>
       )
@@ -29,25 +29,25 @@ export default function Home() {
       id: "tab2", 
       title: "STEP 2", 
       subTitle: "How much you can save over time", 
-      content: "Did you know the taxman (SARS) gives you money back for investing in a retirement annuity? Pay less tax or get a tax refund every year, based on your income and retirement annuity contributions. Getting a tax refund means you're paying less for your investment. Now that's powerful! Use our Tax Back calculator to see your potential savings.  Download the comprehensive report to review or share with your financial adviser."
+      content: "Benefit from the amazing power of compound growth. This is when your money earn returns on your original investment AND all the returns that accumulate over time. It’s like a snowball effect on your money. Over time the growth on your money will accelerate through the power of compounding. Use our Retirement Annuity calculator to see how your investment will grow. Download the comprehensive report to review, or to share with your financial adviser."
     },
     { 
       id: "tab3", 
       title: "STEP 3", 
       subTitle: "What your future income will be", 
-      content: "Did you know the taxman (SARS) gives you money back for investing in a retirement annuity? Pay less tax or get a tax refund every year, based on your income and retirement annuity contributions. Getting a tax refund means you're paying less for your investment. Now that's powerful! Use our Tax Back calculator to see your potential savings.  Download the comprehensive report to review or share with your financial adviser."
+      content: "A retirement annuity is a unique savings account for your future income. When you stop working, you have to reinvest your savings into an investment product called an income annuity. This annuity will pay you a regular income when you retire. Use our Income Annuity calculator to see what retirement income you can expect. Download the comprehensive report to review, or to share with your financial adviser."
     },
     { 
       id: "tab4", 
       title: "STEP 4", 
       subTitle: "Plan and find the money", 
-      content: "Did you know the taxman (SARS) gives you money back for investing in a retirement annuity? Pay less tax or get a tax refund every year, based on your income and retirement annuity contributions. Getting a tax refund means you're paying less for your investment. Now that's powerful! Use our Tax Back calculator to see your potential savings.  Download the comprehensive report to review or share with your financial adviser."
+      content: "Understanding your income and spending is key to building wealth. A budget helps you manage your monthly finances and set long-term goals. Use the Pay Yourself First calculator to find extra money in your budget. Download the comprehensive report to review, or to share with your financial adviser."
     },
     { 
       id: "tab5", 
       title: "STEP 5", 
       subTitle: "Take action today!", 
-      content: "Did you know the taxman (SARS) gives you money back for investing in a retirement annuity? Pay less tax or get a tax refund every year, based on your income and retirement annuity contributions. Getting a tax refund means you're paying less for your investment. Now that's powerful! Use our Tax Back calculator to see your potential savings.  Download the comprehensive report to review or share with your financial adviser."
+      content: "Knowing how much tax savings you can get, and how compound growth boosts your retirement annuity is great, but the most important step is taking action today. Make sure you also have the right life and disability cover. And join Old Mutual Rewards to get even more back. Talk to your financial adviser or buy a retirement annuity online now!"
     },
   ];
 

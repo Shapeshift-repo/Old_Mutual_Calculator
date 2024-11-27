@@ -242,7 +242,7 @@ export default function RetirementAnnuity() {
 
     const investmentStrategyTable = [
         {
-            lowest: 1.5,
+            lowest: 1.50,
             low: 2.63,
             light: 3.08,
             moderate: 4.67,
@@ -268,65 +268,89 @@ export default function RetirementAnnuity() {
         // Clean the values by removing non-numeric characters
         let { age, grossIncome, contribution, investment, saving, monthly, J9, N8 } = formData;
         
-        grossIncome = parseFloat((grossIncome || '').replace(/R|\D/g, '')) || 0; 
-        const annualIncome = grossIncome * 12;
-        contribution = parseFloat((contribution || '').replace(/R|\D/g, '')) || 0;
-        const annualContribution = contribution * 12;
+        grossIncome = parseFloat((grossIncome || '').replace(/R|\D/g, '')) || 0; //checked
+        const annualIncome = grossIncome * 12; //checked
+        contribution = parseFloat((contribution || '').replace(/R|\D/g, '')) || 0; //checked
+        const annualContribution = contribution * 12; //checked
         
         // Clean and set saving and monthly, defaulting to 0 if empty
-        saving = parseFloat((saving || '').replace(/R|\D/g, '')) || 0;
+        saving = parseFloat((saving || '').replace(/R|\D/g, '')) || 0; //checked
         if(J9 == 1){
-            J9 = saving;
+            J9 = saving; //checked
         }
            
-        monthly = parseFloat((monthly || '').replace(/R|\D/g, '')) || 0;
+        monthly = parseFloat((monthly || '').replace(/R|\D/g, '')) || 0; //checked
         
         // Parsing inputs
-        let D9 = age;
-        let G9 = grossIncome;
-        let D11 = contribution;
+        let D9 = age; //checked
+        let G9 = grossIncome; //checked
+        let D11 = contribution; //checked
         let investmentStrategyValue = investmentStrategyTable[0][investment] / 100;
-        let D13 = monthly;
+        let D13 = monthly; //checked
         let D15 = D13 + D11; // Total Monthly Contributions
+        let agediff = N8 - D9 // Age Difference
         
-        let N5 = 0.05; // 5% as a decimal
-        
-        let N9 = 0.05; // Rate again
+        let N5 = 0.05; // Default escalation rate 
+        let N9 = 0.05; // Default inflation assumption
     
         // Calculate effective return rate
         let N7 = (1 + N9) * (1 + investmentStrategyValue) - 1;
-
-        N7 = Math.round(N7 * 10000) / 10000;
+        N7 = Math.round(N7 * 1000) / 1000;
+console.log("N7",N7);
+        // Round to 10 decimal places (to match Excel)
 
         let N15 = N5 === 0
-            ? D15 * (N8 - D9) * 12
-            : 12 * D15 * (((1 + N5) ** (N8 - D9) - 1) / N5);
-
-        N15 = Math.round(N15);
+            ? D15 * (agediff) * 12
+            : 12 * D15 * (((1 + N5) ** (agediff) - 1) / N5);
         
-        let N16 = J9; // Initial investment
+        // Round to 10 decimal places (to match Excel)
+        N15 = Math.round(N15 * 10000000000) / 10000000000;
+        
+console.log("N15",N15);
+        
+        let N16 = J9; // Lumpsum Investment
     
         let Q5 = ((1 + N7) ** (1 / 12)) - 1;
-        Q5 = Math.round(Q5 * 100000000) / 100000000;
+        
+        // Round to 10 decimal places (to match Excel)
+        Q5 = Math.round(Q5 * 10000000000) / 10000000000;
 
-        // Step 1: Calculate the first part of the formula
-        let part1 = (1 + Q5) ** 12 - 1; // (1 + 0.0079)^12 - 1
-        let part2 = Q5 / (1 + Q5); // 0.0079 / (1 + 0.0079)
-        let firstTerm = D15 * (part1 / part2); // First term calculation
+console.log("Q5",Q5);
 
-        // Step 2: Calculate the second part of the formula
-        let part3 = (1 + N7) ** (N8 - D9) - (1 + N5) ** (N8 - D9); 
-        let part4 = N7 - N5;
-        let secondTerm = firstTerm * (part3 / part4); // Second term calculation
 
-        // Step 3: Calculate the third term
-        let thirdTerm = J9 * (1 + N7) ** (N8 - D9); // J9 * (1 + 0.099)^(55 - 38)
+        function calculateFinal(D15, Q5, N7, N5, J9, agediff) {
+            
+            // Step 1: Calculate first part
+            const term1 = 1 + Q5; // (1 + Q5)
+            const term2 = term1 ** 12; // (1 + Q5)^12
+            const term3 = term2 - 1; // (1 + Q5)^12 - 1
+            const term4 = Q5 / term1; // (Q5 / (1 + Q5))
+            const part1 = (D15 * term3) / term4; // First part
+console.log("Part 1:", part1);
+            // Step 2: Calculate the second part
+            const term5 = 1 + N7; // (1 + N7)
+            const term6 = 1 + N5; // (1 + N5)
+            const term7 = term5 ** agediff; // (1 + N7)^(agediff)
+            const term8 = term6 ** agediff; // (1 + N5)^(agediff)
+            
+            const part2 = (term7 - term8) / (N7 - N5); // Second part: ( (1 + N7)^(agediff) - (1 + N5)^(agediff) ) / (N7 - N5)
+console.log("Part 2:", part2);
 
-        // Step 4: Sum all terms to get the final result
-        let N13 = secondTerm + thirdTerm;
+            // Step 3: Calculate J9 * (1 + N7)^(agediff)
+            const term9 = J9 * term7; // J9 * (1 + N7)^(agediff)
+ console.log("Part 3:", term9);
 
-        // Step 5: Round to 2 decimal places (to match Excel)
-        N13 = Math.round(N13 * 100) / 100;
+            // Step 4: Combine all parts for the final result
+            const result1 = part1 * part2 + term9; // Final calculation
+console.log("esult:", result1);
+
+            return result1;
+        }
+
+        const N131 = calculateFinal(D15, Q5, N7, N5, J9, agediff);
+        console.log("The result of the calculation is:", N131);
+
+        let N13 = N131;
 
         let N14 = N13 - N15 - N16;
     
@@ -412,14 +436,15 @@ export default function RetirementAnnuity() {
         
         let Q14 = V24 * (N15 - 12 * D15);
         
-        let Q15 = Math.round(Q13 + Q14);
+        let Q15 = (Q13 + Q14);    
+        Q15 = Math.round(Q15 * 10000000000) / 10000000000;
         
-        const totalInvestment = N13.toFixed(0);
+        const totalInvestment = N13.toFixed(2);
         localStorage.setItem('totalInvestment', totalInvestment);
-        const taxGetBack = Q15.toFixed(0);
-        const investmentGrowth = N14.toFixed(0);
-        const totalContributionPaid = (N15 + N16).toFixed(0);
-        const lampSum = J9.toFixed(0);
+        const taxGetBack = Q15.toFixed(2);
+        const investmentGrowth = N14.toFixed(2);
+        const totalContributionPaid = (N15 + N16).toFixed(2);
+        const lampSum = J9.toFixed(2);
 
         const investmentOption = contributionOptions.find(option => option.value === investment);
         const investmentLabel = investmentOption ? investmentOption.label.split(' - ')[1] : 'inflation plus 3%-4%';

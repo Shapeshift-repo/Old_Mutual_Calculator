@@ -155,7 +155,7 @@ export default function RetirementAnnuityForm() {
 
         let P51 = (G45 * P48 * (1 - E64)) / E64;
 
-        let P54 = Math.round(((G45 + P51) / E52) / 12);
+        let P54 = (((G45 + P51) / E52) / 12);
 
         let P57 = P54 / J64;
 

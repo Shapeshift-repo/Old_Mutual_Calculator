@@ -1,3 +1,5 @@
+
+
 'use client';
 
 import React, { useState, useEffect } from "react";
@@ -310,47 +312,53 @@ console.log("N15",N15);
         
         let N16 = J9; // Lumpsum Investment
     
-        let Q5 = ((1 + N7) ** (1 / 12)) - 1;
+        let Q5s1 = (1 + N7);
+        let Q5s2 = (1 / 12);
+        let Q5s3 = Q5s1 ** Q5s2;
+        let Q5s4 = Q5s3 -1;
+
+        let Q5 = Q5s4;
         
         // Round to 10 decimal places (to match Excel)
-        Q5 = Math.round(Q5 * 10000000000) / 10000000000;
+        //Q5 = Math.round(Q5 * 10000000000) / 10000000000;
 
 console.log("Q5",Q5);
 
+        // Step 1: Calculate the first part of the formula
+        let Step1Part1 = (1 + Q5);        
+console.log("Step1Part1",Step1Part1);
+        let Step1Part2 = Step1Part1 ** 12;
+console.log("Step1Part2",Step1Part2);
+        let Step1Part3 = Step1Part2 - 1;
+console.log("Step1Part3",Step1Part3);
+        let Step1Part4 = Q5 / Step1Part1; 
+console.log("Step1Part4",Step1Part4);
+        let firstTerm = (D15 * Step1Part3) / Step1Part4;
 
-        function calculateFinal(D15, Q5, N7, N5, J9, agediff) {
-            
-            // Step 1: Calculate first part
-            const term1 = 1 + Q5; // (1 + Q5)
-            const term2 = term1 ** 12; // (1 + Q5)^12
-            const term3 = term2 - 1; // (1 + Q5)^12 - 1
-            const term4 = Q5 / term1; // (Q5 / (1 + Q5))
-            const part1 = (D15 * term3) / term4; // First part
-console.log("Part 1:", part1);
-            // Step 2: Calculate the second part
-            const term5 = 1 + N7; // (1 + N7)
-            const term6 = 1 + N5; // (1 + N5)
-            const term7 = term5 ** agediff; // (1 + N7)^(agediff)
-            const term8 = term6 ** agediff; // (1 + N5)^(agediff)
-            
-            const part2 = (term7 - term8) / (N7 - N5); // Second part: ( (1 + N7)^(agediff) - (1 + N5)^(agediff) ) / (N7 - N5)
-console.log("Part 2:", part2);
+console.log("T1",firstTerm);
 
-            // Step 3: Calculate J9 * (1 + N7)^(agediff)
-            const term9 = J9 * term7; // J9 * (1 + N7)^(agediff)
- console.log("Part 3:", term9);
+        // Step 2: Calculate the second part of the formula
+        let T2P1 = 1 + N7;
+        let T2P2 = 1 + N5;
+        let T2P3 = T2P1 ** agediff;
+        let T2P4 = T2P2 ** agediff;
+        let secondTerm = T2P3 - T2P4;
+        secondTerm = Math.round(secondTerm * 100) / 100;
 
-            // Step 4: Combine all parts for the final result
-            const result1 = part1 * part2 + term9; // Final calculation
-console.log("esult:", result1);
+console.log("T2",secondTerm);
+        
+        // Step 3: Calculate the third part of the formula
+        let T3P1 = N7 - N5;
+        let T3P2 = 1 + N7;
+        let T3P3 = T3P2 ** agediff;
+        let thirdTerm = T3P1 + J9 * T3P3;
+        
+console.log("T3",thirdTerm);
 
-            return result1;
-        }
+        let N13 = (firstTerm) * (secondTerm) / (thirdTerm);
+        N13 = Math.round(N13 * 100000000) / 100000000;
 
-        const N131 = calculateFinal(D15, Q5, N7, N5, J9, agediff);
-        console.log("The result of the calculation is:", N131);
-
-        let N13 = N131;
+console.log("N13",N13);
 
         let N14 = N13 - N15 - N16;
     
@@ -1460,3 +1468,4 @@ console.log("esult:", result1);
         </section>
     );
 }
+

@@ -243,15 +243,15 @@ export default function RetirementAnnuity() {
     };
 
     const investmentStrategyTable = [
-        {
-            lowest: 1.50,
-            low: 2.63,
-            light: 3.08,
-            moderate: 4.67,
-            medium: 5.24,
-            high: 5.60,
-            highest: 6.41
-        }
+    {
+      lowest: 0.015,
+      low: 0.02625,
+      light: 0.03075,
+      moderate: 0.0466625,
+      medium: 0.052375,
+      high: 0.056,
+      highest: 0.0641,
+      },
     ];
     
     const taxBrackets = [
@@ -297,7 +297,7 @@ export default function RetirementAnnuity() {
     
         // Calculate effective return rate
         let N7 = (1 + N9) * (1 + investmentStrategyValue) - 1;
-        N7 = Math.round(N7 * 1000) / 1000;
+        //N7 = Math.round(N7 * 1000) / 1000;
 console.log("N7",N7);
         // Round to 10 decimal places (to match Excel)
 
@@ -343,7 +343,7 @@ console.log("T1",firstTerm);
         let T2P3 = T2P1 ** agediff;
         let T2P4 = T2P2 ** agediff;
         let secondTerm = T2P3 - T2P4;
-        secondTerm = Math.round(secondTerm * 100) / 100;
+        //secondTerm = Math.round(secondTerm * 100) / 100;
 
 console.log("T2",secondTerm);
         

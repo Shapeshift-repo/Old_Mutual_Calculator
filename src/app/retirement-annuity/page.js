@@ -287,7 +287,7 @@ export default function RetirementAnnuity() {
         let D9 = age; //checked
         let G9 = grossIncome; //checked
         let D11 = contribution; //checked
-        let investmentStrategyValue = investmentStrategyTable[0][investment] / 100;
+        let investmentStrategyValue = investmentStrategyTable[0][investment];
         let D13 = monthly; //checked
         let D15 = D13 + D11; // Total Monthly Contributions
         let agediff = N8 - D9 // Age Difference

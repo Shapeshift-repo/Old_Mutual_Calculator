@@ -13,14 +13,21 @@ export default function Hero() {
     );
 
     const heroContent = {
-        title: "Invest in <br>your future &",
-        subtitle: "get your tax back <br>for that holiday",
-        description: "Five steps to a secure financial <br>future for you, & your family.",
-        buttonLabel: "CALCULATOR"
+        title: "SECURE<br>YOUR<br>FUTURE",
+        subtitle: "so that your children<br> won’t have to when<br> you retire",
+        description: "5 simple steps to a better retirement.",
+        buttonLabel: "CALCULATOR",
+        buttonLabel2: "5 STEPS"
     };
 
     const scrollToSection = () => {
         const section = document.getElementById('calculator-section');
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+    const scrollToSectionSteps = () => {
+        const section = document.getElementById('steps-section');
         if (section) {
             section.scrollIntoView({ behavior: 'smooth' });
         }
@@ -30,7 +37,7 @@ export default function Hero() {
         <section className="hero-section py-0 lg:py-[80px]">
             <div className="container">
                 <div className="flex flex-col gap-[40px] lg:gap-[160px] lg:flex-row items-center">
-                    <div className="relative z-[1] w-full flex flex-col gap-[10px] justify-center lg:justify-end text-center lg:text-right order-2 lg:order-1">
+                    <div className="relative z-[1] w-full flex flex-col gap-[10px] justify-center lg:justify-end text-center lg:text-left order-2 lg:order-1">
                         <Heading 
                             content={heroContent.title} 
                             className="text-[40px] leading-[46px] lg:text-[72px] lg:leading-[70px] font-extrabold pb-[5px] text-transparent" 
@@ -52,9 +59,15 @@ export default function Hero() {
                         </div>
 
                         {/* Button - Dynamic Label */}
-                        <div className="flex justify-center lg:justify-end mt-[20px]">
+                        <div className="flex justify-left lg:justify-end mt-[20px]">
                             <Button onClick={scrollToSection} label={heroContent.buttonLabel} Icon={icon} className="down-bounce text-white" />
                         </div>
+
+                        {/* Button - Dynamic Label */}
+                        <div className="flex justify-center lg:justify-end mt-[20px]">
+                            <Button onClick={scrollToSectionSteps} label={heroContent.buttonLabel2} Icon={icon} className="down-bounce text-white" />
+                        </div>
+
                     </div>
                     <div className="w-full order-1 lg:order-2">
                         <div className="relative flex justify-center lg:block w-[222px] lg:max-w-[490px] ml-[38%] lg:ml-0">
@@ -91,9 +104,9 @@ export default function Hero() {
                             <Image
                                 src="/images/hero.png"
                                 alt="Hero Image"
-                                width={751}
-                                height={625}
-                                className="absolute bottom-[27px] right-[50px] lg:bottom-[67px] lg:right-[-176px] w-[332px] lg:w-fit h-auto max-w-fit opacity-0 animate-zoom-in"
+                                width={550}
+                                height={582}
+                                className="absolute top-[10px] right-[-320px] lg:top-[10px] lg:right-[-320px] w-[335px] lg:w-fit h-auto max-w-fit opacity-0 animate-zoom-in"
                             />
 
                         </div>

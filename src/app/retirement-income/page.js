@@ -529,7 +529,7 @@ export default function RetirementAnnuity() {
                         If you manage to save up a capital amount of <Text style={styles.boldGreen}>R{result && formatNumberWithSpaces(result.G45)}</Text> by your retirement age of <Text style={styles.boldGreen}>{value}</Text> years, you can expect an income of <Text style={styles.boldGreen}>R{result ? formatNumberWithSpaces(result.E52) : ''}</Text> per month at a drawdown rate of <Text style={styles.boldGreen}>{value2}%</Text>.
                     </Text>
                     <Text>
-                        In poor markets ({result ? formatNumberWithSpaces(result.P53) : 0}% growth), your income will last about <Text style={styles.boldGreen}>10</Text> years. If you experience {result ? formatNumberWithSpaces(result.P54) : 0}% growth, your income could last up to <Text style={styles.boldGreen}>25</Text> years.
+                        In Average markets ({result ? formatNumberWithSpaces(result.P53) : 0}% growth), your income will last about <Text style={styles.boldGreen}>10</Text> years. If you experience {result ? formatNumberWithSpaces(result.P54) : 0}% growth, your income could last up to <Text style={styles.boldGreen}>25</Text> years.
                     </Text>
                 </View>
 
@@ -550,7 +550,7 @@ export default function RetirementAnnuity() {
                         </View>
 
                         <View>
-                            <Text style={styles.barInfo}>Poor markets (4% growth)</Text>
+                            <Text style={styles.barInfo}>Average markets (4% growth)</Text>
                         </View>
 
                         <Text style={[styles.boxBorderLabel, styles.boxBorderLabelGreen]}>{result ? formatNumberWithSpaces(result.P54) : 0} Years</Text>
@@ -561,7 +561,7 @@ export default function RetirementAnnuity() {
                         </View>
 
                         <View>
-                            <Text style={styles.barInfo}>Average markets (8% growth)</Text>
+                            <Text style={styles.barInfo}>Good markets (8% growth)</Text>
                         </View>
 
                     </View>
@@ -767,7 +767,7 @@ export default function RetirementAnnuity() {
                                         
                                         <ProgressBar 
                                             label={`${result ? formatNumberWithSpaces(result.P53) : 0} Years`} 
-                                            hint={`Poor markets 4% growth)`}
+                                            hint={`Average markets 4% growth)`}
                                             progress={`${result ? result.P53 : 0}`}
                                             labelClasses="mt-[42px] from-[#ED0080] to-[#F37021]" 
                                             trackClasses=""
@@ -777,7 +777,7 @@ export default function RetirementAnnuity() {
 
                                         <ProgressBar 
                                             label={`${result ? formatNumberWithSpaces(result.P54) : 0} Years`} 
-                                            hint={`Average markets 8% growth)`}
+                                            hint={`Good markets 8% growth)`}
                                             progress={`${result ? result.P54 : 0}`}
                                             labelClasses="mt-[37px]" 
                                             trackClasses=""

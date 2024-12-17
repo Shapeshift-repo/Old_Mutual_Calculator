@@ -143,7 +143,7 @@ export default function RetirementAnnuityForm() {
         
         let J64 = .5;
 
-        let P47 = -0.01;
+        let P47 = 0.02;
 
         let P50 = G45*P47*(1-E64)/E64;
         
@@ -151,7 +151,7 @@ export default function RetirementAnnuityForm() {
 
         let P56 = P53 / J64;
 
-        let P48 = 0.03;
+        let P48 = 0.04;
 
         let P51 = (G45 * P48 * (1 - E64)) / E64;
 
@@ -522,7 +522,7 @@ export default function RetirementAnnuityForm() {
                         If you manage to save up a capital amount of <Text style={styles.boldGreen}>R{result && formatNumberWithSpaces(result.G45)}</Text> by your retirement age of <Text style={styles.boldGreen}>{value}</Text> years, you can expect an income of <Text style={styles.boldGreen}>R{result ? formatNumberWithSpaces(result.E52) : ''}</Text> per month at a drawdown rate of <Text style={styles.boldGreen}>{value2}%</Text>.
                     </Text>
                     <Text>
-                        In poor markets ({result ? formatNumberWithSpaces(result.P53) : 0}% growth), your income will last about <Text style={styles.boldGreen}>10</Text> years. If you experience {result ? formatNumberWithSpaces(result.P54) : 0}% growth, your income could last up to <Text style={styles.boldGreen}>25</Text> years.
+                        In Average markets ({result ? formatNumberWithSpaces(result.P53) : 0}% growth), your income will last about <Text style={styles.boldGreen}>10</Text> years. If you experience {result ? formatNumberWithSpaces(result.P54) : 0}% growth, your income could last up to <Text style={styles.boldGreen}>25</Text> years.
                     </Text>
                 </View>
 
@@ -543,7 +543,7 @@ export default function RetirementAnnuityForm() {
                         </View>
 
                         <View>
-                            <Text style={styles.barInfo}>Poor markets ({result ? formatNumberWithSpaces(result.P53) : 0}% growth)</Text>
+                            <Text style={styles.barInfo}>Average markets ({result ? formatNumberWithSpaces(result.P53) : 0}% growth)</Text>
                         </View>
 
                         <Text style={[styles.boxBorderLabel, styles.boxBorderLabelGreen]}>10 Years</Text>
@@ -554,7 +554,7 @@ export default function RetirementAnnuityForm() {
                         </View>
 
                         <View>
-                            <Text style={styles.barInfo}>Average markets ({result ? formatNumberWithSpaces(result.P54) : 0}% growth)</Text>
+                            <Text style={styles.barInfo}>Good markets ({result ? formatNumberWithSpaces(result.P54) : 0}% growth)</Text>
                         </View>
 
                     </View>
@@ -760,7 +760,7 @@ export default function RetirementAnnuityForm() {
                                         
                                         <ProgressBar 
                                             label="10 Years" 
-                                            hint={`Poor markets (${result ? formatNumberWithSpaces(result.P53) : 0}% growth)`}
+                                            hint={`Average markets (${result ? formatNumberWithSpaces(result.P53) : 0}% growth)`}
                                             progress={`${result ? result.P53 : 0}`}
                                             labelClasses="mt-[42px] from-[#ED0080] to-[#F37021]" 
                                             trackClasses=""
@@ -770,7 +770,7 @@ export default function RetirementAnnuityForm() {
 
                                         <ProgressBar 
                                             label="25 Years" 
-                                            hint={`Average markets (${result ? formatNumberWithSpaces(result.P54) : 0}% growth)`}
+                                            hint={`Good markets (${result ? formatNumberWithSpaces(result.P54) : 0}% growth)`}
                                             progress={`${result ? result.P54 : 0}`}
                                             labelClasses="mt-[37px]" 
                                             trackClasses=""

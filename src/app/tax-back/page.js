@@ -119,15 +119,10 @@ export default function TaxBack() {
     ];
 
     function calculateAdjustedValue(K3, N3, C8, N4, C10) {
-        // Calculate the minimum value
-        const minValue = Math.min(
-          N3 * 12 * C8,
-          N4,
-          C10 * 12
-        );
-      
-        // Subtract the minimum value from K3
-        return K3 - minValue;
+        
+    const minValue = Math.min(N3 * 12 * C8, N4, C10 * 12);
+    // Subtract the MIN value from K3
+    return K3 - minValue;
     }
 
     // On submit
@@ -168,6 +163,11 @@ export default function TaxBack() {
 
             const resultannualSalaryNet = calculateAdjustedValue(K3, N3, C8, N4, C10);
             console.log(resultannualSalaryNet);
+
+            const calculateValueK8 = (K3, N3, C8, N4, C10) => {                
+                const minValue = Math.min(N3 * 12 * C8, N4, C10 * 12); // Calculate the MIN value                
+                return K3 - minValue; // Subtract the MIN value from K3
+            };
             
             if (annualIncome >= taxBrackets[7].startBracket) {
                 // Income is above the highest bracket
@@ -212,13 +212,35 @@ export default function TaxBack() {
                     previousBracket = taxBracket.previousBracket;
                     previousBracketNet = taxBracketNet.previousBracket;
                     taxPrior = previousBracket + (annualIncome - startBracket) * (taxRate / 100);
-                    annualSalaryNet = annualIncome - annualInvest;
+                    annualSalaryNet= calculateValueK8(annualIncome, N3, grossIncome, N4, monthlyInvest);  
+                    //annualSalaryNet = annualIncome - annualInvest;
                     taxAfterContribution = previousBracketNet + (annualIncomeNet - startBracketNet) * (taxRateNet / 100);
                     taxBack = Math.round(taxPrior - taxAfterContribution);
                     cost = annualInvest - taxBack;
                 }
             }  
-    
+            
+            let K8 = calculateValueK8(annualIncome, N3, grossIncome, N4, monthlyInvest);            
+            //annualSalaryNet = K8;
+
+            //taxBack = K8;
+            console.log("C8",grossIncome);
+            console.log("C10",monthlyInvest);
+            console.log("C16",annualInvest);
+            console.log("C18",taxBack);
+            console.log("K3",annualIncome);
+            console.log("K4",taxRate);
+            console.log("K5",startBracket);
+            console.log("K6",previousBracket);
+            console.log("K7",taxPrior);
+            console.log("K8",K8);
+            console.log("K9",taxRateNet);
+            console.log("K10",startBracketNet);
+            console.log("K11",previousBracketNet);
+            console.log("K12",taxAfterContribution);
+            console.log("N24",cost);
+
+
             // Update the investmentDetails state
             setInvestmentDetails({
                 grossIncome,

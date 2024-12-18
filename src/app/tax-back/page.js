@@ -118,6 +118,18 @@ export default function TaxBack() {
         { bracket: 7, startBracket: 1817000, taxRate: 45, previousBracket: 627254 }
     ];
 
+    function calculateAdjustedValue(K3, N3, C8, N4, C10) {
+        // Calculate the minimum value
+        const minValue = Math.min(
+          N3 * 12 * C8,
+          N4,
+          C10 * 12
+        );
+      
+        // Subtract the minimum value from K3
+        return K3 - minValue;
+    }
+
     // On submit
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -147,6 +159,15 @@ export default function TaxBack() {
             let taxAfterContribution = 0;
             let taxBack = 0;
             let cost = 0;
+
+            let K3 = grossIncome*12;
+            let N3 = 0.275;
+            let C8 = grossIncome;
+            let N4 = 350000;
+            let C10 = monthlyInvest;
+
+            const resultannualSalaryNet = calculateAdjustedValue(K3, N3, C8, N4, C10);
+            console.log(resultannualSalaryNet);
             
             if (annualIncome >= taxBrackets[7].startBracket) {
                 // Income is above the highest bracket
@@ -157,7 +178,10 @@ export default function TaxBack() {
                 previousBracket = taxBrackets[7].previousBracket;
                 previousBracketNet = taxBrackets[7].previousBracket;
                 taxPrior = previousBracket + (annualIncome - startBracket) * (taxRate / 100);
+                // OLD annualSalaryNet Calculation
                 annualSalaryNet = annualIncome - annualInvest;
+                // New annualSalaryNet Calculation
+                annualSalaryNet = resultannualSalaryNet;
                 taxAfterContribution = previousBracket + (annualSalaryNet - startBracket) * (taxRate / 100);
                 taxBack = taxPrior - taxAfterContribution;
                 cost = annualInvest - taxBack;
@@ -241,6 +265,7 @@ export default function TaxBack() {
             fadeInBoxes.forEach(box => {
                 observer.observe(box);
             });
+
         }
     };   
     
@@ -785,6 +810,9 @@ const handleDownload = async () => {
                                         maxValue={350000}
                                         maxValueError="There is a limit on tax-free contributions of 27.5% or R350 000 per year."
                                     />
+                                    <p>
+                                        <span className="text-[16px] font-light block">Your tax back limit. The yearly tax deduction on a retirement annuity is limited to 27.5% of your total income, up to a maximum of R350 000.</span>
+                                    </p>
                                 </div>
                                 <div id="view-section" className="mt-[30px]"></div>
                                 <div className="flex justify-center">

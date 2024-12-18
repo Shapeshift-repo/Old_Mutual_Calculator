@@ -99,6 +99,16 @@ export default function RetirementAnnuity() {
         return `${value}%`;
     }
 
+    function calculateRoundedValueForTodaysMoney(E64, G45, N9, D45) {
+        const value = E64 * G45 / 12 * Math.pow(1 + N9, -D45);
+        
+        // Round down to the nearest multiple of 1000
+        const roundedValue = Math.floor(value / 1000) * 1000;
+
+        // Format the result
+        return roundedValue;
+      }
+
     const [value2, setValue2] = useState(4.5);
 
     const handleSlide2Change = (event, newValue) => {
@@ -141,6 +151,11 @@ export default function RetirementAnnuity() {
         // Safely convert `monthlyInvest` to a string and clean it
         let { monthlyInvest } = formData;
         monthlyInvest = parseFloat(String(monthlyInvest || '').replace(/[^\d]/g, '')) || 0; // Convert to string before replace
+        
+        let N5 = 0.05; // Default escalation rate 
+        let N9 = 0.05; // Default inflation assumption
+        let X5 = 0.275;// Maximum % Gross Salary Tax Deductible
+        let X6 = 350000; // Maximum Notional Deduction
     
         let G45 = monthlyInvest;
     
@@ -165,8 +180,12 @@ export default function RetirementAnnuity() {
         let P54 = Math.round(((G45 + P51) / E52) / 12);
     
         let P57 = P54 / J64;
+
+        let D45 = 40; // Years until retirement
+
+        let E53 = calculateRoundedValueForTodaysMoney(E64, G45, N9, D45);
     
-        return { E52, P53, P54, G45 };
+        return { E52, P53, P54, G45, E53 };
     };        
 
     // On submit
@@ -757,17 +776,18 @@ export default function RetirementAnnuity() {
                                             className="text-[47px] leading-[26px] font-semibold pt-[15px] text-white text-center w-full" 
                                             tag="h5"
                                         />
+                                        <p className="text-[22px] leading-[19px] font-light text-white text-center w-full">({`R ${result ? formatNumberWithSpaces(result.E53) : ''}`} in today’s money)</p>
                                     </div>
                                     <div className="estimate-body pt-[55px] pb-[48px] px-[34px] lg:px-[75px] bg-[#F0F0F0]">
                                         <Heading 
-                                            content="Your income will last"
+                                            content="Your income will last*"
                                             className="text-[20px] leading-[19px] font-medium text-primary w-full" 
                                             tag="h5"
                                         />
                                         
                                         <ProgressBar 
                                             label={`${result ? formatNumberWithSpaces(result.P53) : 0} Years`} 
-                                            hint={`Average markets 4% growth)`}
+                                            hint={`Average markets 7% growth)`}
                                             progress={`${result ? result.P53 : 0}`}
                                             labelClasses="mt-[42px] from-[#ED0080] to-[#F37021]" 
                                             trackClasses=""
@@ -777,7 +797,7 @@ export default function RetirementAnnuity() {
 
                                         <ProgressBar 
                                             label={`${result ? formatNumberWithSpaces(result.P54) : 0} Years`} 
-                                            hint={`Good markets 8% growth)`}
+                                            hint={`Good markets 9% growth)`}
                                             progress={`${result ? result.P54 : 0}`}
                                             labelClasses="mt-[37px]" 
                                             trackClasses=""
@@ -817,6 +837,10 @@ export default function RetirementAnnuity() {
                                     </div>
                                 </div>
 
+                                <p>
+                                    <span className="text-[18px] pt-[40px] pb-[0px] font-light block inline-block text-center">*The years above indicate the point at which the purchasing power of your income will begin to decline.</span>
+                                </p>
+
                                 <div className="container px-[34px] lg:px-0">
                                     <ColorCard 
                                         heading="" 
@@ -826,12 +850,16 @@ export default function RetirementAnnuity() {
                                             <p><strong>Guaranteed (or life) annuity</strong><br><br>A guaranteed annuity ensures that you receive a regular income for as long as you live.</p>
                                             <p><strong>Composite (or compound) annuity</strong><br><br>By combining the features of a living annuity and a guaranteed annuity, a composite annuity ensures that you receive an income for life and allows you to keep a portion of your capital invested in the markets.</p>
                                         `}
-                                        className="rounded-[15px] px-[25px] lg:px-[65px] py-[45px] lg:py-[60px] mt-[78px] [&>div>div>div>div>p]:mb-[32px]" 
+                                        className="rounded-[15px] px-[25px] lg:px-[65px] py-[45px] lg:py-[60px] mt-[40px] [&>div>div>div>div>p]:mb-[32px]" 
                                         showShadow={false} 
                                     />
                                 </div>
+                                
+                                <p>
+                                    <span className="text-[18px] pt-[40px] pb-[0px] font-light block inline-block text-center">This calculator will produce estimates. To get a more accurate income plan, speak to your financial adviser  or click on the CALL ME BACK button below.</span>
+                                </p>
 
-                                <div className="generate-report bg-transparent rounded-[15px] pt-[90px] pb-[54px] px-[15px]">
+                                <div className="generate-report bg-transparent rounded-[15px] pt-[20px] pb-[54px] px-[15px]">
                                     
                                     <div className="flex flex-col items-center gap-[20px] justify-center mt-[35px]">
                                         <button

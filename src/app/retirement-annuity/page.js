@@ -285,18 +285,24 @@ export default function RetirementAnnuity() {
         
         // Parsing inputs
         let D9 = age; //checked
+        let F32 = N8; // Retirement Age
         let G9 = grossIncome; //checked
         let D11 = contribution; //checked
         let investmentStrategyValue = investmentStrategyTable[0][investment];
         let D13 = monthly; //checked
         let D15 = D13 + D11; // Total Monthly Contributions
-        let agediff = N8 - D9 // Age Difference
-        
+        let agediff = N8 - D9; // Age Difference
+        let D32 = age + 1;
         let N5 = 0.05; // Default escalation rate 
         let N9 = 0.05; // Default inflation assumption
+        let X5 = 0.275;// Maximum % Gross Salary Tax Deductible
+        let X6 = 350000; // Maximum Notional Deduction
     
         // Calculate effective return rate
-        let N7 = (1 + N9) * (1 + investmentStrategyValue) - 1;
+        // N7 This was the old Calculation updated on 17 December 2024
+        // let N7 = (1 + N9) * (1 + investmentStrategyValue) - 1;
+        let N7 = N9 + (1 + investmentStrategyValue) - 1;
+
         //N7 = Math.round(N7 * 1000) / 1000;
 console.log("N7",N7);
         // Round to 10 decimal places (to match Excel)
@@ -361,7 +367,35 @@ console.log("T3",thirdTerm);
 console.log("N13",N13);
 
         let N14 = N13 - N15 - N16;
-    
+
+        // Calculating N17
+        function calculateValue(X5, G9, X6, D15, N9, F32, D9) {
+            const minValue = Math.min(
+              X5 * 12 * G9,
+              X6,
+              D15 * 12
+            );            
+            const growthFactor = ((Math.pow(1 + N9, F32 - D9) - 1) / N9);            
+            return minValue * growthFactor;
+          }
+          
+          let N17 = calculateValue(X5, G9, X6, D15, N9, F32, D9);
+          console.log("N17",N17);
+
+        // Calculating N24
+        function calculateValue(X5, G9, X6, D15, N9, F32, D32) {
+            const minValue = Math.min(
+              X5 * 12 * G9,
+              X6,
+              D15 * 12
+            );            
+            const growthFactor = ((Math.pow(1 + N9, F32 - D32) - 1) / N9);            
+            return minValue * growthFactor;
+          }
+          
+          let N24 = calculateValue(X5, G9, X6, D15, N9, F32, D32);
+          console.log("N24",N24);
+
         // Function to calculate tax based on income
         const calculateTax = (income) => {
             // Check for income less than the lowest bracket

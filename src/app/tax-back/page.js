@@ -138,7 +138,7 @@ export default function TaxBack() {
             monthlyInvest = parseFloat(monthlyInvest.replace(/[^\d]/g, ''));
             let annualInvest = monthlyInvest * 12;
 
-            let annualIncomeNet = annualIncome - annualInvest;
+          
             
             // Ensure values are valid
             if (isNaN(grossIncome) || isNaN(annualIncome) || isNaN(monthlyInvest) || isNaN(annualInvest)) return;
@@ -160,7 +160,7 @@ export default function TaxBack() {
             let C8 = grossIncome;
             let N4 = 350000;
             let C10 = monthlyInvest;
-
+            let annualIncomeNet = calculateAdjustedValue(K3, N3, C8, N4, C10);
             const resultannualSalaryNet = calculateAdjustedValue(K3, N3, C8, N4, C10);
             console.log(resultannualSalaryNet);
 

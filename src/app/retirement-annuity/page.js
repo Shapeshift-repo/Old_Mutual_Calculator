@@ -292,7 +292,7 @@ export default function RetirementAnnuity() {
         let D13 = monthly; //checked
         let D15 = D13 + D11; // Total Monthly Contributions
         let agediff = N8 - D9; // Age Difference
-        let D32 = age + 1;
+        let D32 = age;
         let N5 = 0.05; // Default escalation rate 
         let N9 = 0.05; // Default inflation assumption
         let X5 = 0.275;// Maximum % Gross Salary Tax Deductible

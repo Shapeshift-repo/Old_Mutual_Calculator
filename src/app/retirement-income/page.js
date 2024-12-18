@@ -168,7 +168,7 @@ export default function RetirementAnnuity() {
         let P47 = N9 + 0.02;
         let P48 = N9 + 0.04;
     
-        let P47 = -0.01;
+ 
     
         let P50 = G45 * P47 * (1 - E64) / E64;
 

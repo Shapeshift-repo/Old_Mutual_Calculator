@@ -122,7 +122,7 @@ export default function RetirementAnnuity() {
     };
 
     const [value, setValue] = useState(25); // Slider 1 value (single value)
-    const [value1, setValue1] = useState([25, 65]); // Slider 2 range value [min, max]
+    const [value1, setValue1] = useState([25, 55]); // Slider 2 range value [min, max]
 
     const minDistance = 0; // Minimum distance between the two thumbs on Slider 2
 
@@ -396,6 +396,15 @@ console.log("N13",N13);
           let N24 = calculateValueForN24(X5, G9, X6, D15, N9, F32, D32);
           console.log("N24",N24);
 
+        const checkU5Condition = (D15, X6, X5, G9) => {
+            const leftValue = D15 * 12; // Calculate D15 * 12
+            const rightValue = Math.min(X6, X5 * G9 * 12); // MIN(X6, X5 * G9 * 12)
+            return leftValue <= rightValue; // Return true or false based on condition
+          };
+
+        const U5result = checkU5Condition(D15, X6, X5, G9);
+        //console.log("U5result",U5result);
+
         // Function to calculate tax based on income
         const calculateTax = (income) => {
             // Check for income less than the lowest bracket
@@ -534,11 +543,10 @@ console.log("N13",N13);
         const investmentGrowth = N14.toFixed(2);
         const totalContributionPaid = (N15 + N16).toFixed(2);
         const lampSum = J9.toFixed(2);
-
         const investmentOption = contributionOptions.find(option => option.value === investment);
         const investmentLabel = investmentOption ? investmentOption.label.split(' - ')[1] : 'inflation plus 3%-4%';
 
-        return { totalInvestment, taxGetBack, investmentGrowth, totalContributionPaid, lampSum, grossIncome, contribution, monthly, age, investmentLabel };
+        return { totalInvestment, taxGetBack, investmentGrowth, totalContributionPaid, lampSum, grossIncome, contribution, monthly, age, investmentLabel, U5result };
     };
 
     // On submit
@@ -1303,6 +1311,20 @@ console.log("N13",N13);
                                     options={contributionOptions}
                                 />
 
+                                {/* Only show error message if result is false */}
+                                <div>
+
+      {/* Only show error message if result for U5 is false */}
+      {!formData.U5result && (
+        <p style={{ color: 'red', fontWeight: 'bold' }}>
+          U5 is False
+        </p>
+      )}
+      <ul>
+        <li><strong>Condition Result:</strong> {formData.U5result ? 'True' : 'False'}</li>
+      </ul>
+    </div>
+
                                 <label className="mt-[20px] mb-[15px] text-[20px] leading-[25px] font-light block">Do you have any current retirement savings?</label>
                                 <ToggleButtonGroup
                                     value={choice}
@@ -1485,7 +1507,7 @@ console.log("N13",N13);
                                     getAriaLabel={() => 'Age'}
                                     value={value1}
                                     min={18} 
-                                    max={65}
+                                    max={55}
                                     onChange={handleSlide2Change}
                                     valueLabelDisplay="on"
                                     getAriaValueText={valuetext}

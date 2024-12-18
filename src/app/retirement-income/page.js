@@ -164,12 +164,20 @@ export default function RetirementAnnuity() {
         let E52 = roundDownThousand((G45 * E64) / 12);
     
         let J64 = 0.5;
+
+        let P47 = N9 + 0.02;
+        let P48 = N9 + 0.04;
     
         let P47 = -0.01;
     
         let P50 = G45 * P47 * (1 - E64) / E64;
-    
-        let P53 = calculateRoundedValue(G45, P50, E52);
+
+        let Q47 = (1+P47) ** (1/12) - 1;
+        let Q48 = (1+P48) ** (1/12) - 1;
+
+        let U49 = 0.175;
+
+        let P53 = Math.log((U49 * (1 - (E64 / 12 * P47 / (Q47 / (1 + Q47)) / (P47 - N9)))) /(E64 - (U49 * E64 / 12 * P47 / (Q47 / (1 + Q47)) / (P47 - N9)))) / Math.log((1 + N9) / (1 + P47));
     
         let P56 = P53 / J64;
     
@@ -177,7 +185,7 @@ export default function RetirementAnnuity() {
     
         let P51 = (G45 * P48 * (1 - E64)) / E64;
     
-        let P54 = Math.round(((G45 + P51) / E52) / 12);
+        let P54 = Math.log((U49 * (1 - (E64 / 12 * P48 / (Q48 / (1 + Q48)) / (P48 - N9)))) /(E64 - (U49 * E64 / 12 * P48 / (Q48 / (1 + Q48)) / (P48 - N9)))) / Math.log((1 + N9) / (1 + P48));
     
         let P57 = P54 / J64;
 
@@ -569,7 +577,7 @@ export default function RetirementAnnuity() {
                         </View>
 
                         <View>
-                            <Text style={styles.barInfo}>Average markets (4% growth)</Text>
+                            <Text style={styles.barInfo}>Average markets (4%7growth)</Text>
                         </View>
 
                         <Text style={[styles.boxBorderLabel, styles.boxBorderLabelGreen]}>{result ? formatNumberWithSpaces(result.P54) : 0} Years</Text>
@@ -580,7 +588,7 @@ export default function RetirementAnnuity() {
                         </View>
 
                         <View>
-                            <Text style={styles.barInfo}>Good markets (8% growth)</Text>
+                            <Text style={styles.barInfo}>Good markets (9% growth)</Text>
                         </View>
 
                     </View>
@@ -795,16 +803,15 @@ export default function RetirementAnnuity() {
                                             hintClasses = ""
                                         />
 
-                                        <ProgressBar 
-                                            label={`${result ? formatNumberWithSpaces(result.P54) : 0} Years`} 
+                                       <ProgressBar 
+                                            label={`${result ? (result.P54 ? formatNumberWithSpaces(result.P54) : "120") : 0} Years`} 
                                             hint={`Good markets 9% growth)`}
-                                            progress={`${result ? result.P54 : 0}`}
+                                            progress={`${result ? (result.P54 ? formatNumberWithSpaces(result.P54) : 100) : 0}`}
                                             labelClasses="mt-[37px]" 
                                             trackClasses=""
                                             progressClasses=""
                                             hintClasses = ""
                                         />
-
                                     </div>
                                     <div className="estimate-footer pt-[35px] pb-[69px] px-[34px] lg:px-[75px] bg-[#E9E9E9] rounded-bl-[62px] rounded-br-[62px] lg:rounded-bl-[20px] lg:rounded-br-[20px]">
 

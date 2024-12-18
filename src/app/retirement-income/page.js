@@ -1,18 +1,18 @@
 'use client';
 
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import Banner from "../components/Banner";
-import Heading from "../components/Heading";
 import Slider from '@mui/material/Slider';
 import { alpha, styled } from '@mui/material/styles';
-import TextInput from "../components/TextInput";
+import { Document, Font, Image, PDFDownloadLink, Link as PDFLink, Page, StyleSheet, Text, View, pdf } from '@react-pdf/renderer';
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import Banner from "../components/Banner";
 import Button from "../components/Button";
-import VideoCard from "../components/VideoCard";
-import ProgressBar from "../components/ProgressBar";
 import ColorCard from "../components/ColorCard";
+import Heading from "../components/Heading";
+import ProgressBar from "../components/ProgressBar";
+import TextInput from "../components/TextInput";
 import Tooltip from "../components/Tooltip";
-import { Font, Page, Text, Link as PDFLink, View, Image, Document, StyleSheet, PDFDownloadLink, pdf } from '@react-pdf/renderer';
+import VideoCard from "../components/VideoCard";
 
 Font.register({
     family: 'Montserrat',
@@ -164,11 +164,9 @@ export default function RetirementAnnuity() {
         let E52 = roundDownThousand((G45 * E64) / 12);
     
         let J64 = 0.5;
-
+    
         let P47 = N9 + 0.02;
         let P48 = N9 + 0.04;
-    
- 
     
         let P50 = G45 * P47 * (1 - E64) / E64;
 
@@ -177,15 +175,16 @@ export default function RetirementAnnuity() {
 
         let U49 = 0.175;
 
+    
+
         let P53 = Math.log((U49 * (1 - (E64 / 12 * P47 / (Q47 / (1 + Q47)) / (P47 - N9)))) /(E64 - (U49 * E64 / 12 * P47 / (Q47 / (1 + Q47)) / (P47 - N9)))) / Math.log((1 + N9) / (1 + P47));
     
         let P56 = P53 / J64;
-    
-    
+
         let P51 = (G45 * P48 * (1 - E64)) / E64;
-    
+
         let P54 = Math.log((U49 * (1 - (E64 / 12 * P48 / (Q48 / (1 + Q48)) / (P48 - N9)))) /(E64 - (U49 * E64 / 12 * P48 / (Q48 / (1 + Q48)) / (P48 - N9)))) / Math.log((1 + N9) / (1 + P48));
-    
+
         let P57 = P54 / J64;
 
         let D45 = 40; // Years until retirement
@@ -802,7 +801,7 @@ export default function RetirementAnnuity() {
                                             hintClasses = ""
                                         />
 
-                                       <ProgressBar 
+                                        <ProgressBar 
                                             label={`${result ? (result.P54 ? formatNumberWithSpaces(result.P54) : "120") : 0} Years`} 
                                             hint={`Good markets 9% growth)`}
                                             progress={`${result ? (result.P54 ? formatNumberWithSpaces(result.P54) : 100) : 0}`}
@@ -811,6 +810,7 @@ export default function RetirementAnnuity() {
                                             progressClasses=""
                                             hintClasses = ""
                                         />
+
                                     </div>
                                     <div className="estimate-footer pt-[35px] pb-[69px] px-[34px] lg:px-[75px] bg-[#E9E9E9] rounded-bl-[62px] rounded-br-[62px] lg:rounded-bl-[20px] lg:rounded-br-[20px]">
 

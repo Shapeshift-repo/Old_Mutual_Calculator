@@ -577,7 +577,7 @@ export default function RetirementAnnuity() {
                         </View>
 
                         <View>
-                            <Text style={styles.barInfo}>Average markets (4%7growth)</Text>
+                            <Text style={styles.barInfo}>Average markets (7% growth)</Text>
                         </View>
 
                         <Text style={[styles.boxBorderLabel, styles.boxBorderLabelGreen]}>{result ? formatNumberWithSpaces(result.P54) : 0} Years</Text>

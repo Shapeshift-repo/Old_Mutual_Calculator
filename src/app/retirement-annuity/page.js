@@ -369,7 +369,7 @@ console.log("N13",N13);
         let N14 = N13 - N15 - N16;
 
         // Calculating N17
-        function calculateValue(X5, G9, X6, D15, N9, F32, D9) {
+        function calculateValueForN17(X5, G9, X6, D15, N9, F32, D9) {
             const minValue = Math.min(
               X5 * 12 * G9,
               X6,
@@ -379,11 +379,11 @@ console.log("N13",N13);
             return minValue * growthFactor;
           }
           
-          let N17 = calculateValue(X5, G9, X6, D15, N9, F32, D9);
+          let N17 = calculateValueForN17(X5, G9, X6, D15, N9, F32, D9);
           console.log("N17",N17);
 
         // Calculating N24
-        function calculateValue(X5, G9, X6, D15, N9, F32, D32) {
+        function calculateValueForN24(X5, G9, X6, D15, N9, F32, D32) {
             const minValue = Math.min(
               X5 * 12 * G9,
               X6,
@@ -393,7 +393,7 @@ console.log("N13",N13);
             return minValue * growthFactor;
           }
           
-          let N24 = calculateValue(X5, G9, X6, D15, N9, F32, D32);
+          let N24 = calculateValueForN24(X5, G9, X6, D15, N9, F32, D32);
           console.log("N24",N24);
 
         // Function to calculate tax based on income
@@ -446,18 +446,64 @@ console.log("N13",N13);
 
         let U18 = U17+(U14-U16)*U15;
 
-        let U19 = U14 - D15 * 12 - J9;
-        
+        function calculateDifferenceForU19(U14, X5, G9, X6, D15) {
+            // Calculate the minimum value
+            const minValue = Math.min(
+              X5 * 12 * G9, // First term
+              X6,           // Second term
+              D15 * 12      // Third term
+            );
+          
+            // Subtract the minimum value from U14
+            return U14 - minValue;
+          }
+
+        // Old U19 Calculation
+        // let U19 = U14 - D15 * 12 - J9;
+        // New U19 Calculation
+        let U19 = calculateDifferenceForU19(U14, X5, G9, X6, D15);
+        console.log("U19",U19);
         let { startBracket: U21, previousBracket: U22, taxRate: U20 } = getBracketDetails(U19);
+        console.log("U21",U21);
+        console.log("U22",U22);
 
         U20 = U20 / 100;
-
+        console.log("U20",U20);
         let U23 = U22+(U19-U21)*U20;
-        
-        let U24 = (U18 - U23) / (D15 * 12 + J9);
-        
-        let Q13 = U24 * (N16 + 12 * D15);
-        
+        console.log("U23",U23);
+
+        function calculateDivisionforU24(U18, U23, X5, G9, X6, D15) {
+            // Calculate the difference (U18 - U23)
+            const difference = U18 - U23;
+          
+            // Calculate the minimum value
+            const minValue = Math.min(
+              X5 * 12 * G9, // First term
+              X6,           // Second term
+              D15 * 12      // Third term
+            );
+          
+            // Perform the division
+            if (minValue === 0) {
+              throw new Error("Division by zero is not allowed");
+            }
+          
+            return difference / minValue;
+          }
+
+        // Old U24 Calculation
+        // let U24 = (U18 - U23) / (D15 * 12 + J9);
+        // New U24 Calculation        
+        let U24 = calculateDivisionforU24(U18, U23, X5, G9, X6, D15);
+
+        console.log("U24",U24);
+        // Old U24 Calculation
+        // let Q13 = U24 * (N16 + 12 * D15);
+        // New U24 Calculation 
+        let U242 = Math.round(U24 * 10000000000) / 10000000000;   
+        let Q13 = U242 * N17;
+        console.log("Q13",Q13);
+
         let V14 = G9 * 12;
         
         let { startBracket: V16, previousBracket: V17, taxRate: V15 } = getBracketDetails(V14);
@@ -483,7 +529,8 @@ console.log("N13",N13);
         
         const totalInvestment = N13.toFixed(2);
         localStorage.setItem('totalInvestment', totalInvestment);
-        const taxGetBack = Q15.toFixed(2);
+        // const taxGetBack = Q15.toFixed(2); - Old
+        const taxGetBack = Q13.toFixed(2);
         const investmentGrowth = N14.toFixed(2);
         const totalContributionPaid = (N15 + N16).toFixed(2);
         const lampSum = J9.toFixed(2);

@@ -264,7 +264,7 @@ export default function RetirementAnnuity() {
         { bracket: 6, startBracket: 857900, taxRate: 41, previousBracket: 234023 },
         { bracket: 7, startBracket: 1817000, taxRate: 45, previousBracket: 627254 }
     ];
-    
+    const [checkFlag, setCheckFlag] = useState(true);
     const calculateInvestmentAndTax = (formData) => {
         
         // Clean the values by removing non-numeric characters
@@ -399,10 +399,10 @@ console.log("N13",N13);
         const checkU5Condition = (D15, X6, X5, G9) => {
             const leftValue = D15 * 12; // Calculate D15 * 12
             const rightValue = Math.min(X6, X5 * G9 * 12); // MIN(X6, X5 * G9 * 12)
-            return leftValue <= rightValue; // Return true or false based on condition
+            setCheckFlag(leftValue <= rightValue);
           };
-
-        const U5result = checkU5Condition(D15, X6, X5, G9);
+        checkU5Condition(D15, X6, X5, G9);
+        const U5result = checkFlag;
         //console.log("U5result",U5result);
 
         // Function to calculate tax based on income
@@ -1300,7 +1300,8 @@ console.log("N13",N13);
                                     onChange={handleChange}
                                     name="contribution"
                                 />
-
+                                {/* Only show error message if result for U5 is false */}
+                                <p>{checkFlag ? "" : "Your yearly contributions exceed the maximum qualifying for tax rebate in a given tax year."}</p>
                                 <SelectInput
                                     label="Investment strategy"
                                     required
@@ -1310,19 +1311,9 @@ console.log("N13",N13);
                                     name="investment"
                                     options={contributionOptions}
                                 />
-
-                                {/* Only show error message if result is false */}
                                 <div>
 
-      {/* Only show error message if result for U5 is false */}
-      {!formData.U5result && (
-        <p style={{ color: 'red', fontWeight: 'bold' }}>
-          U5 is False
-        </p>
-      )}
-      <ul>
-        <li><strong>Condition Result:</strong> {formData.U5result ? 'True' : 'False'}</li>
-      </ul>
+     
     </div>
 
                                 <label className="mt-[20px] mb-[15px] text-[20px] leading-[25px] font-light block">Do you have any current retirement savings?</label>
@@ -1507,7 +1498,7 @@ console.log("N13",N13);
                                     getAriaLabel={() => 'Age'}
                                     value={value1}
                                     min={18} 
-                                    max={55}
+                                    max={65}
                                     onChange={handleSlide2Change}
                                     valueLabelDisplay="on"
                                     getAriaValueText={valuetext}

@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Heading from './Heading';
 
 export default function ScrollableTabs({ tabs }){
@@ -52,15 +52,16 @@ export default function ScrollableTabs({ tabs }){
 
   const handleTabClick = (index) => {
     setActiveTabIndex(index);
-    const tabElement = containerRef.current.children[index];
+    const tabElement = containerRef.current.children[0];
     if (tabElement) {
       tabElement.scrollIntoView({ behavior: 'smooth', inline: 'center' });
     }
   };
 
   return (
-    <section id="steps-section" className="shadow-box py-[80px] pb-[51px] lg:pb-[80px]">
-        <div className="container">
+    <section id="steps-section" className="shadow-box py-[80px] pb-[51px] lg:pb-[80px] relative">
+      <div ref={containerRef}><div className="absolute -mt-10"></div></div>
+        <div className="container" >
             <div className="shadow-box-holder bg-white pt-[24px] lg:pt-[52px] pb-0 px-[27px] lg:px-[70px] rounded-[30px] shadow-[0_4px_64px_0_rgba(0,0,0,0.12)] lg:shadow-[0_0_12px_0_rgba(0,0,0,0.12)]">
               <div className="relative overflow-hidden">
                 {showLeftArrow && (
@@ -76,7 +77,7 @@ export default function ScrollableTabs({ tabs }){
                   </button>
                 )}
                 <div
-                  ref={containerRef}
+                  
                   className="relative flex justify-between overflow-x-auto whitespace-nowrap after:content-[''] after:absolute after:bottom-0 after:h-[4px] after:w-full after:bg-[#D9D9D9] after:rounded-md scroll-smooth scrollbar-hide"
                   onScroll={() => {
                     const container = containerRef.current;

@@ -2,21 +2,21 @@
 
 'use client';
 
-import React, { useState, useEffect } from "react";
-import Banner from "../components/Banner";
-import Heading from "../components/Heading";
 import Slider from "@mui/material/Slider";
 import { alpha, styled } from '@mui/material/styles';
-import TextInput from "../components/TextInput";
-import SelectInput from "../components/SelectInput";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { Document, Font, Image, PDFDownloadLink, Link as PDFLink, Page, StyleSheet, Text, View, pdf } from '@react-pdf/renderer';
+import React, { useEffect, useState } from "react";
+import Banner from "../components/Banner";
 import Button from "../components/Button";
-import VideoCard from "../components/VideoCard";
-import StepButton from "../components/StepButton";
 import ColorCard from "../components/ColorCard";
+import Heading from "../components/Heading";
 import NumberPlate from "../components/NumberPlate";
-import { Font, Page, Text, Link as PDFLink, View, Image, Document, StyleSheet, PDFDownloadLink, pdf } from '@react-pdf/renderer';
+import SelectInput from "../components/SelectInput";
+import StepButton from "../components/StepButton";
+import TextInput from "../components/TextInput";
+import VideoCard from "../components/VideoCard";
 
 Font.register({
     family: 'Montserrat',
@@ -361,7 +361,13 @@ console.log("T2",secondTerm);
         
 console.log("T3",thirdTerm);
 
-        let N13 = (firstTerm) * (secondTerm) / (thirdTerm);
+const part1 = (D15 * ((Math.pow(1 + Q5, 12) - 1) / (Q5 / (1 + Q5))));
+const part2 = ((Math.pow(1 + N7, F32 - D9) - Math.pow(1 + N5, F32 - D9)) / (N7 - N5));
+const part3 = J9 * Math.pow(1 + N7, F32 - D9);
+const result = (part1 * part2) + part3;
+
+        // let N13 = (firstTerm) * (secondTerm) / (thirdTerm);
+        let N13 = result;
         N13 = Math.round(N13 * 100000000) / 100000000;
 
 console.log("N13",N13);
@@ -1301,7 +1307,7 @@ console.log("N13",N13);
                                     name="contribution"
                                 />
                                 {/* Only show error message if result for U5 is false */}
-                                <p>{checkFlag ? "" : "Your yearly contributions exceed the maximum qualifying for tax rebate in a given tax year."}</p>
+                                <p>{checkFlag ? "" : "Contribution Limit: The yearly tax deduction on a retirement annuity is limited to 27.5% of your total income, up to a maximum of R350 000."}</p>
                                 <SelectInput
                                     label="Investment strategy"
                                     required

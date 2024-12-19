@@ -554,7 +554,7 @@ export default function RetirementAnnuity() {
                         If you manage to save up a capital amount of <Text style={styles.boldGreen}>R{result && formatNumberWithSpaces(result.G45)}</Text> by your retirement age of <Text style={styles.boldGreen}>{value}</Text> years, you can expect an income of <Text style={styles.boldGreen}>R{result ? formatNumberWithSpaces(result.E52) : ''}</Text> per month at a drawdown rate of <Text style={styles.boldGreen}>{value2}%</Text>.
                     </Text>
                     <Text>
-                        In Average markets ({result ? formatNumberWithSpaces(result.P53) : 0}% growth), your income will last about <Text style={styles.boldGreen}>10</Text> years. If you experience {result ? formatNumberWithSpaces(result.P54) : 0}% growth, your income could last up to <Text style={styles.boldGreen}>25</Text> years.
+                        In Average markets (7% growth), your income will last about <Text style={styles.boldGreen}>{result ? formatNumberWithSpaces(result.P53) : 0}</Text> years. If you experience 9% growth, your income could last up to <Text style={styles.boldGreen}>{result ? formatNumberWithSpaces(result.P54) : 0}</Text> years.
                     </Text>
                 </View>
 
@@ -787,7 +787,7 @@ export default function RetirementAnnuity() {
                                     <div className="estimate-body pt-[55px] pb-[48px] px-[34px] lg:px-[75px] bg-[#F0F0F0]">
                                         <Heading 
                                             content="Your income will last*"
-                                            className="text-[20px] leading-[19px] font-medium text-primary w-full" 
+                                            className="text-[24px] leading-[19px] font-medium text-primary w-full" 
                                             tag="h5"
                                         />
                                         

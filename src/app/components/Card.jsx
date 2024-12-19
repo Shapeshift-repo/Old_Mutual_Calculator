@@ -1,10 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
 import Heading from "./Heading";
-import Image from "next/image";
 
 export default function Card({ heading = null, content = null, image = null, link = null, contentClasses = "" }){
   return (
-    <div className="card-box relative h-[433px] w-full rounded-[30px] overflow-hidden transition-transform duration-300 ease-in-out transform">
+    <div href={link}  className="card-box relative h-[433px] w-full rounded-[30px] overflow-hidden transition-transform duration-300 ease-in-out transform">
       {/* Card Image */}
       <div className="w-full h-full relative">
         <Image

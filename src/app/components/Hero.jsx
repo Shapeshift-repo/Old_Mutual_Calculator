@@ -1,8 +1,8 @@
 "use client";
 
+import Image from 'next/image';
 import Button from './Button';
 import Heading from './Heading';
-import Image from 'next/image';
 
 export default function Hero() {
 
@@ -36,7 +36,7 @@ export default function Hero() {
     return (
         <section className="hero-section py-0 lg:py-[80px]">
             <div className="container">
-                <div className="flex flex-col gap-[40px] lg:gap-[160px] lg:flex-row items-center">
+                <div className="flex flex-col gap-[40px] lg:gap-[110px] lg:flex-row items-center">
                     <div className="relative z-[1] w-full flex flex-col gap-[10px] justify-center lg:justify-end text-center lg:text-left order-2 lg:order-1">
                         <Heading 
                             content={heroContent.title} 

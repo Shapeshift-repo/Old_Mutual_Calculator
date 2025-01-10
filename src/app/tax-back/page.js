@@ -774,7 +774,7 @@ const handleDownload = async () => {
                                     }
 
                                     <TextInput 
-                                        label="How much you’d like to invest monthly?"
+                                        label="How much would you like to invest monthly?"
                                         required 
                                         className="mt-[28px]"
                                         value={formData.monthlyInvest} 
@@ -803,7 +803,7 @@ const handleDownload = async () => {
                                         tag="h5"
                                     />
                                     <h3 className="font-extrabold inline-block bg-gradient-to-r from-[#50B848] to-[#009677] bg-clip-text text-[47px] leading-[25px] font-semibold pt-[22px] text-primary text-center w-full">
-                                        R<CountUp end={investmentDetails.annualInvest} />
+                                        R<CountUp end={investmentDetails.annualInvest} separator="" />
                                     </h3>
                                     
                                     <div className="note-icon mt-[17px] flex justify-center">
@@ -982,7 +982,7 @@ const handleDownload = async () => {
                                     </div>
                                 </div>
 
-                                <VideoCard heading="Tax back explained" image="/images/video-thumb.jpg" videoID="L61p2uyiMSo" className="mt-[60px]"/>
+                                <VideoCard heading="Tax back explained" image="/images/video-1-thumb.png" videoID="L61p2uyiMSo" className="mt-[60px]"/>
 
                                 <StepButton heading="NEXT STEP" content="See how your money will grow until retirement." link="/retirement-annuity" className="mt-[60px]" />
 

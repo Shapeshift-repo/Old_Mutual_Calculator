@@ -31,11 +31,15 @@ const PrimarySlider = styled(Slider)(({ theme }) => ({
     '& .MuiSlider-thumb': {
         height: 29,
         width: 29,
-        backgroundColor: '#009677',
+        backgroundColor: '#009677', // Default color
         border: '3px solid white',
         boxShadow: '2px 2px 5px 0 rgba(00, 00, 00, .25)',
         '&:hover, &:focus': {
-        boxShadow: '0px 0px 0px 8px rgba(0, 150, 119, 0.16)',
+            boxShadow: '0px 0px 0px 8px rgba(0, 150, 119, 0.16)',
+        },
+        // Change color for the left thumb (if needed, use :nth-child for specific instance)
+        '&:nth-of-type(1)': {
+            backgroundColor: '#FF0000', // New color for the left thumb
         },
     },
     '& .MuiSlider-track': {
@@ -1423,7 +1427,7 @@ export default function RetirementAnnuity() {
 
                                 </div>
 
-                                <VideoCard heading="Tax back explained" image="/images/video-thumb.jpg" videoID="L61p2uyiMSo" className="mt-[60px]"/>
+                                <VideoCard heading="Retirement income explained" image="/images/video-2-thumb.png" videoID="L61p2uyiMSo" className="mt-[60px]"/>
 
                                 <StepButton heading="NEXT STEP" content="See what income your savings will give you in retirement." link="/retirement-income" className="mt-[60px]" />
 

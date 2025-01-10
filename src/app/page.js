@@ -84,7 +84,11 @@ export default function Home() {
   const CallToActionData1 = {
     heading: 'LIFE AND DISABILITY COVER',
     subHeading: 'Protect you & your family’s financial future with',
-    content: '',
+    content: (
+      <>
+        Protect yours and your family’s financial future with <Link className="font-bold text-primary underline" href="https://www.oldmutual.co.za/personal/solutions/life-and-disability/life-insurance/">LIFE AND DISABILITY INSURANCE.</Link>
+      </>
+    ),
     buttonLabel: 'FIND OUT MORE',
     href: '#',
     img: '/images/cta-img-1.png',
@@ -93,7 +97,11 @@ export default function Home() {
   const CallToActionData2 = {
     heading: 'JOIN OLD MUTUAL REWARDS',
     subHeading: 'Make your savings journey much more rewarding',
-    content: '',
+    content: (
+      <>
+        Protect yours and your family’s financial future with <Link className="font-bold text-[#ED0080] underline" href="https://www.oldmutual.co.za/personal/solutions/life-and-disability/life-insurance/">LIFE AND DISABILITY INSURANCE.</Link>
+      </>
+    ),
     buttonLabel: 'FIND OUT MORE',
     href: '#',
     artwork: (

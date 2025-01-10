@@ -574,7 +574,7 @@ export default function RetirementAnnuity() {
                 <View style={styles.contentBottom}>
                     <Text style={styles.bottomHeading1}>Your different income annuity options at retirement</Text>
                     <Text style={styles.bottomHeading2}>Living annuity</Text>
-                    <Text>A living annuity is a flexibility plan where you decide how your savings are invested and you choose an income level that suits your needs. You can withdraw an income between 2.5% and 17.5% of your investment a year, allowing you to adapt your income when needed. You can adjust your income every year, but if your investment underperforms or you withdraw too much, you could run out of retirement savings.</Text>
+                    <Text>A living annuity is a flexible plan where you decide how your savings are invested and you choose an income level that suits your needs. You can withdraw an income between 2.5% and 17.5% of your investment a year, allowing you to adapt your income when needed. You can adjust your income every year, but if your investment underperforms or you withdraw too much, you could run out of retirement savings.</Text>
                     <Text style={styles.bottomHeading2}>Guaranteed (or life) annuity</Text>
                     <Text>A guaranteed annuity ensures that you receive a regular income for as long as you live. You can choose an escalation option that determines how the purchasing power of your income will increase or decrease over time.</Text>
                     <Text style={styles.bottomHeading2}>Composite (or compound) annuity</Text>
@@ -694,7 +694,7 @@ export default function RetirementAnnuity() {
 
                             <div className="form-field-holder max-w-[570px]">
                                 <Heading 
-                                    content="See what monthly income you could get during retirement from a Living Annuity"
+                                    content="See what monthly income you could get during retirement from a living annuity"
                                     className="text-[24px] leading-[28px] hidden lg:flex font-normal pb-[60px] text-[#1E1E1E] pr-[20px]" 
                                     tag="h3"
                                 />
@@ -845,7 +845,7 @@ export default function RetirementAnnuity() {
 
                                 </div>
 
-                                <VideoCard heading="Tax back explained" image="/images/video-thumb.jpg" videoID="L61p2uyiMSo" className="mt-[60px]"/>
+                                <VideoCard heading="Compound growth explained" image="/images/video-3-thumb.png" videoID="L61p2uyiMSo" className="mt-[60px]"/>
 
                             </div>
                         </div>

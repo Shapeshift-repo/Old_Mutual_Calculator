@@ -1,5 +1,5 @@
-import Link from "next/link";
-import Heading from "./Heading";
+import Link from "next/link"
+import Heading from "./Heading"
 
 export default function ColorCard({ heading = null, content = null, link = null, className = "", showShadow = true }) {
     return (
@@ -12,7 +12,7 @@ export default function ColorCard({ heading = null, content = null, link = null,
             {/* Render HTML content */}
             {content && (
               <div
-                className="text-[20px] lg:text-[22px] leading-[26px] text-white font-light color-card-content"
+                className="text-[20px] lg:text-[22px] leading-[19px] text-white font-light color-card-content"
                 dangerouslySetInnerHTML={{ __html: content }}
               />
             )}

@@ -118,13 +118,6 @@ export default function TaxBack() {
         { bracket: 7, startBracket: 1817000, taxRate: 45, previousBracket: 627254 }
     ];
 
-    function calculateAdjustedValue(K3, N3, C8, N4, C10) {
-        
-    const minValue = Math.min(N3 * 12 * C8, N4, C10 * 12);
-    // Subtract the MIN value from K3
-    return K3 - minValue;
-    }
-
     // On submit
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -138,7 +131,7 @@ export default function TaxBack() {
             monthlyInvest = parseFloat(monthlyInvest.replace(/[^\d]/g, ''));
             let annualInvest = monthlyInvest * 12;
 
-          
+            let annualIncomeNet = annualIncome - annualInvest;
             
             // Ensure values are valid
             if (isNaN(grossIncome) || isNaN(annualIncome) || isNaN(monthlyInvest) || isNaN(annualInvest)) return;
@@ -154,20 +147,6 @@ export default function TaxBack() {
             let taxAfterContribution = 0;
             let taxBack = 0;
             let cost = 0;
-
-            let K3 = grossIncome*12;
-            let N3 = 0.275;
-            let C8 = grossIncome;
-            let N4 = 350000;
-            let C10 = monthlyInvest;
-            let annualIncomeNet = calculateAdjustedValue(K3, N3, C8, N4, C10);
-            const resultannualSalaryNet = calculateAdjustedValue(K3, N3, C8, N4, C10);
-            console.log(resultannualSalaryNet);
-
-            const calculateValueK8 = (K3, N3, C8, N4, C10) => {                
-                const minValue = Math.min(N3 * 12 * C8, N4, C10 * 12); // Calculate the MIN value                
-                return K3 - minValue; // Subtract the MIN value from K3
-            };
             
             if (annualIncome >= taxBrackets[7].startBracket) {
                 // Income is above the highest bracket
@@ -178,10 +157,7 @@ export default function TaxBack() {
                 previousBracket = taxBrackets[7].previousBracket;
                 previousBracketNet = taxBrackets[7].previousBracket;
                 taxPrior = previousBracket + (annualIncome - startBracket) * (taxRate / 100);
-                // OLD annualSalaryNet Calculation
                 annualSalaryNet = annualIncome - annualInvest;
-                // New annualSalaryNet Calculation
-                annualSalaryNet = resultannualSalaryNet;
                 taxAfterContribution = previousBracket + (annualSalaryNet - startBracket) * (taxRate / 100);
                 taxBack = taxPrior - taxAfterContribution;
                 cost = annualInvest - taxBack;
@@ -212,35 +188,13 @@ export default function TaxBack() {
                     previousBracket = taxBracket.previousBracket;
                     previousBracketNet = taxBracketNet.previousBracket;
                     taxPrior = previousBracket + (annualIncome - startBracket) * (taxRate / 100);
-                    annualSalaryNet= calculateValueK8(annualIncome, N3, grossIncome, N4, monthlyInvest);  
-                    //annualSalaryNet = annualIncome - annualInvest;
+                    annualSalaryNet = annualIncome - annualInvest;
                     taxAfterContribution = previousBracketNet + (annualIncomeNet - startBracketNet) * (taxRateNet / 100);
                     taxBack = Math.round(taxPrior - taxAfterContribution);
                     cost = annualInvest - taxBack;
                 }
             }  
-            
-            let K8 = calculateValueK8(annualIncome, N3, grossIncome, N4, monthlyInvest);            
-            //annualSalaryNet = K8;
-
-            //taxBack = K8;
-            console.log("C8",grossIncome);
-            console.log("C10",monthlyInvest);
-            console.log("C16",annualInvest);
-            console.log("C18",taxBack);
-            console.log("K3",annualIncome);
-            console.log("K4",taxRate);
-            console.log("K5",startBracket);
-            console.log("K6",previousBracket);
-            console.log("K7",taxPrior);
-            console.log("K8",K8);
-            console.log("K9",taxRateNet);
-            console.log("K10",startBracketNet);
-            console.log("K11",previousBracketNet);
-            console.log("K12",taxAfterContribution);
-            console.log("N24",cost);
-
-
+    
             // Update the investmentDetails state
             setInvestmentDetails({
                 grossIncome,
@@ -287,7 +241,6 @@ export default function TaxBack() {
             fadeInBoxes.forEach(box => {
                 observer.observe(box);
             });
-
         }
     };   
     
@@ -821,7 +774,7 @@ const handleDownload = async () => {
                                     }
 
                                     <TextInput 
-                                        label="How much you’d like to invest monthly?"
+                                        label="How much would you like to invest monthly?"
                                         required 
                                         className="mt-[28px]"
                                         value={formData.monthlyInvest} 
@@ -832,9 +785,6 @@ const handleDownload = async () => {
                                         maxValue={350000}
                                         maxValueError="There is a limit on tax-free contributions of 27.5% or R350 000 per year."
                                     />
-                                    <p>
-                                        <span className="text-[16px] font-light block">Your tax back limit. The yearly tax deduction on a retirement annuity is limited to 27.5% of your total income, up to a maximum of R350 000.</span>
-                                    </p>
                                 </div>
                                 <div id="view-section" className="mt-[30px]"></div>
                                 <div className="flex justify-center">
@@ -853,7 +803,7 @@ const handleDownload = async () => {
                                         tag="h5"
                                     />
                                     <h3 className="font-extrabold inline-block bg-gradient-to-r from-[#50B848] to-[#009677] bg-clip-text text-[47px] leading-[25px] font-semibold pt-[22px] text-primary text-center w-full">
-                                        R<CountUp end={investmentDetails.annualInvest} />
+                                        R<CountUp end={investmentDetails.annualInvest} separator="" />
                                     </h3>
                                     
                                     <div className="note-icon mt-[17px] flex justify-center">
@@ -1032,7 +982,7 @@ const handleDownload = async () => {
                                     </div>
                                 </div>
 
-                                <VideoCard heading="Tax back explained" image="/images/video-thumb.jpg" videoID="L61p2uyiMSo" className="mt-[60px]"/>
+                                <VideoCard heading="Tax back explained" image="/images/video-1-thumb.png" videoID="L61p2uyiMSo" className="mt-[60px]"/>
 
                                 <StepButton heading="NEXT STEP" content="See how your money will grow until retirement." link="/retirement-annuity" className="mt-[60px]" />
 

@@ -1,22 +1,20 @@
-
-
 'use client';
 
+import React, { useState, useEffect } from "react";
+import Banner from "../components/Banner";
+import Heading from "../components/Heading";
 import Slider from "@mui/material/Slider";
 import { alpha, styled } from '@mui/material/styles';
+import TextInput from "../components/TextInput";
+import SelectInput from "../components/SelectInput";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { Document, Font, Image, PDFDownloadLink, Link as PDFLink, Page, StyleSheet, Text, View, pdf } from '@react-pdf/renderer';
-import React, { useEffect, useState } from "react";
-import Banner from "../components/Banner";
 import Button from "../components/Button";
-import ColorCard from "../components/ColorCard";
-import Heading from "../components/Heading";
-import NumberPlate from "../components/NumberPlate";
-import SelectInput from "../components/SelectInput";
-import StepButton from "../components/StepButton";
-import TextInput from "../components/TextInput";
 import VideoCard from "../components/VideoCard";
+import StepButton from "../components/StepButton";
+import ColorCard from "../components/ColorCard";
+import NumberPlate from "../components/NumberPlate";
+import { Font, Page, Text, Link as PDFLink, View, Image, Document, StyleSheet, PDFDownloadLink, pdf } from '@react-pdf/renderer';
 
 Font.register({
     family: 'Montserrat',
@@ -33,11 +31,15 @@ const PrimarySlider = styled(Slider)(({ theme }) => ({
     '& .MuiSlider-thumb': {
         height: 29,
         width: 29,
-        backgroundColor: '#009677',
+        backgroundColor: '#009677', // Default color
         border: '3px solid white',
         boxShadow: '2px 2px 5px 0 rgba(00, 00, 00, .25)',
         '&:hover, &:focus': {
-        boxShadow: '0px 0px 0px 8px rgba(0, 150, 119, 0.16)',
+            boxShadow: '0px 0px 0px 8px rgba(0, 150, 119, 0.16)',
+        },
+        // Change color for the left thumb (if needed, use :nth-child for specific instance)
+        '&:nth-of-type(1)': {
+            backgroundColor: '#FF0000', // New color for the left thumb
         },
     },
     '& .MuiSlider-track': {
@@ -122,7 +124,7 @@ export default function RetirementAnnuity() {
     };
 
     const [value, setValue] = useState(25); // Slider 1 value (single value)
-    const [value1, setValue1] = useState([25, 55]); // Slider 2 range value [min, max]
+    const [value1, setValue1] = useState([25, 65]); // Slider 2 range value [min, max]
 
     const minDistance = 0; // Minimum distance between the two thumbs on Slider 2
 
@@ -243,15 +245,15 @@ export default function RetirementAnnuity() {
     };
 
     const investmentStrategyTable = [
-    {
-      lowest: 0.015,
-      low: 0.02625,
-      light: 0.03075,
-      moderate: 0.0466625,
-      medium: 0.052375,
-      high: 0.056,
-      highest: 0.0641,
-      },
+        {
+            lowest: 1.5,
+            low: 2.63,
+            light: 3.08,
+            moderate: 4.67,
+            medium: 5.24,
+            high: 5.60,
+            highest: 6.41
+        }
     ];
     
     const taxBrackets = [
@@ -264,153 +266,74 @@ export default function RetirementAnnuity() {
         { bracket: 6, startBracket: 857900, taxRate: 41, previousBracket: 234023 },
         { bracket: 7, startBracket: 1817000, taxRate: 45, previousBracket: 627254 }
     ];
-    const [checkFlag, setCheckFlag] = useState(true);
+    
     const calculateInvestmentAndTax = (formData) => {
         
         // Clean the values by removing non-numeric characters
         let { age, grossIncome, contribution, investment, saving, monthly, J9, N8 } = formData;
         
-        grossIncome = parseFloat((grossIncome || '').replace(/R|\D/g, '')) || 0; //checked
-        const annualIncome = grossIncome * 12; //checked
-        contribution = parseFloat((contribution || '').replace(/R|\D/g, '')) || 0; //checked
-        const annualContribution = contribution * 12; //checked
+        grossIncome = parseFloat((grossIncome || '').replace(/R|\D/g, '')) || 0; 
+        const annualIncome = grossIncome * 12;
+        contribution = parseFloat((contribution || '').replace(/R|\D/g, '')) || 0;
+        const annualContribution = contribution * 12;
         
         // Clean and set saving and monthly, defaulting to 0 if empty
-        saving = parseFloat((saving || '').replace(/R|\D/g, '')) || 0; //checked
+        saving = parseFloat((saving || '').replace(/R|\D/g, '')) || 0;
         if(J9 == 1){
-            J9 = saving; //checked
+            J9 = saving;
         }
            
-        monthly = parseFloat((monthly || '').replace(/R|\D/g, '')) || 0; //checked
+        monthly = parseFloat((monthly || '').replace(/R|\D/g, '')) || 0;
         
         // Parsing inputs
-        let D9 = age; //checked
-        let F32 = N8; // Retirement Age
-        let G9 = grossIncome; //checked
-        let D11 = contribution; //checked
-        let investmentStrategyValue = investmentStrategyTable[0][investment];
-        let D13 = monthly; //checked
+        let D9 = age;
+        let G9 = grossIncome;
+        let D11 = contribution;
+        let investmentStrategyValue = investmentStrategyTable[0][investment] / 100;
+        let D13 = monthly;
         let D15 = D13 + D11; // Total Monthly Contributions
-        let agediff = N8 - D9; // Age Difference
-        let D32 = age;
-        let N5 = 0.05; // Default escalation rate 
-        let N9 = 0.05; // Default inflation assumption
-        let X5 = 0.275;// Maximum % Gross Salary Tax Deductible
-        let X6 = 350000; // Maximum Notional Deduction
+        
+        let N5 = 0.05; // 5% as a decimal
+        
+        let N9 = 0.05; // Rate again
     
         // Calculate effective return rate
-        // N7 This was the old Calculation updated on 17 December 2024
-        // let N7 = (1 + N9) * (1 + investmentStrategyValue) - 1;
-        let N7 = N9 + (1 + investmentStrategyValue) - 1;
+        let N7 = (1 + N9) * (1 + investmentStrategyValue) - 1;
 
-        //N7 = Math.round(N7 * 1000) / 1000;
-console.log("N7",N7);
-        // Round to 10 decimal places (to match Excel)
+        N7 = Math.round(N7 * 10000) / 10000;
 
         let N15 = N5 === 0
-            ? D15 * (agediff) * 12
-            : 12 * D15 * (((1 + N5) ** (agediff) - 1) / N5);
+            ? D15 * (N8 - D9) * 12
+            : 12 * D15 * (((1 + N5) ** (N8 - D9) - 1) / N5);
+
+        N15 = Math.round(N15);
         
-        // Round to 10 decimal places (to match Excel)
-        N15 = Math.round(N15 * 10000000000) / 10000000000;
-        
-console.log("N15",N15);
-        
-        let N16 = J9; // Lumpsum Investment
+        let N16 = J9; // Initial investment
     
-        let Q5s1 = (1 + N7);
-        let Q5s2 = (1 / 12);
-        let Q5s3 = Q5s1 ** Q5s2;
-        let Q5s4 = Q5s3 -1;
-
-        let Q5 = Q5s4;
-        
-        // Round to 10 decimal places (to match Excel)
-        //Q5 = Math.round(Q5 * 10000000000) / 10000000000;
-
-console.log("Q5",Q5);
+        let Q5 = ((1 + N7) ** (1 / 12)) - 1;
+        Q5 = Math.round(Q5 * 100000000) / 100000000;
 
         // Step 1: Calculate the first part of the formula
-        let Step1Part1 = (1 + Q5);        
-console.log("Step1Part1",Step1Part1);
-        let Step1Part2 = Step1Part1 ** 12;
-console.log("Step1Part2",Step1Part2);
-        let Step1Part3 = Step1Part2 - 1;
-console.log("Step1Part3",Step1Part3);
-        let Step1Part4 = Q5 / Step1Part1; 
-console.log("Step1Part4",Step1Part4);
-        let firstTerm = (D15 * Step1Part3) / Step1Part4;
-
-console.log("T1",firstTerm);
+        let part1 = (1 + Q5) ** 12 - 1; // (1 + 0.0079)^12 - 1
+        let part2 = Q5 / (1 + Q5); // 0.0079 / (1 + 0.0079)
+        let firstTerm = D15 * (part1 / part2); // First term calculation
 
         // Step 2: Calculate the second part of the formula
-        let T2P1 = 1 + N7;
-        let T2P2 = 1 + N5;
-        let T2P3 = T2P1 ** agediff;
-        let T2P4 = T2P2 ** agediff;
-        let secondTerm = T2P3 - T2P4;
-        //secondTerm = Math.round(secondTerm * 100) / 100;
+        let part3 = (1 + N7) ** (N8 - D9) - (1 + N5) ** (N8 - D9); 
+        let part4 = N7 - N5;
+        let secondTerm = firstTerm * (part3 / part4); // Second term calculation
 
-console.log("T2",secondTerm);
-        
-        // Step 3: Calculate the third part of the formula
-        let T3P1 = N7 - N5;
-        let T3P2 = 1 + N7;
-        let T3P3 = T3P2 ** agediff;
-        let thirdTerm = T3P1 + J9 * T3P3;
-        
-console.log("T3",thirdTerm);
+        // Step 3: Calculate the third term
+        let thirdTerm = J9 * (1 + N7) ** (N8 - D9); // J9 * (1 + 0.099)^(55 - 38)
 
-const part1 = (D15 * ((Math.pow(1 + Q5, 12) - 1) / (Q5 / (1 + Q5))));
-const part2 = ((Math.pow(1 + N7, F32 - D9) - Math.pow(1 + N5, F32 - D9)) / (N7 - N5));
-const part3 = J9 * Math.pow(1 + N7, F32 - D9);
-const result = (part1 * part2) + part3;
+        // Step 4: Sum all terms to get the final result
+        let N13 = secondTerm + thirdTerm;
 
-        // let N13 = (firstTerm) * (secondTerm) / (thirdTerm);
-        let N13 = result;
-        N13 = Math.round(N13 * 100000000) / 100000000;
-
-console.log("N13",N13);
+        // Step 5: Round to 2 decimal places (to match Excel)
+        N13 = Math.round(N13 * 100) / 100;
 
         let N14 = N13 - N15 - N16;
-
-        // Calculating N17
-        function calculateValueForN17(X5, G9, X6, D15, N9, F32, D9) {
-            const minValue = Math.min(
-              X5 * 12 * G9,
-              X6,
-              D15 * 12
-            );            
-            const growthFactor = ((Math.pow(1 + N9, F32 - D9) - 1) / N9);            
-            return minValue * growthFactor;
-          }
-          
-          let N17 = calculateValueForN17(X5, G9, X6, D15, N9, F32, D9);
-          console.log("N17",N17);
-
-        // Calculating N24
-        function calculateValueForN24(X5, G9, X6, D15, N9, F32, D32) {
-            const minValue = Math.min(
-              X5 * 12 * G9,
-              X6,
-              D15 * 12
-            );            
-            const growthFactor = ((Math.pow(1 + N9, F32 - D32) - 1) / N9);            
-            return minValue * growthFactor;
-          }
-          
-          let N24 = calculateValueForN24(X5, G9, X6, D15, N9, F32, D32);
-          console.log("N24",N24);
-
-        const checkU5Condition = (D15, X6, X5, G9) => {
-            const leftValue = D15 * 12; // Calculate D15 * 12
-            const rightValue = Math.min(X6, X5 * G9 * 12); // MIN(X6, X5 * G9 * 12)
-            setCheckFlag(leftValue <= rightValue);
-          };
-        checkU5Condition(D15, X6, X5, G9);
-        const U5result = checkFlag;
-        //console.log("U5result",U5result);
-
+    
         // Function to calculate tax based on income
         const calculateTax = (income) => {
             // Check for income less than the lowest bracket
@@ -461,64 +384,18 @@ console.log("N13",N13);
 
         let U18 = U17+(U14-U16)*U15;
 
-        function calculateDifferenceForU19(U14, X5, G9, X6, D15) {
-            // Calculate the minimum value
-            const minValue = Math.min(
-              X5 * 12 * G9, // First term
-              X6,           // Second term
-              D15 * 12      // Third term
-            );
-          
-            // Subtract the minimum value from U14
-            return U14 - minValue;
-          }
-
-        // Old U19 Calculation
-        // let U19 = U14 - D15 * 12 - J9;
-        // New U19 Calculation
-        let U19 = calculateDifferenceForU19(U14, X5, G9, X6, D15);
-        console.log("U19",U19);
+        let U19 = U14 - D15 * 12 - J9;
+        
         let { startBracket: U21, previousBracket: U22, taxRate: U20 } = getBracketDetails(U19);
-        console.log("U21",U21);
-        console.log("U22",U22);
 
         U20 = U20 / 100;
-        console.log("U20",U20);
+
         let U23 = U22+(U19-U21)*U20;
-        console.log("U23",U23);
-
-        function calculateDivisionforU24(U18, U23, X5, G9, X6, D15) {
-            // Calculate the difference (U18 - U23)
-            const difference = U18 - U23;
-          
-            // Calculate the minimum value
-            const minValue = Math.min(
-              X5 * 12 * G9, // First term
-              X6,           // Second term
-              D15 * 12      // Third term
-            );
-          
-            // Perform the division
-            if (minValue === 0) {
-              throw new Error("Division by zero is not allowed");
-            }
-          
-            return difference / minValue;
-          }
-
-        // Old U24 Calculation
-        // let U24 = (U18 - U23) / (D15 * 12 + J9);
-        // New U24 Calculation        
-        let U24 = calculateDivisionforU24(U18, U23, X5, G9, X6, D15);
-
-        console.log("U24",U24);
-        // Old U24 Calculation
-        // let Q13 = U24 * (N16 + 12 * D15);
-        // New U24 Calculation 
-        let U242 = Math.round(U24 * 10000000000) / 10000000000;   
-        let Q13 = U242 * N17;
-        console.log("Q13",Q13);
-
+        
+        let U24 = (U18 - U23) / (D15 * 12 + J9);
+        
+        let Q13 = U24 * (N16 + 12 * D15);
+        
         let V14 = G9 * 12;
         
         let { startBracket: V16, previousBracket: V17, taxRate: V15 } = getBracketDetails(V14);
@@ -539,20 +416,19 @@ console.log("N13",N13);
         
         let Q14 = V24 * (N15 - 12 * D15);
         
-        let Q15 = (Q13 + Q14);    
-        Q15 = Math.round(Q15 * 10000000000) / 10000000000;
+        let Q15 = Math.round(Q13 + Q14);
         
-        const totalInvestment = N13.toFixed(2);
+        const totalInvestment = N13.toFixed(0);
         localStorage.setItem('totalInvestment', totalInvestment);
-        // const taxGetBack = Q15.toFixed(2); - Old
-        const taxGetBack = Q13.toFixed(2);
-        const investmentGrowth = N14.toFixed(2);
-        const totalContributionPaid = (N15 + N16).toFixed(2);
-        const lampSum = J9.toFixed(2);
+        const taxGetBack = Q15.toFixed(0);
+        const investmentGrowth = N14.toFixed(0);
+        const totalContributionPaid = (N15 + N16).toFixed(0);
+        const lampSum = J9.toFixed(0);
+
         const investmentOption = contributionOptions.find(option => option.value === investment);
         const investmentLabel = investmentOption ? investmentOption.label.split(' - ')[1] : 'inflation plus 3%-4%';
 
-        return { totalInvestment, taxGetBack, investmentGrowth, totalContributionPaid, lampSum, grossIncome, contribution, monthly, age, investmentLabel, U5result };
+        return { totalInvestment, taxGetBack, investmentGrowth, totalContributionPaid, lampSum, grossIncome, contribution, monthly, age, investmentLabel };
     };
 
     // On submit
@@ -1306,8 +1182,7 @@ console.log("N13",N13);
                                     onChange={handleChange}
                                     name="contribution"
                                 />
-                                {/* Only show error message if result for U5 is false */}
-                                <p>{checkFlag ? "" : "Contribution Limit: The yearly tax deduction on a retirement annuity is limited to 27.5% of your total income, up to a maximum of R350 000."}</p>
+
                                 <SelectInput
                                     label="Investment strategy"
                                     required
@@ -1317,10 +1192,6 @@ console.log("N13",N13);
                                     name="investment"
                                     options={contributionOptions}
                                 />
-                                <div>
-
-     
-    </div>
 
                                 <label className="mt-[20px] mb-[15px] text-[20px] leading-[25px] font-light block">Do you have any current retirement savings?</label>
                                 <ToggleButtonGroup
@@ -1556,7 +1427,7 @@ console.log("N13",N13);
 
                                 </div>
 
-                                <VideoCard heading="Tax back explained" image="/images/video-thumb.jpg" videoID="L61p2uyiMSo" className="mt-[60px]"/>
+                                <VideoCard heading="Retirement income explained" image="/images/video-2-thumb.png" videoID="L61p2uyiMSo" className="mt-[60px]"/>
 
                                 <StepButton heading="NEXT STEP" content="See what income your savings will give you in retirement." link="/retirement-income" className="mt-[60px]" />
 
@@ -1568,4 +1439,3 @@ console.log("N13",N13);
         </section>
     );
 }
-

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image';
-import Hero from "./components/Hero";
+import Hero from "./components/Hero2";
 import InvestingBlock from "./components/InvestingBlock";
 import ScrollableTabs from "./components/Tabs";
 import CardBlock from "./components/CardBlock";
@@ -16,45 +16,79 @@ export default function Home() {
     { 
       id: "tab1", 
       title: "STEP 1", 
-      subTitle: "Get tax back on your investment", 
+      subTitle: "See how much TAX you could get back", 
+      heading: "Get tax back on your investment",
       content: (
         <>
-          Did you know the taxman (SARS) gives you money back for investing in a retirement annuity? Pay less tax or get a tax refund every year, based on your income and retirement annuity contributions. Getting a tax refund means you&lsquo;re paying less for your investment. Now that&lsquo;s powerful! Use our &nbsp; 
-          <Link href="/tax-back">Tax Back calculator</Link> 
-          &nbsp;to see your potential savings. Download the comprehensive report to review or share with your financial adviser.
+          <p className='mb-[30px]'>See how much tax you could receive back each year by contributing regularly to your retirement annuity.</p>
+          <p><strong className='font-bold text-primary'>Did you know?</strong></p>
+          <p className='mb-[30px]'>SARS offers you money back for investing in a retirement annuity!</p>
+          <p>This means that you will get a tax refund every year or pay less tax, based on your income and retirement annuity contributions. Use this <Link className='font-bold text-primary underline' href="/tax-back">TAX BACK calculator</Link> to discover your potential savings and download the comprehensive report to share with your financial adviser.</p>
         </>
       )
     },
     { 
       id: "tab2", 
       title: "STEP 2", 
-      subTitle: "How much you can save over time", 
-      content: "Benefit from the amazing power of compound growth. This is when your money earn returns on your original investment AND all the returns that accumulate over time. It’s like a snowball effect on your money. Over time the growth on your money will accelerate through the power of compounding. Use our Retirement Annuity calculator to see how your investment will grow. Download the comprehensive report to review, or to share with your financial adviser."
+      subTitle: "Benefit from compound growth", 
+      heading: "Benefit from compound growth ",
+      content: (
+        <>
+          <p className='mb-[30px]'>Discover how much your investments can grow when you contribute to a retirement annuity.</p>
+          <p className='mb-[30px]'>Compound growth is when the money you save earns interest, and then that interest also starts earning interest. The longer you save, the more your money grows.</p>
+          <p>Use our <Link className='font-bold text-primary underline' href="/retirement-annuity">Retirement Annuity calculator</Link> to see how your investment will grow. Download the comprehensive report to review or share with your financial adviser.</p>
+        </>
+      )
     },
     { 
       id: "tab3", 
       title: "STEP 3", 
-      subTitle: "What your future income will be", 
-      content: "A retirement annuity is a unique savings account for your future income. When you stop working, you have to reinvest your savings into an investment product called an income annuity. This annuity will pay you a regular income when you retire. Use our Income Annuity calculator to see what retirement income you can expect. Download the comprehensive report to review, or to share with your financial adviser."
+      subTitle: "Work out your income at retirement", 
+      heading: "Work out your income at retirement",
+      content: (
+        <>
+          <p className='mb-[30px]'>Discover how much monthly income you can expect to receive at retirement.</p>
+          <p className='mb-[30px]'>A retirement annuity helps you save for future income, ensuring you receive a regular income when you stop working. Contribute consistently, let your money grow, and enjoy a sustainable income in retirement.</p>
+          <p>Use our <Link className='font-bold text-primary underline' href="/retirement-income">Income Annuity calculator</Link> to see the income you can expect at retirement. Download the comprehensive report to review or share with your financial adviser.</p>
+        </>
+      )
     },
     { 
       id: "tab4", 
       title: "STEP 4", 
       subTitle: "Plan and find the money", 
-      content: "Understanding your income and spending is key to building wealth. A budget helps you manage your monthly finances and set long-term goals. Use the Pay Yourself First calculator to find extra money in your budget. Download the comprehensive report to review, or to share with your financial adviser."
+      heading: "Plan and find the money",
+      content: (
+        <>
+          <p className='mb-[30px]'>See how much you can save in your budget through small behaviour changes.</p>
+          <p className='mb-[30px]'>The Pay Yourself First calculator will guide you towards saving money on daily and monthly expenses such as food, energy, fuel and entertainment.</p>
+          <p className='mb-[30px]'>Use the Pay <Link className='font-bold text-primary underline' href="#">Yourself First calculator</Link> to find extra money in your budget.</p>
+          <p>Download the comprehensive report to review or share with your financial adviser</p>
+        </>
+      )
     },
     { 
       id: "tab5", 
       title: "STEP 5", 
-      subTitle: "Take action today!", 
-      content: "Knowing how much tax savings you can get, and how compound growth boosts your retirement annuity is great, but the most important step is taking action today. Make sure you also have the right life and disability cover. And join Old Mutual Rewards to get even more back. Talk to your financial adviser or buy a retirement annuity online now!"
+      subTitle: "Take action today! ", 
+      heading: "Take action today! ",
+      content: (
+        <>
+          <p className='mb-[30px]'>Knowing how much tax you will get back and how compound growth boosts your retirement annuity is great, but the most important step is to take action today.</p>
+          <p className='text-[#4fb848]'>Talk to your financial adviser or purchase a retirement annuity online now!</p>
+        </>
+      )
     },
   ];
 
   const CallToActionData1 = {
     heading: 'LIFE AND DISABILITY COVER',
-    subHeading: 'Protect you & your family’s financial future.',
-    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ornare dignissim nibh, vel feugiat justo.',
+    subHeading: 'Protect you & your family’s financial future with',
+    content: (
+      <>
+        Protect yours and your family’s financial future with <Link className="font-bold text-primary underline" href="https://www.oldmutual.co.za/personal/solutions/life-and-disability/life-insurance/">LIFE AND DISABILITY INSURANCE.</Link>
+      </>
+    ),
     buttonLabel: 'FIND OUT MORE',
     href: '#',
     img: '/images/cta-img-1.png',
@@ -62,8 +96,12 @@ export default function Home() {
 
   const CallToActionData2 = {
     heading: 'JOIN OLD MUTUAL REWARDS',
-    subHeading: 'Make your savings journey much <br/>more rewarding.',
-    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ornare dignissim nibh, vel feugiat justo.',
+    subHeading: 'Make your savings journey much more rewarding',
+    content: (
+      <>
+        Protect yours and your family’s financial future with <Link className="font-bold text-[#ED0080] underline" href="https://www.oldmutual.co.za/personal/solutions/life-and-disability/life-insurance/">LIFE AND DISABILITY INSURANCE.</Link>
+      </>
+    ),
     buttonLabel: 'FIND OUT MORE',
     href: '#',
     artwork: (

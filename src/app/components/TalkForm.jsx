@@ -99,7 +99,7 @@ export default function TalkForm(){
       />
 
       <div class="mb-[25px]">
-        <Link className="link text-primary text-[18px] leading-[25px] font-light underline" href="/">
+        <Link className="link text-primary text-[18px] leading-[25px] font-light underline" href="https://www.oldmutual.co.za/privacy-notice/">
             View our Privacy Policy
         </Link>
       </div>

@@ -845,7 +845,7 @@ export default function RetirementAnnuity() {
 
                                 </div>
 
-                                <VideoCard heading="Compound growth explained" image="/images/video-3-thumb.png" videoID="L61p2uyiMSo" className="mt-[60px]"/>
+                                <VideoCard heading="Compound growth explained" image="/images/video-3-thumb.png" videoID="Waq0iTibw2E" className="mt-[60px]"/>
 
                             </div>
                         </div>

@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useState } from 'react';
 import Link from 'next/link'
 import Image from 'next/image';
 import Hero from "./components/Hero2";
@@ -9,8 +10,21 @@ import CardBlock from "./components/CardBlock";
 import CardsData from "./content/cardsData.json";
 import CallToAction from './components/CallToAction';
 import ArtworkBackgroundBlock from './components/ArtworkBackgroundBlock';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 export default function Home() {
+
+  
+  const [open1, setOpen1] = useState(false);
+  const [open2, setOpen2] = useState(false);
+
+  const handleOpen1 = () => setOpen1(true);
+  const handleClose1 = () => setOpen1(false);
+
+  const handleOpen2 = () => setOpen2(true);
+  const handleClose2 = () => setOpen2(false);
 
   const tabsData = [
     { 
@@ -90,7 +104,6 @@ export default function Home() {
       </>
     ),
     buttonLabel: 'FIND OUT MORE',
-    href: '#',
     img: '/images/cta-img-1.png',
   }
 
@@ -145,12 +158,82 @@ export default function Home() {
       <ScrollableTabs tabs={tabsData} />
       <CardBlock cardsData={CardsData} />
       <section className="container">
-       <CallToAction heading={CallToActionData1.heading} subheading={CallToActionData1.subHeading} content={CallToActionData1.content} buttonLabel={CallToActionData1.buttonLabel} href={CallToActionData1.href} sectionClasses='bg-gradient-to-r from-[#F4F3F6] to-[#807c79]' headingClasses='text-transparent bg-gradient-to-l custom-gradient' buttonClasses='border-0 lg:border border-primary text-primary from-transparent to-transparent' img={CallToActionData1.img} imgBoxClasses="right-[-165px] lg:right-[60px]" imgClasses="w-[290px] lg:w-[444px]" />
+       <CallToAction heading={CallToActionData1.heading} subheading={CallToActionData1.subHeading} content={CallToActionData1.content} buttonLabel={CallToActionData1.buttonLabel} buttonOnClick={handleOpen1} sectionClasses='bg-gradient-to-r from-[#F4F3F6] to-[#807c79]' headingClasses='text-transparent bg-gradient-to-l custom-gradient' buttonClasses='border-0 lg:border border-primary text-primary from-transparent to-transparent' img={CallToActionData1.img} imgBoxClasses="right-[-165px] lg:right-[60px]" imgClasses="w-[290px] lg:w-[444px]" />
       </section>
       <section className="container">
-        <CallToAction heading={CallToActionData2.heading} subheading={CallToActionData2.subHeading} content={CallToActionData2.content} buttonLabel={CallToActionData2.buttonLabel} href={CallToActionData2.href} sectionClasses='custom-artwork' headingClasses='from-[#ED0080] to-[#F37021] text-transparent' buttonClasses='border-0 lg:border border-[#ED0080] text-[#ED0080] from-transparent to-transparent' artwork={CallToActionData2.artwork} img={CallToActionData2.img} />
+        <CallToAction heading={CallToActionData2.heading} subheading={CallToActionData2.subHeading} content={CallToActionData2.content} buttonLabel={CallToActionData2.buttonLabel} buttonOnClick={handleOpen2} sectionClasses='custom-artwork' headingClasses='from-[#ED0080] to-[#F37021] text-transparent' buttonClasses='border-0 lg:border border-[#ED0080] text-[#ED0080] from-transparent to-transparent' artwork={CallToActionData2.artwork} img={CallToActionData2.img} />
       </section>
       <ArtworkBackgroundBlock />
+      <Modal
+                    open={open1}
+                    onClose={handleClose1}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box className="absolute top-[2%] left-[3%] lg:top-1/2 lg:left-1/2 transform translate-x-0 translate-y-0 lg:-translate-x-1/2 lg:-translate-y-1/2 w-[94%] lg:w-[900px] h-[96%] h-auto bg-white rounded-[15px] shadow-lg p-8 overflow-scroll lg:overflow-hidden">
+                        <span CloseIcon
+                            onClick={handleClose1}
+                            className="absolute top-[20px] right-[19px] cursor-pointer"
+                        >
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 1L17 17" stroke="#009677" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M1 17L17 1" stroke="#009677" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                        <Typography id="modal-modal-title" variant="h6" component="h2" className="text-primary text-[20px] leading-[20px] font-semibold mb-[34px]">
+                          OLD MUTUAL REWARDS
+                        </Typography>
+                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                            <div className='text-[16px] leading-[24px] [&>h6]:mb-[30px] [&>h6]:font-bold'>
+                            <p>More rewards on your way to secure your future wealth!<br/><br/></p>
+<p>Old Mutual Rewards is a free-to-join financial wellness programme designed to partner with you on your journey towards your future wealth.<br/><br/></p>
+
+<p><strong>LEARN AND EARN:</strong> Earn points for learning how to take control of your finances using our online financial education content, online assessments, Rewards calculators and tools.<br/><br/></p>
+
+<p><strong>GET MORE:</strong> Your Rewards tier determines the rate at which you earn points and other discounted benefits. You can earn a percentage of your premiums on qualifying products in Rewards points monthly.<br/><br/></p>
+
+<p><strong>GET REWARDED:</strong> Redeem your points with our partners or save them for the future. Buy groceries and fuel, watch a movie, treat the family to a meal, save points in your Old Mutual Money Account, or even donate your points to a charity.<br/><br/></p>
+
+<p>There are many more ways to earn points:<br/>
+Speaking to an adviser: 100 points<br/>
+Referring a friend: 		100 points<br/>
+Completing online courses: 	50 points<br/>
+Using financial calculators:	20 points<br/>
+Requesting a credit report: 	100 points<br/>
+Completing a survey: 		50 points<br/><br/></p>
+
+<p>It’s free and anybody can join. Register today on <Link className='font-bold text-primary underline' href="https://oldmutual.co.za/rewards">oldmutual.co.za/rewards</Link></p>
+
+                            </div>
+                        </Typography>
+                    </Box>
+                </Modal>
+                
+                <Modal
+                    open={open2}
+                    onClose={handleClose2}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box className="absolute top-[2%] left-[3%] lg:top-1/2 lg:left-1/2 transform translate-x-0 translate-y-0 lg:-translate-x-1/2 lg:-translate-y-1/2 w-[94%] lg:w-[400px] h-[96%] h-auto bg-white rounded-[15px] shadow-lg p-8 overflow-scroll lg:overflow-hidden">
+                        <span CloseIcon
+                            onClick={handleClose2}
+                            className="absolute top-[20px] right-[19px] cursor-pointer"
+                        >
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 1L17 17" stroke="#009677" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M1 17L17 1" stroke="#009677" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                        <Typography id="modal-modal-title" variant="h6" component="h2" className="text-primary text-[20px] leading-[20px] font-semibold mb-[34px]">
+                        </Typography>
+                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                            <div className='text-[16px] leading-[24px] [&>h6]:mb-[30px] [&>h6]:font-bold'>
+                            <p>It is important to save for your retirement, but it’s equally important to protect your savings. Our life and disability insurance options ensure that you can still achieve your savings goals if anything happens to you. Ask your adviser about the right life and disability insurance for you and your family, or find out more <Link className='font-bold text-[#ED0080] underline' href="https://www.oldmutual.co.za/personal/solutions/life-and-disability/life-insurance/">here.</Link></p>
+                            </div>
+                        </Typography>
+                    </Box>
+                </Modal>
     </>
   );
 }

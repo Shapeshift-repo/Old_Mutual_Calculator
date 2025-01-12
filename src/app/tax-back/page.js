@@ -130,6 +130,9 @@ export default function TaxBack() {
             let annualIncome = grossIncome * 12;
             monthlyInvest = parseFloat(monthlyInvest.replace(/[^\d]/g, ''));
             let annualInvest = monthlyInvest * 12;
+            
+            localStorage.setItem('grossIncome', grossIncome);
+            localStorage.setItem('monthlyInvest', monthlyInvest);
 
             let annualIncomeNet = annualIncome - annualInvest;
             

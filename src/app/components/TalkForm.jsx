@@ -1,23 +1,25 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TextInput from './TextInput';
 import Button from './Button';
-import Link from 'next/link'
+import Link from 'next/link';
 
-export default function TalkForm(){
+export default function TalkForm() {
   const [formData, setFormData] = useState({
     name: '',
     surname: '',
-    userType: '',
-    sliderValue: 50,
+    phone: '',
+    postalCode: '',
   });
 
   const [errors, setErrors] = useState({
     name: '',
     surname: '',
-    userType: '',
+    phone: '',
   });
+
+  const [isFormValid, setIsFormValid] = useState(false);
 
   // Handle input changes
   const handleChange = (e) => {
@@ -34,11 +36,13 @@ export default function TalkForm(){
     });
   };
 
-  // Check if form is valid (i.e., no required field is empty)
-  const isFormValid = () => {
-    const { name, surname, userType } = formData;
-    return name && surname && userType;
-  };
+  // UseEffect to check form validity whenever formData changes
+  useEffect(() => {
+    const { name, surname, phone } = formData;
+    const valid = name && surname && phone;
+    setIsFormValid(valid);
+    console.log('Form valid status:', valid);
+  }, [formData]);
 
   // Handle form submission
   const handleSubmit = (e) => {
@@ -49,27 +53,22 @@ export default function TalkForm(){
     // Simple validation logic
     if (!formData.name) newErrors.name = 'Name is required';
     if (!formData.surname) newErrors.surname = 'Surname is required';
-    if (!formData.userType) newErrors.userType = 'User type is required';
+    if (!formData.phone) newErrors.phone = 'Phone number is required';
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
+      console.log('Errors:', newErrors);
     } else {
       // Add your form submission logic here
       console.log('Form submitted: ', formData);
     }
   };
 
-  const userTypeOptions = [
-    { value: '', label: 'Select User Type' },
-    { value: 'admin', label: 'Admin' },
-    { value: 'user', label: 'User' },
-  ];
-
   return (
     <form onSubmit={handleSubmit}>
       <TextInput
         label="Your Name"
-        name="your-name"
+        name="name"
         value={formData.name}
         onChange={handleChange}
         error={errors.name}
@@ -77,7 +76,7 @@ export default function TalkForm(){
       />
       <TextInput
         label="Your Surname"
-        name="your-surname"
+        name="surname"
         value={formData.surname}
         onChange={handleChange}
         error={errors.surname}
@@ -86,28 +85,29 @@ export default function TalkForm(){
       <TextInput
         label="Cellphone Number"
         name="phone"
-        value={formData.surname}
+        value={formData.phone}
         onChange={handleChange}
-        error={errors.surname}
+        error={errors.phone}
         required
       />
       <TextInput
         label="Postal Code (optional)"
-        name="postal-code"
-        value={formData.surname}
+        name="postalCode"
+        value={formData.postalCode}
         onChange={handleChange}
       />
 
-      <div class="mb-[25px]">
+      <div className="mb-[25px]">
         <Link className="link text-primary text-[18px] leading-[25px] font-light underline" href="https://www.oldmutual.co.za/privacy-notice/">
-            View our Privacy Policy
+          View our Privacy Policy
         </Link>
       </div>
 
       <Button
         label="CALL ME BACK"
         onClick={handleSubmit}
-        disabled={!isFormValid()}
+        disabled={!isFormValid}
+        className="down-bounce text-white disabled:text-black"
       />
     </form>
   );

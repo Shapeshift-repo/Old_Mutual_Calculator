@@ -26,7 +26,7 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 left-0 w-full z-50 transition-all duration-300 ${
+      className={`sticky top-0 left-0 w-full z-[999] transition-all duration-300 ${
         isActive ? 'active' : ''
       } ${isSmall ? 'small-header' : ''}`}
     >

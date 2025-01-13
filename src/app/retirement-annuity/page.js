@@ -81,6 +81,17 @@ export default function RetirementAnnuity() {
         monthly: 0
     });
 
+    // Use useEffect to retrieve the stored value when the component mounts
+    useEffect(() => {
+        const savedGrossIncome = localStorage.getItem('grossIncome');
+        const savedMonthlyInvest = localStorage.getItem('monthlyInvest');
+        setFormData((prevData) => ({
+            ...prevData,
+            grossIncome: savedGrossIncome ? `R${formatNumberWithSpaces(savedGrossIncome)}` : '',
+            contribution: savedMonthlyInvest ? `R${formatNumberWithSpaces(savedMonthlyInvest)}` : ''
+        }));
+    }, []);
+
     const [result, setResult] = useState(null);
 
     const [errors, setErrors] = useState({
@@ -417,6 +428,21 @@ export default function RetirementAnnuity() {
         let Q14 = V24 * (N15 - 12 * D15);
         
         let Q15 = Math.round(Q13 + Q14);
+
+        let Q20 = U24*(J9+12*D15);
+
+        let N22;
+        if (N5 === 0) {
+            N22 = D15 * (65 - 25) * 12;
+        } else {
+            N22 = 12 * D15 * (((1 + N5) ** (65 - 25) - 1) / N5);
+        }
+
+        let Q21 = V24*(N22-12*D15);
+
+        let Q22 = Q20 + Q21;
+
+        let Q28 = Q15 - Q22;
         
         const totalInvestment = N13.toFixed(0);
         localStorage.setItem('totalInvestment', totalInvestment);
@@ -424,11 +450,12 @@ export default function RetirementAnnuity() {
         const investmentGrowth = N14.toFixed(0);
         const totalContributionPaid = (N15 + N16).toFixed(0);
         const lampSum = J9.toFixed(0);
+        const costOfDelay = Q28.toFixed(0);
 
         const investmentOption = contributionOptions.find(option => option.value === investment);
         const investmentLabel = investmentOption ? investmentOption.label.split(' - ')[1] : 'inflation plus 3%-4%';
 
-        return { totalInvestment, taxGetBack, investmentGrowth, totalContributionPaid, lampSum, grossIncome, contribution, monthly, age, investmentLabel };
+        return { totalInvestment, taxGetBack, investmentGrowth, totalContributionPaid, lampSum, grossIncome, contribution, monthly, age, investmentLabel, costOfDelay };
     };
 
     // On submit
@@ -925,7 +952,7 @@ export default function RetirementAnnuity() {
                 
                 <View style={styles.contentTop2}>
                     <Text>
-                        With your monthly contribution of <Text style={styles.boldGreen}>R{result ? formatNumberWithSpaces(result.grossIncome) : 0}</Text> and your current retirement savings of <Text style={styles.boldGreen}>R{result ? formatNumberWithSpaces(result.contribution) : 0}</Text>, with an investment strategy of <Text style={styles.boldGreen}>{result ? result.investmentLabel : 'inflation plus 3%-4%'}</Text>, your total savings at age <Text style={styles.boldGreen}>{result ? result.age : 25}</Text> will be <Text style={styles.boldGreen}>R{result ? formatNumberWithSpaces(result.taxGetBack) : 0}.</Text> Your cost of delay is <Text style={styles.boldGreen}>R{result ? formatNumberWithSpaces(result.lampSum) : 0}</Text>
+                        With your monthly contribution of <Text style={styles.boldGreen}>R{result ? formatNumberWithSpaces(result.grossIncome) : 0}</Text> and your current retirement savings of <Text style={styles.boldGreen}>R{result ? formatNumberWithSpaces(result.contribution) : 0}</Text>, with an investment strategy of <Text style={styles.boldGreen}>{result ? result.investmentLabel : 'inflation plus 3%-4%'}</Text>, your total savings at age <Text style={styles.boldGreen}>{result ? result.age : 25}</Text> will be <Text style={styles.boldGreen}>R{result ? formatNumberWithSpaces(result.taxGetBack) : 0}.</Text> Your cost of delay is <Text style={styles.boldGreen}>R{result ? formatNumberWithSpaces(result.costOfDelay) : 0}</Text>
                     </Text>
                 </View>
 
@@ -1135,7 +1162,7 @@ export default function RetirementAnnuity() {
                             />
                         </div>
                     </div>
-                    <div id="calculator-form" className="w-full relative">
+                    <div id="calculator-form" className="w-full relative z-[99]">
                         
                         <form className="relative mt-[-110px] pt-[30px] pb-[48px] lg:pb-0 lg:pt-0 lg:mt-0 bg-white px-[34px] lg:px-0 rounded-[64px] lg:rounded-0 z-10 lg:z-2 shadow-[0_4px_29px_0_rgba(0,0,0,0.24)] lg:shadow-none">
                             <div className="flex justify-center mb-[60px] block lg:hidden">
@@ -1427,7 +1454,7 @@ export default function RetirementAnnuity() {
 
                                 </div>
 
-                                <VideoCard heading="Retirement income explained" image="/images/video-2-thumb.png" videoID="L61p2uyiMSo" className="mt-[60px]"/>
+                                <VideoCard heading="Retirement income explained" image="/images/video-2-thumb.png" videoID="yoTev524nhs" className="mt-[60px]"/>
 
                                 <StepButton heading="NEXT STEP" content="See what income your savings will give you in retirement." link="/retirement-income" className="mt-[60px]" />
 

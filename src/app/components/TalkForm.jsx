@@ -60,14 +60,14 @@ export default function TalkForm() {
     } else {
       const requestBody = {
         pageURL: "https://www.oldmutual.co.za",
-        source: "USSD: ",
-        googleAnalyticsId: "USSDLeads",
+        source: "Retirement Calculator Tools",
+        googleAnalyticsId: "G-H2MLQMKQ3T",
         formData: {
           firstName: formData.name,
           surname: formData.surname,
           phoneNumber: formData.phone,
           comment: "Let's talk",
-          sourceProduct: "USSD-FuneralEasiPlus",
+          sourceProduct: "Retirement Calculator Tools",
         },
         // Additional fields
         postalCode: formData.postalCode,

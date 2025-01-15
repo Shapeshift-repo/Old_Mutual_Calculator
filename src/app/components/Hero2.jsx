@@ -69,7 +69,7 @@ export default function Hero() {
                         <div className="relative flex justify-center lg:block">
                             
                             <Image
-                                src="/images/hero2.png"
+                                src="/images/top-img.png"
                                 alt="Hero Image"
                                 width={777.5}
                                 height={823}

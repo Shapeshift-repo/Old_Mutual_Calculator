@@ -86,7 +86,7 @@ const Report = ({
               This report shows you just how much you can save on education
               costs by starting early. With time on your side, you can invest
               smaller amounts over a longer term and benefit from compound
-              growth. Taking out a loan to pay for your child's education in
+              growth. Taking out a loan to pay for your child&apos;s education in
               future will cost you so much more, because of high interest rates.
             </Text>
           </View>

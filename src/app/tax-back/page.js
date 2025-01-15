@@ -131,6 +131,7 @@ export default function TaxBack() {
             monthlyInvest = parseFloat(monthlyInvest.replace(/[^\d]/g, ''));
             let annualInvest = monthlyInvest * 12;
             
+            localStorage.setItem('age', value);
             localStorage.setItem('grossIncome', grossIncome);
             localStorage.setItem('monthlyInvest', monthlyInvest);
 
@@ -806,7 +807,7 @@ const handleDownload = async () => {
                                         tag="h5"
                                     />
                                     <h3 className="font-extrabold inline-block bg-gradient-to-r from-[#50B848] to-[#009677] bg-clip-text text-[47px] leading-[25px] font-semibold pt-[22px] text-primary text-center w-full">
-                                        R<CountUp end={investmentDetails.annualInvest} separator="" />
+                                        R<CountUp end={investmentDetails.annualInvest} separator=" " />
                                     </h3>
                                     
                                     <div className="note-icon mt-[17px] flex justify-center">
@@ -985,7 +986,8 @@ const handleDownload = async () => {
                                     </div>
                                 </div>
 
-                                <VideoCard heading="Tax back explained" image="/images/video-1-thumb.png" videoID="nVWyUQXndBw" className="mt-[60px]"/>
+
+                                <VideoCard heading="Tax back explained" image="/images/video-1-thumb.png" url="videos/video-1.mp4" className="mt-[60px]"/>
 
                                 <StepButton heading="NEXT STEP" content="See how your money will grow until retirement." link="/retirement-annuity" className="mt-[60px]" />
 

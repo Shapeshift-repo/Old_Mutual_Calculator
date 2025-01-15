@@ -112,7 +112,7 @@ export default function Home() {
     subHeading: 'Make your savings journey much more rewarding',
     content: (
       <>
-        Make your savings journey much more rewarding with <Link className="font-bold text-[#ED0080] underline" href="https://oldmutual.co.za/rewards">OLD MUTUAL REWARDS.</Link>
+        Make your savings journey much more <Link className="font-bold text-[#ED0080] underline" href="https://oldmutual.co.za/rewards/">rewarding.</Link>
       </>
     ),
     buttonLabel: 'FIND OUT MORE',
@@ -181,36 +181,9 @@ export default function Home() {
                             </svg>
                         </span>
                         <Typography id="modal-modal-title" variant="h6" component="h2" className="text-primary text-[20px] leading-[20px] font-semibold mb-[34px]">
-                          LIFE AND DISABILITY COVER
-                        </Typography>
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            <div className='text-[16px] leading-[24px] [&>h6]:mb-[30px] [&>h6]:font-bold'>
-                            <p>It is important to save for your retirement, but it’s equally important to protect your savings. Our life and disability insurance options ensure that you can still achieve your savings goals if anything happens to you. Ask your adviser about the right life and disability insurance for you and your family, or find out more <Link className='font-bold text-[#ED0080] underline' href="https://www.oldmutual.co.za/personal/solutions/life-and-disability/life-insurance/">here.</Link></p>
-                            </div>
-                        </Typography>
-                    </Box>
-                </Modal>
-                
-                <Modal
-                    open={open2}
-                    onClose={handleClose2}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <Box className="absolute top-[2%] left-[3%] lg:top-1/2 lg:left-1/2 transform translate-x-0 translate-y-0 lg:-translate-x-1/2 lg:-translate-y-1/2 w-[94%] lg:w-[900px] h-[96%] h-auto bg-white rounded-[15px] shadow-lg p-8 overflow-scroll lg:overflow-hidden">
-                        <span CloseIcon
-                            onClick={handleClose2}
-                            className="absolute top-[20px] right-[19px] cursor-pointer"
-                        >
-                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M1 1L17 17" stroke="#009677" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M1 17L17 1" stroke="#009677" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </span>
-                        <Typography id="modal-modal-title" variant="h6" component="h2" className="text-primary text-[20px] leading-[20px] font-semibold mb-[34px]">
                           OLD MUTUAL REWARDS
                         </Typography>
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>                        
+                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                             <div className='text-[16px] leading-[24px] [&>h6]:mb-[30px] [&>h6]:font-bold'>
                             <p>More rewards on your way to secure your future wealth!<br/><br/></p>
 <p>Old Mutual Rewards is a free-to-join financial wellness programme designed to partner with you on your journey towards your future wealth.<br/><br/></p>
@@ -231,6 +204,32 @@ Completing a survey: 		50 points<br/><br/></p>
 
 <p>It’s free and anybody can join. Register today on <Link className='font-bold text-primary underline' href="https://oldmutual.co.za/rewards">oldmutual.co.za/rewards</Link></p>
 
+                            </div>
+                        </Typography>
+                    </Box>
+                </Modal>
+                
+                <Modal
+                    open={open2}
+                    onClose={handleClose2}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box className="absolute top-[2%] left-[3%] lg:top-1/2 lg:left-1/2 transform translate-x-0 translate-y-0 lg:-translate-x-1/2 lg:-translate-y-1/2 w-[94%] lg:w-[400px] h-[96%] h-auto bg-white rounded-[15px] shadow-lg p-8 overflow-scroll lg:overflow-hidden">
+                        <span CloseIcon
+                            onClick={handleClose2}
+                            className="absolute top-[20px] right-[19px] cursor-pointer"
+                        >
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 1L17 17" stroke="#009677" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M1 17L17 1" stroke="#009677" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                        <Typography id="modal-modal-title" variant="h6" component="h2" className="text-primary text-[20px] leading-[20px] font-semibold mb-[34px]">
+                        </Typography>
+                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                            <div className='text-[16px] leading-[24px] [&>h6]:mb-[30px] [&>h6]:font-bold'>
+                            <p>It is important to save for your retirement, but it’s equally important to protect your savings. Our life and disability insurance options ensure that you can still achieve your savings goals if anything happens to you. Ask your adviser about the right life and disability insurance for you and your family, or find out more <Link className='font-bold text-[#ED0080] underline' href="https://www.oldmutual.co.za/personal/solutions/life-and-disability/life-insurance/">here.</Link></p>
                             </div>
                         </Typography>
                     </Box>

@@ -41,28 +41,57 @@ export default function TalkForm() {
     const { name, surname, phone } = formData;
     const valid = name && surname && phone;
     setIsFormValid(valid);
-    console.log('Form valid status:', valid);
   }, [formData]);
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const newErrors = {};
-
+  
     // Simple validation logic
     if (!formData.name) newErrors.name = 'Name is required';
     if (!formData.surname) newErrors.surname = 'Surname is required';
     if (!formData.phone) newErrors.phone = 'Phone number is required';
-
+  
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       console.log('Errors:', newErrors);
     } else {
-      // Add your form submission logic here
-      console.log('Form submitted: ', formData);
+      const requestBody = {
+        pageURL: "https://www.oldmutual.co.za",
+        source: "USSD: ",
+        googleAnalyticsId: "USSDLeads",
+        formData: {
+          firstName: formData.name,
+          surname: formData.surname,
+          phoneNumber: formData.phone,
+          comment: "Let's talk",
+          sourceProduct: "USSD-FuneralEasiPlus",
+        },
+        // Additional fields
+        postalCode: formData.postalCode,
+      };
+  
+      try {
+        const response = await fetch('https://leadscapture.qa.digital.omapps.net/v1/chatbot/lead', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        });
+  
+        if (response.status === 201) {
+          console.log('Form submitted successfully:', await response.json());
+        } else {
+          console.error('Failed to submit form. Status code:', response.status);
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error);
+      }
     }
-  };
+  };  
 
   return (
     <form onSubmit={handleSubmit}>

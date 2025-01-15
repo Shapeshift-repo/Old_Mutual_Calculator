@@ -275,7 +275,7 @@ const Report = ({
                   }}
                 >
                   R{numberWithSpaces(Math.ceil(futureRepaymentRate))} {"\n"}(R
-                  {numberWithSpaces(monthlyPremium)} in today's value)
+                  {numberWithSpaces(monthlyPremium)} in today&apos;s value)
                 </Text>
               </View>
               <View
@@ -364,7 +364,7 @@ const Report = ({
                 fontFamily: "Montserrat",
               }}
             >
-              It really does pay to start saving for your child's education
+              It really does pay to start saving for your child&apos;s education
               today!
             </Text>
             <Text
@@ -376,9 +376,9 @@ const Report = ({
               }}
             >
               Avoid taking out an expensive loan in future and start saving for
-              your child's education today. Contact your financial adviser to
-              help you choose the best savings solution for your family. If you
-              don't have a financial adviser, call{" "}
+              your child&apos;s education today. Contact your financial adviser
+              to help you choose the best savings solution for your family. If
+              you don&apos;t have a financial adviser, call{" "}
               <Text
                 style={{
                   fontSize: 12,
@@ -411,16 +411,16 @@ const Report = ({
             }}
           >
             DISCLAIMER: The information in this calculator is intended for
-            illustrative purposes only and the values shown aren't guaranteed.
-            This isn't an offer and it's not part of a contractual undertaking
-            by Old Mutual Limited, Old Mutual Life Assurance Company (South
-            Africa) Ltd or any of Old Mutual Limited's subsidiaries. The
-            calculator also doesn't represent financial advice by any of the
-            companies in the Old Mutual Limited Group. The personal information
-            provided will only be used to generate a report and no personal
-            information provided will be stored during this process. Old Mutual
-            Life Assurance Company (SA) Limited is a licensed FSP and life
-            insurer.
+            illustrative purposes only and the values shown aren&apos;t
+            guaranteed. This isn&apos;t an offer and it&apos;s not part of a
+            contractual undertaking by Old Mutual Limited, Old Mutual Life
+            Assurance Company (South Africa) Ltd or any of Old Mutual
+            Limited&apos;s subsidiaries. The calculator also doesn&apos;t
+            represent financial advice by any of the companies in the Old Mutual
+            Limited Group. The personal information provided will only be used
+            to generate a report and no personal information provided will be
+            stored during this process. Old Mutual Life Assurance Company (SA)
+            Limited is a licensed FSP and life insurer.
           </Text>
           <Text
             style={{
@@ -486,7 +486,7 @@ const Report = ({
                   color: "#282828",
                 }}
               >
-                It is important to save for education, but it's equally
+                It is important to save for education, but it&apos;s equally
                 important to protect those dreams. Our life and disability cover
                 options ensure that you can still achieve your savings goals if
                 anything happens to you. Ask your adviser about the right life

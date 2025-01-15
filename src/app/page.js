@@ -112,7 +112,7 @@ export default function Home() {
     subHeading: 'Make your savings journey much more rewarding',
     content: (
       <>
-        Protect yours and your family’s financial future with <Link className="font-bold text-[#ED0080] underline" href="https://www.oldmutual.co.za/personal/solutions/life-and-disability/life-insurance/">LIFE AND DISABILITY INSURANCE.</Link>
+        Make your savings journey much more <Link className="font-bold text-[#ED0080] underline" href="https://oldmutual.co.za/rewards/">rewarding.</Link>
       </>
     ),
     buttonLabel: 'FIND OUT MORE',

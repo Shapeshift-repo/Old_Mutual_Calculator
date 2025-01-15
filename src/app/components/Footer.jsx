@@ -110,8 +110,8 @@ export default function Footer() {
                             className="absolute top-[20px] right-[19px] cursor-pointer"
                         >
                             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M1 1L17 17" stroke="#009677" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M1 17L17 1" stroke="#009677" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M1 1L17 17" stroke="#009677" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M1 17L17 1" stroke="#009677" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </span>
                         <Typography id="modal-modal-title" variant="h6" component="h2" className="text-primary text-[20px] leading-[20px] font-semibold mb-[34px]">

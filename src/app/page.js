@@ -120,7 +120,7 @@ export default function Home() {
     artwork: (
       <>
         <svg width="557" height="433" viewBox="0 0 557 433" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M97.8225 421C64.0533 370.941 -17.1057 247.388 39.5479 273.78C110.365 306.769 233.311 458.421 206.755 355.514C180.198 252.607 119.217 127.05 219.049 216.171C318.881 305.291 426.582 376.687 398.551 273.78C370.519 170.872 351.831 27.0974 416.747 103.909C481.662 180.72 544.611 239.804 536.25 136.897C529.562 54.5709 528.546 11.9965 528.873 1" stroke="url(#paint0_linear_1_66461)" stroke-width="40"/>
+          <path d="M97.8225 421C64.0533 370.941 -17.1057 247.388 39.5479 273.78C110.365 306.769 233.311 458.421 206.755 355.514C180.198 252.607 119.217 127.05 219.049 216.171C318.881 305.291 426.582 376.687 398.551 273.78C370.519 170.872 351.831 27.0974 416.747 103.909C481.662 180.72 544.611 239.804 536.25 136.897C529.562 54.5709 528.546 11.9965 528.873 1" stroke="url(#paint0_linear_1_66461)" strokeWidth="40"/>
           <defs>
           <linearGradient id="paint0_linear_1_66461" x1="20" y1="211" x2="537" y2="211" gradientUnits="userSpaceOnUse">
           <stop stop-color="#ED0080"/>
@@ -176,8 +176,8 @@ export default function Home() {
                             className="absolute top-[20px] right-[19px] cursor-pointer"
                         >
                             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M1 1L17 17" stroke="#009677" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M1 17L17 1" stroke="#009677" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M1 1L17 17" stroke="#009677" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M1 17L17 1" stroke="#009677" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </span>
                         <Typography id="modal-modal-title" variant="h6" component="h2" className="text-primary text-[20px] leading-[20px] font-semibold mb-[34px]">
@@ -221,8 +221,8 @@ Completing a survey: 		50 points<br/><br/></p>
                             className="absolute top-[20px] right-[19px] cursor-pointer"
                         >
                             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M1 1L17 17" stroke="#009677" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M1 17L17 1" stroke="#009677" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M1 1L17 17" stroke="#009677" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M1 17L17 1" stroke="#009677" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </span>
                         <Typography id="modal-modal-title" variant="h6" component="h2" className="text-primary text-[20px] leading-[20px] font-semibold mb-[34px]">

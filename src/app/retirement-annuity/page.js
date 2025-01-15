@@ -1359,7 +1359,7 @@ export default function RetirementAnnuity() {
                                             class="animated-line"
                                             d="M2 457C151.627 437.403 500.905 318.966 701 2"
                                             stroke="#009677"
-                                            stroke-width="3.5"
+                                            strokeWidth="3.5"
                                             stroke-linecap="round"
                                         />
                                     </svg>
@@ -1378,7 +1378,7 @@ export default function RetirementAnnuity() {
                                             class="animated-line"
                                             d="M2 161C151.627 154.152 500.905 112.764 701 2"
                                             stroke="#00C0E8"
-                                            stroke-width="3.5"
+                                            strokeWidth="3.5"
                                             stroke-linecap="round"
                                         />
                                     </svg>

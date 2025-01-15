@@ -860,7 +860,7 @@ const handleDownload = async () => {
                                         id="linePath"
                                         d="M280.062 1C172.594 33.8635 10.8279 163.5 1.20593 478.008C-10.6055 864.085 487.828 1339 475.331 1720.85C465.589 2018.53 303.856 2220.27 243.01 2285.5"
                                         stroke="#A3A3A3"
-                                        stroke-width="1"
+                                        strokeWidth="1"
                                         fill="transparent"
                                     />
 
@@ -883,7 +883,7 @@ const handleDownload = async () => {
                                         id="mobileLinePath"
                                         d="M143.878 1C104.636 28.8341 21.4787 149.027 2.78122 407.125C-20.5906 729.747 194.084 1147.26 175.906 1459.76C161.363 1709.76 113.292 1882.75 91.0748 1938"
                                         stroke="#A3A3A3"
-                                        stroke-width="1"
+                                        strokeWidth="1"
                                         fill="transparent"
                                     />
 

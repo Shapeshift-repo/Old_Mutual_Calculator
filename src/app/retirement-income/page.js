@@ -689,7 +689,7 @@ export default function RetirementAnnuity() {
                     <div className="relative lg:static top-0 lg:top-[-230px] left-0 w-full">
                             <Banner 
                                 id="main-banner"
-                                heading="RETIREMENT INCOME"
+                                heading="INCOME ANNUITY"
                                 subHeading="CALCULATOR"
                                 content="See what monthly income you could get during retirement from a Living Annuity"
                                 image="/images/banner3-img-desktop.jpg"
@@ -836,7 +836,7 @@ export default function RetirementAnnuity() {
                                         heading="" 
                                         content={`
                                             <p>Your different income annuity options at retirement</p>
-                                            <p><strong>Living annuity</strong><br><br>A living annuity is a flexibility plan where you decide how your savings are invested and you choose an income level that suits your needs.</p>
+                                            <p><strong>Living annuity</strong><br><br>A living annuity is a flexible plan where you decide how your savings are invested and you choose an income level that suits your needs.</p>
                                             <p><strong>Guaranteed (or life) annuity</strong><br><br>A guaranteed annuity ensures that you receive a regular income for as long as you live.</p>
                                             <p><strong>Composite (or compound) annuity</strong><br><br>By combining the features of a living annuity and a guaranteed annuity, a composite annuity ensures that you receive an income for life and allows you to keep a portion of your capital invested in the markets.</p>
                                         `}

@@ -89,7 +89,7 @@ export default function Hero() {
                             </div>
 
                             <Image
-                                src="/images/hero.png"
+                                src="/images/hero2.png"
                                 alt="Hero Image"
                                 width={751}
                                 height={625}

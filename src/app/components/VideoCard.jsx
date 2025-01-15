@@ -5,7 +5,7 @@ import Heading from "./Heading";
 import ModalVideo from 'react-modal-video';
 import 'react-modal-video/scss/modal-video.scss';
 
-export default function VideoCard({ heading = null, videoID = null, image = null, className = '' }){
+export default function VideoCard({ heading = null, url = null, image = null, className = '' }){
 
   const [isOpen, setOpen] = useState(false);
 
@@ -45,15 +45,15 @@ export default function VideoCard({ heading = null, videoID = null, image = null
           )}
         </div>
       </div>
-
-      <ModalVideo
-        channel="youtube"
-        youtube={{ mute: 1, autoplay: 1 }}
-        isOpen={isOpen}
-        videoId={videoID || "L61p2uyiMSo"}
-        onClose={() => setOpen(false)} 
-      />
-
+      
+      {heading && (
+        <ModalVideo
+          channel="custom"
+          isOpen={isOpen}
+          url={url}
+          onClose={() => setOpen(false)} 
+        />
+      )}
     </div>
   );
 }

@@ -75,11 +75,25 @@ export default function RetirementAnnuity() {
 
     // Use useEffect to retrieve the stored value when the component mounts
     useEffect(() => {
+        const savedAge = localStorage.getItem('age');
         const savedInvestment = localStorage.getItem('totalInvestment');
         setFormData((prevData) => ({
             ...prevData,
+            savedAge: savedAge ? parseInt(savedAge, 10) : 60,
             monthlyInvest: savedInvestment ? `R${formatNumberWithSpaces(savedInvestment)}` : ''
         }));
+
+        // Set the slider values to savedAge if it exists
+        if (savedAge) {
+            if (savedAge >= 55) {
+                // If savedAge is greater than or equal to 55, set the slider value to 55
+                setValue(savedAge);
+            } else {
+                // Otherwise, use the saved age as the value
+                setValue(60);
+            }
+        }
+
     }, []);
 
     const [errors, setErrors] = useState({
@@ -845,7 +859,7 @@ export default function RetirementAnnuity() {
 
                                 </div>
 
-                                <VideoCard heading="Compound growth explained" image="/images/video-3-thumb.png" videoID="Waq0iTibw2E" className="mt-[60px]"/>
+                                <VideoCard heading="Compound growth explained" image="/images/video-3-thumb.png" url="videos/video-3.mp4" className="mt-[60px]"/>
 
                             </div>
                         </div>

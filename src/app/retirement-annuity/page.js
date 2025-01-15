@@ -82,14 +82,29 @@ export default function RetirementAnnuity() {
     });
 
     // Use useEffect to retrieve the stored value when the component mounts
+    
+
+    const [value, setValue] = useState(25); // Slider 1 value (single value)
+    const [value1, setValue1] = useState([25, 65]); // Slider 2 range value [min, max]
+
     useEffect(() => {
+        const savedAge = localStorage.getItem('age');
         const savedGrossIncome = localStorage.getItem('grossIncome');
         const savedMonthlyInvest = localStorage.getItem('monthlyInvest');
+
+        // Set formData with saved values
         setFormData((prevData) => ({
             ...prevData,
+            savedAge: savedAge ? parseInt(savedAge, 10) : 25,
             grossIncome: savedGrossIncome ? `R${formatNumberWithSpaces(savedGrossIncome)}` : '',
             contribution: savedMonthlyInvest ? `R${formatNumberWithSpaces(savedMonthlyInvest)}` : ''
         }));
+
+        // Set the slider values to savedAge if it exists
+        if (savedAge) {
+            setValue(savedAge);
+            setValue1([savedAge, Math.max(savedAge, value1[1])]); // Range slider (min, max)
+        }
     }, []);
 
     const [result, setResult] = useState(null);
@@ -133,9 +148,6 @@ export default function RetirementAnnuity() {
             setResult(result);
         }
     };
-
-    const [value, setValue] = useState(25); // Slider 1 value (single value)
-    const [value1, setValue1] = useState([25, 65]); // Slider 2 range value [min, max]
 
     const minDistance = 0; // Minimum distance between the two thumbs on Slider 2
 
@@ -446,6 +458,8 @@ export default function RetirementAnnuity() {
         
         const totalInvestment = N13.toFixed(0);
         localStorage.setItem('totalInvestment', totalInvestment);
+        localStorage.setItem('age', value);
+        
         const taxGetBack = Q15.toFixed(0);
         const investmentGrowth = N14.toFixed(0);
         const totalContributionPaid = (N15 + N16).toFixed(0);
@@ -1454,7 +1468,7 @@ export default function RetirementAnnuity() {
 
                                 </div>
 
-                                <VideoCard heading="Retirement income explained" image="/images/video-2-thumb.png" videoID="yoTev524nhs" className="mt-[60px]"/>
+                                <VideoCard heading="Retirement income explained" image="/images/video-2-thumb.png" url="videos/video-2.mp4" className="mt-[60px]"/>
 
                                 <StepButton heading="NEXT STEP" content="See what income your savings will give you in retirement." link="/retirement-income" className="mt-[60px]" />
 

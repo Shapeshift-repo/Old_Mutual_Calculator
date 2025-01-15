@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="279.375" height="249.922" viewBox="0 0 279.375 249.922">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.144" y1="0.261" x2="0.834" y2="0.951" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#008c6b"/>
+      <stop offset="1" stop-color="#42b139"/>
+    </linearGradient>
+    <filter id="Path_22938" x="0" y="0" width="279.375" height="249.922" filterUnits="userSpaceOnUse">
+      <feOffset dy="7" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feFlood flood-color="#2c2c2c" flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-path">
+      <path id="Union_28" data-name="Union 28" d="M23.95,67.379,15.374,58.7l-4.318,5.27-2.166-6.86,3.127-3.3L3.524,36.945l4.557-2.594.81-7.113L0,9.647l.442.247L.247,9.545,8.607,0l8.615,4.683L15.648,9.545l3.51,13.9,5.045,4.1,2.258,6.961,9.8-2.545.785,7.286,6.476,1.37L55.788,27.55,60.2,28.818,65.514,17.36,76.3,22.385l8.322-3.97L91.9,20.592v6.042L79.514,31.966,72.911,48.1l10.15,1.3,3.729,8.747-.078-.012.035.02-23.9-1.045L55.7,62.981H42.582L31.935,70.254Z" fill="url(#linear-gradient)"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <rect width="105.465" height="79.685" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="Group_5204" data-name="Group 5204" transform="translate(-954.973 -3107.903)">
+    <g transform="matrix(1, 0, 0, 1, 954.97, 3107.9)" filter="url(#Path_22938)">
+      <path id="Path_22938-2" data-name="Path 22938" d="M7321.049,17552.152l4.208-5.154,8.356,10.055,7.781,2.027,10.375-7.109,12.782.783,6.938-5.883,34.916,1.553,1.916-3.209,7.619,1.793,4.909-5.543,18.239-3.221,42.766-37.8,18.462-31.1,12.293-7.895,8.143-27.168-10.225-1.439-3.761,7.3-11.714-2.131-3.039-12.432,8.3-9.227,7.524,2.092,2.687-27.6-5.9-10.855-6.114-17.623-19.117-3.646-11.766,1.051-3.845,4.576-5.744,1.037-8.4,8.6-10.55,6-1.967,8.5-14.807,10.131-6.375,14.346-9.5,2.523-11.926-2.523-9.3-7.568-5.34,2.3-2.5,8.654-14.356,14.412h-16.357l4.036-10.986-2.877-9.217-10.518-10.611,1.243,57.625-6.35,1.428-4.179,6.119-24.038-2.191-1.354-6.709-6.773-3.271-.983,4.625-3.642,5.355,27.722,54.871-.788,7.734-4.441,2.537,8.278,16.486-3.049,3.225Z" transform="translate(-7266.35 -17340.97)" fill="#ededed" stroke="#159677" stroke-width="1.5"/>
+    </g>
+    <path id="Union_23" data-name="Union 23" d="M23.95,67.379,15.374,58.7l-4.318,5.27-2.166-6.86,3.127-3.3L3.524,36.945l4.557-2.594.81-7.113L0,9.647l.442.247L.247,9.545,8.607,0l8.615,4.683L15.648,9.545l3.51,13.9,5.045,4.1,2.258,6.961,9.8-2.545.785,7.286,6.476,1.37L55.788,27.55,60.2,28.818,65.514,17.36,76.3,22.385l8.322-3.97L91.9,20.592v6.042L79.514,31.966,72.911,48.1l10.15,1.3,3.729,8.747-.078-.012.035.02-23.9-1.045L55.7,62.981H42.582L31.935,70.254Z" transform="translate(997.684 3257.322)" fill="url(#linear-gradient)"/>
+    <g id="Mask_Group_129" data-name="Mask Group 129" transform="translate(997.684 3257.322)" clip-path="url(#clip-path)">
+      <g id="Repeat_Grid_2" data-name="Repeat Grid 2" transform="translate(-10.816 -3.152)" clip-path="url(#clip-path-2)">
+        <g transform="translate(-1288.5 -3774)">
+          <line id="Line_164" data-name="Line 164" x2="135" transform="translate(1288.5 3774.5)" fill="none" stroke="#138c6b" stroke-width="1.5"/>
+        </g>
+        <g transform="translate(-1288.5 -3763)">
+          <line id="Line_164-2" data-name="Line 164" x2="135" transform="translate(1288.5 3774.5)" fill="none" stroke="#138c6b" stroke-width="1.5"/>
+        </g>
+        <g transform="translate(-1288.5 -3752)">
+          <line id="Line_164-3" data-name="Line 164" x2="135" transform="translate(1288.5 3774.5)" fill="none" stroke="#138c6b" stroke-width="1.5"/>
+        </g>
+        <g transform="translate(-1288.5 -3741)">
+          <line id="Line_164-4" data-name="Line 164" x2="135" transform="translate(1288.5 3774.5)" fill="none" stroke="#138c6b" stroke-width="1.5"/>
+        </g>
+        <g transform="translate(-1288.5 -3730)">
+          <line id="Line_164-5" data-name="Line 164" x2="135" transform="translate(1288.5 3774.5)" fill="none" stroke="#138c6b" stroke-width="1.5"/>
+        </g>
+        <g transform="translate(-1288.5 -3719)">
+          <line id="Line_164-6" data-name="Line 164" x2="135" transform="translate(1288.5 3774.5)" fill="none" stroke="#138c6b" stroke-width="1.5"/>
+        </g>
+        <g transform="translate(-1288.5 -3708)">
+          <line id="Line_164-7" data-name="Line 164" x2="135" transform="translate(1288.5 3774.5)" fill="none" stroke="#138c6b" stroke-width="1.5"/>
+        </g>
+        <g transform="translate(-1288.5 -3697)">
+          <line id="Line_164-8" data-name="Line 164" x2="135" transform="translate(1288.5 3774.5)" fill="none" stroke="#138c6b" stroke-width="1.5"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

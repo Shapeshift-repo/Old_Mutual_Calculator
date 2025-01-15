@@ -403,7 +403,7 @@ export default function RetirementAnnuity() {
             marginBottom: 2,
         },
         bottomHeading3: {
-            fontSize: 9,
+            fontSize: 10,
             fontWeight: 'bold',
             marginTop: 10,
         },
@@ -535,7 +535,7 @@ export default function RetirementAnnuity() {
 
                 <View style={styles.contentTop1}>
                     <Text style={styles.contentHi}>Hi</Text>
-                    <Text style={styles.contentAfterHi}>When you retire (from the age of 55), your retirement savings will need to provide an income so that you can support yourself and your family. You have to invest a minimum of two thirds of your retirement savings to buy an income annuity. This is an investment that will pay you a regular income during your retirement. You may withdraw the rest of your retirement savings as a lump sum when you retire. This will depend on how much you have withdrawn before retirement. For more information visit <PDFLink style={styles.greenText} src="https://www.oldmutual.co.za/two-pot-retirement-system">www.oldmutual.co.za/two-pot-retirement-system</PDFLink>.</Text>
+                    <Text style={styles.contentAfterHi}>When you retire (from the age of 55), your retirement savings will need to provide an income so that you can support yourself and your family. You will have to buy an income annuity with your retirement savings, which will provide you with a regular income when you retire. For more information visit <PDFLink style={styles.greenText} src="https://www.oldmutual.co.za/two-pot-retirement-system">www.oldmutual.co.za/two-pot-retirement-system</PDFLink>.</Text>
                 </View>
                 
                 <View style={styles.contentTop2}>
@@ -543,7 +543,7 @@ export default function RetirementAnnuity() {
                         If you manage to save up a capital amount of <Text style={styles.boldGreen}>R{result && formatNumberWithSpaces(result.G45)}</Text> by your retirement age of <Text style={styles.boldGreen}>{value}</Text> years, you can expect an income of <Text style={styles.boldGreen}>R{result ? formatNumberWithSpaces(result.E52) : ''}</Text> per month at a drawdown rate of <Text style={styles.boldGreen}>{value2}%</Text>.
                     </Text>
                     <Text>
-                        In poor markets ({result ? formatNumberWithSpaces(result.P53) : 0}% growth), your income will last about <Text style={styles.boldGreen}>10</Text> years. If you experience {result ? formatNumberWithSpaces(result.P54) : 0}% growth, your income could last up to <Text style={styles.boldGreen}>25</Text> years.
+                        In average markets ({result ? formatNumberWithSpaces(result.P53) : 0}% growth), your income will last about <Text style={styles.boldGreen}>{result ? formatNumberWithSpaces(result.P53) : 0}</Text> years. If you experience {result ? formatNumberWithSpaces(result.P54) : 0}% growth, your income could last up to <Text style={styles.boldGreen}>{result ? formatNumberWithSpaces(result.P54) : 0}</Text> years.
                     </Text>
                 </View>
 
@@ -602,8 +602,8 @@ export default function RetirementAnnuity() {
                 
                 <View style={styles.footer}>
                     <Text style={styles.footerText}><Text style={styles.footerBold}>DISCLAIMER:</Text> The information in this tool is intended for illustrative purposes only and the values shown aren&lsquo;t guaranteed. This isn&lsquo;t an offer and it&lsquo;s not part of a contractual undertaking by Old Mutual Limited, Old Mutual Life Assurance Company (South Africa) Ltd or any of Old Mutual Limited&lsquo;s subsidiaries. The tool also doesn&lsquo;t represent financial advice by any of the companies in the Old Mutual Limited Group. The personal information provided will only be used to generate a report and no personal information provided will be stored during this process.</Text>
-                    <Text style={styles.footerText}><Text style={styles.footerBold}>ASSUMPTIONS:</Text> Input age is the age at next tax year end. Calculated assuming your salary is your only income. You have not exceeded the limit of 27.5% of your yearly taxable income (or R350 000) which includes your pension or provident fund yearly contributions. You don’t skip any contributions throughout the year. Fees are not taken into account. The calculation is based on the 2024/25 SARS income tax tables.</Text>
-                    <Text style={styles.footerText}><Text style={styles.footerBold}>IMPORTANT:</Text> The yearly tax deduction on a retirement annuity is limited to 27.5% of your income, up to a maximum of R350 000. Any amount above this is treated as deduction in the following year.</Text>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>ASSUMPTIONS:</Text> Retirement age is 55 unless selected otherwise. Inflation is at 5% (compounded yearly). Growth at 7% (compounded yearly) in average markets, and 9% (compounded yearly) in good markets. Calculations presented are from a living annuity. The initial yearly drawdown rate is determined by the selection in the calculator. Drawdown rate is adjusted each year to keep up with inflation and maintain purchasing power, subject to the drawdown limits of 2.5% to 17.5%.  A maximum of 120 years is displayed. Fees are not taken into account. Fees will reduce the time that funds last (please contact a financial adviser for more detailed information on fees). Monthly income amount is a pre-tax amount.</Text>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>IMPORTANT:</Text> You may be able to draw more than 8% (up to 17.5%), but this will deplete your capital. Please consult a financial adviser.</Text>
                     <Text style={styles.footerText}>Old Mutual Life Assurance Company (SA) Limited is a licensed FSP and life insurer.</Text>               
                 </View>
 
@@ -656,7 +656,7 @@ export default function RetirementAnnuity() {
                         </Text>
                         <Text style={{ height: 5 }} ></Text>
                         <Text style={styles.infoText}>
-                            Redeem your points at over 50 partners – buy groceries and fuel, watch a movie, and treat the family to a meal. Or save your Old Mutual Rewards points for the future ­– save points in qualifying Old Mutual products, or even donate your points to a charity. Plus, get up to 100% off with TaxTim to simplify tax filing and boost your chances of a refund!
+                            Redeem your points at over 50 partners – buy groceries and fuel, watch a movie, and treat the family to a meal. Or save your Old Mutual Rewards points for the future - save points in qualifying Old Mutual products, or even donate your points to a charity. Plus, get up to 100% off with TaxTim to simplify tax filing and boost your chances of a refund!
                         </Text>
                         <Text style={{ height: 5 }} ></Text>
                         <Text style={styles.infoText}>
@@ -668,11 +668,11 @@ export default function RetirementAnnuity() {
                         </Text>
                     </View>
                 </View>
-
+                
                 <View style={styles.footer}>
                     <Text style={styles.footerText}><Text style={styles.footerBold}>DISCLAIMER:</Text> The information in this tool is intended for illustrative purposes only and the values shown aren&lsquo;t guaranteed. This isn&lsquo;t an offer and it&lsquo;s not part of a contractual undertaking by Old Mutual Limited, Old Mutual Life Assurance Company (South Africa) Ltd or any of Old Mutual Limited&lsquo;s subsidiaries. The tool also doesn&lsquo;t represent financial advice by any of the companies in the Old Mutual Limited Group. The personal information provided will only be used to generate a report and no personal information provided will be stored during this process.</Text>
-                    <Text style={styles.footerText}><Text style={styles.footerBold}>ASSUMPTIONS:</Text> Input age is the age at next tax year end. Calculated assuming your salary is your only income. You have not exceeded the limit of 27.5% of your yearly taxable income (or R350 000) which includes your pension or provident fund yearly contributions. You don’t skip any contributions throughout the year. Fees are not taken into account. The calculation is based on the 2024/25 SARS income tax tables.</Text>
-                    <Text style={styles.footerText}><Text style={styles.footerBold}>IMPORTANT:</Text> The yearly tax deduction on a retirement annuity is limited to 27.5% of your income, up to a maximum of R350 000. Any amount above this is treated as deduction in the following year.</Text>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>ASSUMPTIONS:</Text> Retirement age is 55 unless selected otherwise. Inflation is at 5% (compounded yearly). Growth at 7% (compounded yearly) in average markets, and 9% (compounded yearly) in good markets. Calculations presented are from a living annuity. The initial yearly drawdown rate is determined by the selection in the calculator. Drawdown rate is adjusted each year to keep up with inflation and maintain purchasing power, subject to the drawdown limits of 2.5% to 17.5%.  A maximum of 120 years is displayed. Fees are not taken into account. Fees will reduce the time that funds last (please contact a financial adviser for more detailed information on fees). Monthly income amount is a pre-tax amount.</Text>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>IMPORTANT:</Text> You may be able to draw more than 8% (up to 17.5%), but this will deplete your capital. Please consult a financial adviser.</Text>
                     <Text style={styles.footerText}>Old Mutual Life Assurance Company (SA) Limited is a licensed FSP and life insurer.</Text>               
                 </View>
 
@@ -859,7 +859,7 @@ export default function RetirementAnnuity() {
 
                                 </div>
 
-                                <VideoCard heading="Compound growth explained" image="/images/video-3-thumb.png" url="videos/video-3.mp4" className="mt-[60px]"/>
+                                <VideoCard heading="Compound growth explained" image="/images/video-3-thumb.png" url="/videos/video-3.mp4" className="mt-[60px]"/>
 
                             </div>
                         </div>

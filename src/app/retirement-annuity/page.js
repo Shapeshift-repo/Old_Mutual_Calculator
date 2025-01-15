@@ -739,7 +739,7 @@ export default function RetirementAnnuity() {
             color: '#50B848',
         },
         boxHeading: {
-            fontSize: 18,
+            fontSize: 16,
             fontWeight: 'medium',
             marginBottom: 10,
         },
@@ -961,7 +961,7 @@ export default function RetirementAnnuity() {
 
                 <View style={styles.contentTop1}>
                     <Text style={styles.contentHi}>Hi</Text>
-                    <Text style={styles.contentAfterHi}>Saving for the future might be the most important thing you ever do for you and your family. And the earlier you start, the less money it will take. The longer your money is invested, the more it can grow.  See how much your investment will grow if you invest consistently and into your retirement annuity.</Text>
+                    <Text style={styles.contentAfterHi}>Saving for the future might be the most important thing you ever do for you and your family. And the earlier you start, the less money it will take. The longer your money is invested, the more it can grow.  See how much your investment will grow if you invest consistently into your retirement annuity.</Text>
                 </View>
                 
                 <View style={styles.contentTop2}>
@@ -1013,7 +1013,7 @@ export default function RetirementAnnuity() {
                 <View style={styles.imageBoxes}>
                     <View style={styles.box}>                    
                         <Text style={styles.boxHeading}>What is compound growth?</Text>
-                        <Text style={styles.boxText}>Compound growth is the process of earning returns on both your original investment and the interest or gains that accumulate over time. The earlier you start investing, the more you benefit from compound growth.</Text>
+                        <Text style={styles.boxText}>Compound growth is the process of earning returns on both your original investment and the interest or gains that </Text><Text style={styles.boxText}>accumulate over time. The earlier you start investing, the more you benefit from compound growth.</Text>
                         <Text style={styles.boxText}>For more information, see the example below or <PDFLink style={styles.greenText} src="#">watch this video.</PDFLink></Text>
                         <Text style={{ height: 5 }}></Text>
                         <Text style={styles.boxBold}>Example</Text>
@@ -1076,7 +1076,7 @@ export default function RetirementAnnuity() {
                 
                 <View style={styles.footer}>
                     <Text style={styles.footerText}><Text style={styles.footerBold}>DISCLAIMER:</Text> The information in this tool is intended for illustrative purposes only and the values shown aren&lsquo;t guaranteed. This isn&lsquo;t an offer and it&lsquo;s not part of a contractual undertaking by Old Mutual Limited, Old Mutual Life Assurance Company (South Africa) Ltd or any of Old Mutual Limited&lsquo;s subsidiaries. The tool also doesn&lsquo;t represent financial advice by any of the companies in the Old Mutual Limited Group. The personal information provided will only be used to generate a report and no personal information provided will be stored during this process.</Text>
-                    <Text style={styles.footerText}><Text style={styles.footerBold}>ASSUMPTIONS:</Text> Input age is the age at next tax year end. Calculated assuming your salary is your only income. You have not exceeded the limit of 27.5% of your yearly taxable income (or R350 000) which includes your pension or provident fund yearly contributions. You don’t skip any contributions throughout the year. Fees are not taken into account. The calculation is based on the 2024/25 SARS income tax tables.</Text>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>ASSUMPTIONS:</Text> Input age is the age at next tax year end. Tax refunded doesn’t get reinvested. Inflation is at 5% (compounded yearly). Annual salary increase matches inflation at 5% (compounded yearly). You stay within your tax bracket until retirement. Yearly contribution escalation of 5% (compounded yearly). If you entered any additional investment, the assumptions are the same. Lump sum comes from retirement fund savings, meaning no tax back is earned on the lump-sum contribution. Calculated assuming your salary is your only taxable income. Your input contributions are your only retirement fund contributions in the tax year. Any additional pension or provident fund contributions are ignored. Tax back is limited according to the tax deductible limit of 27.5% of your yearly taxable income (or R350 000). The tax deductible limit increases with inflation. Inflation, escalation rate and investment return are greater than zero. Growth is determined by the investment strategy selection in the calculator. No savings component withdrawals were made during </Text>
                     <Text style={styles.footerText}><Text style={styles.footerBold}>IMPORTANT:</Text> The yearly tax deduction on a retirement annuity is limited to 27.5% of your income, up to a maximum of R350 000. Any amount above this is treated as deduction in the following year.</Text>
                     <Text style={styles.footerText}>Old Mutual Life Assurance Company (SA) Limited is a licensed FSP and life insurer.</Text>               
                 </View>
@@ -1130,7 +1130,7 @@ export default function RetirementAnnuity() {
                         </Text>
                         <Text style={{ height: 5 }} ></Text>
                         <Text style={styles.infoText}>
-                            Redeem your points at over 50 partners – buy groceries and fuel, watch a movie, and treat the family to a meal. Or save your Old Mutual Rewards points for the future ­– save points in qualifying Old Mutual products, or even donate your points to a charity. Plus, get up to 100% off with TaxTim to simplify tax filing and boost your chances of a refund!
+                            Redeem your points at over 50 partners – buy groceries and fuel, watch a movie, and treat the family to a meal. Or save your Old Mutual Rewards points for the future - save points in qualifying Old Mutual products, or even donate your points to a charity. Plus, get up to 100% off with TaxTim to simplify tax filing and boost your chances of a refund!
                         </Text>
                         <Text style={{ height: 5 }} ></Text>
                         <Text style={styles.infoText}>
@@ -1142,10 +1142,10 @@ export default function RetirementAnnuity() {
                         </Text>
                     </View>
                 </View>
-
+                
                 <View style={styles.footer}>
                     <Text style={styles.footerText}><Text style={styles.footerBold}>DISCLAIMER:</Text> The information in this tool is intended for illustrative purposes only and the values shown aren&lsquo;t guaranteed. This isn&lsquo;t an offer and it&lsquo;s not part of a contractual undertaking by Old Mutual Limited, Old Mutual Life Assurance Company (South Africa) Ltd or any of Old Mutual Limited&lsquo;s subsidiaries. The tool also doesn&lsquo;t represent financial advice by any of the companies in the Old Mutual Limited Group. The personal information provided will only be used to generate a report and no personal information provided will be stored during this process.</Text>
-                    <Text style={styles.footerText}><Text style={styles.footerBold}>ASSUMPTIONS:</Text> Input age is the age at next tax year end. Calculated assuming your salary is your only income. You have not exceeded the limit of 27.5% of your yearly taxable income (or R350 000) which includes your pension or provident fund yearly contributions. You don’t skip any contributions throughout the year. Fees are not taken into account. The calculation is based on the 2024/25 SARS income tax tables.</Text>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>ASSUMPTIONS:</Text> Input age is the age at next tax year end. Tax refunded doesn’t get reinvested. Inflation is at 5% (compounded yearly). Annual salary increase matches inflation at 5% (compounded yearly). You stay within your tax bracket until retirement. Yearly contribution escalation of 5% (compounded yearly). If you entered any additional investment, the assumptions are the same. Lump sum comes from retirement fund savings, meaning no tax back is earned on the lump-sum contribution. Calculated assuming your salary is your only taxable income. Your input contributions are your only retirement fund contributions in the tax year. Any additional pension or provident fund contributions are ignored. Tax back is limited according to the tax deductible limit of 27.5% of your yearly taxable income (or R350 000). The tax deductible limit increases with inflation. Inflation, escalation rate and investment return are greater than zero. Growth is determined by the investment strategy selection in the calculator. No savings component withdrawals were made during </Text>
                     <Text style={styles.footerText}><Text style={styles.footerBold}>IMPORTANT:</Text> The yearly tax deduction on a retirement annuity is limited to 27.5% of your income, up to a maximum of R350 000. Any amount above this is treated as deduction in the following year.</Text>
                     <Text style={styles.footerText}>Old Mutual Life Assurance Company (SA) Limited is a licensed FSP and life insurer.</Text>               
                 </View>
@@ -1468,7 +1468,7 @@ export default function RetirementAnnuity() {
 
                                 </div>
 
-                                <VideoCard heading="Retirement income explained" image="/images/video-2-thumb.png" url="videos/video-2.mp4" className="mt-[60px]"/>
+                                <VideoCard heading="Retirement income explained" image="/images/video-2-thumb.png" url="/videos/video-2.mp4" className="mt-[60px]"/>
 
                                 <StepButton heading="NEXT STEP" content="See what income your savings will give you in retirement." link="/retirement-income" className="mt-[60px]" />
 

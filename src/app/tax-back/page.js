@@ -559,7 +559,7 @@ const handleDownload = async () => {
                     <Text>
                         With your yearly contribution of <Text style={styles.boldGreen}>R{formatNumberWithSpaces(investmentDetails.annualInvest)}, </Text>
                         (which is <Text style={styles.boldGreen}>R{formatNumberWithSpaces(investmentDetails.annualInvest / 12)} </Text>
-                        a month), you’ll get <Text style={styles.boldGreen}>R{investmentDetails.taxBack} </Text>
+                        a month), you’ll get <Text style={styles.boldGreen}>R{formatNumberWithSpaces(investmentDetails.taxBack)} </Text>
                         TAX BACK at the end of the tax year.
                     </Text>
                 </View>
@@ -602,20 +602,19 @@ const handleDownload = async () => {
                         <Text style={{ height: 10 }}></Text>
                         <Text style={styles.boxBold}>R{formatNumberWithSpaces(investmentDetails.cost)}</Text>
                         <Text style={styles.text}>is the actual cost of your</Text>
-                        <Text style={styles.text}>R{formatNumberWithSpaces(investmentDetails.annualInvest)} investment.</Text>
+                        <Text style={styles.text}>R{formatNumberWithSpaces(investmentDetails.annualInvest)} investment</Text>
                     </View>
                 </View>
 
                 <View style={styles.contentBottom}>
                     <Text style={styles.bottomHeading1}>HOW IT WORKS</Text>
-                    <Text>You receive a tax certificate at the end of the tax year, which shows how much you contributed to your retirement annuity. You’ll receive a rebate from SARS, based on your income tax rates, your contributions and any income that you may have. Visit the <Link style={styles.greenText} src="https://www.sars.gov.za">SARS website</Link> to see the income tax rates.</Text>
+                    <Text>You receive a tax certificate at the end of the tax year, which shows how much you contributed to your retirement annuity. You could receive a rebate from SARS, based on your income tax rates, your contributions and any income that you may have. Visit the <Link style={styles.greenText} src="https://www.sars.gov.za">SARS website</Link> to see the income tax rates.</Text>
                     <Text style={styles.bottomHeading2}>More benefits of a retirement annuity</Text>
-                    <Text style={styles.bottomList}><Text>.</Text> <Text>Your investment grows tax free, you don’t pay income tax on interest, and no dividends or capital gains tax.</Text></Text>
-                    <Text style={styles.bottomList}><Text>.</Text> <Text>When you die, any benefits paid to your beneficiaries as an income or a lump sum are free of estate duty.</Text></Text>
-                    <Text style={styles.bottomList}><Text>.</Text> <Text>Your investment is protected against claims from creditors.</Text></Text>
-                    <Text style={styles.bottomList}><Text>.</Text> <Text>You have a wide range of underlying investment funds to choose from.</Text></Text>
-                    <Text style={styles.bottomList}><Text>.</Text> <Text>You can transfer a pension or provident fund withdrawal into your retirement annuity, tax free.</Text></Text>
-                    <Text style={styles.bottomList}><Text>.</Text> <Text>At retirement you can withdraw R550 000 tax free, if you haven’t made any withdrawals.</Text></Text>
+                    <Text style={styles.bottomList}><Text>&#8226;</Text> <Text>Your investment grows tax free, you don’t pay income tax on interest, and no dividends or capital gains tax.</Text></Text>
+                    <Text style={styles.bottomList}><Text>&#8226;</Text> <Text>When you die, any benefits paid to your beneficiaries as an income or a lump sum are free of estate duty.</Text></Text>
+                    <Text style={styles.bottomList}><Text>&#8226;</Text> <Text>Your investment is protected against claims from creditors.</Text></Text>
+                    <Text style={styles.bottomList}><Text>&#8226;</Text> <Text>You have a wide range of underlying investment funds to choose from.</Text></Text>
+                    <Text style={styles.bottomList}><Text>&#8226;</Text> <Text>You can transfer a pension or provident fund withdrawal into your retirement annuity, tax free.</Text></Text>
                     <Text style={{ height: 3}}></Text>
                     <Text style={styles.bottomBold}>For more information, <Link style={styles.greenText} src="#">watch this video</Link>.</Text>
                     <Text style={styles.bottomHeading2}>How you use your TAX BACK is up to you</Text>
@@ -626,9 +625,9 @@ const handleDownload = async () => {
                 </View>
 
                 <View style={styles.footer}>
-                    <Text style={styles.footerText}><Text style={styles.footerBold}>DISCLAIMER:</Text> The information in this tool is intended for illustrative purposes only and the values shown aren&lsquo;t guaranteed. This isn&lsquo;t an offer and it&lsquo;s not part of a contractual undertaking by Old Mutual Limited, Old Mutual Life Assurance Company (South Africa) Ltd or any of Old Mutual Limited&lsquo;s subsidiaries. The tool also doesn&lsquo;t represent financial advice by any of the companies in the Old Mutual Limited Group. The personal information provided will only be used to generate a report and no personal information provided will be stored during this process.</Text>
-                    <Text style={styles.footerText}><Text style={styles.footerBold}>ASSUMPTIONS:</Text> Input age is the age at next tax year end. Calculated assuming your salary is your only income. You have not exceeded the limit of 27.5% of your yearly taxable income (or R350 000) which includes your pension or provident fund yearly contributions. You don’t skip any contributions throughout the year. Fees are not taken into account. The calculation is based on the 2024/25 SARS income tax tables.</Text>
-                    <Text style={styles.footerText}><Text style={styles.footerBold}>IMPORTANT:</Text> The yearly tax deduction on a retirement annuity is limited to 27.5% of your income, up to a maximum of R350 000. Any amount above this is treated as deduction in the following year.</Text>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>DISCLAIMER:</Text> The information in this tool is intended for illustrative purposes only and the values shown aren&apos;t guaranteed. This isn&apos;t an offer and it&apos;s not part of a contractual undertaking by Old Mutual Limited, Old Mutual Life Assurance Company (South Africa) Ltd or any of Old Mutual Limited&apos;s subsidiaries. The tool also doesn&apos;t represent financial advice by any of the companies in the Old Mutual Limited Group. The personal information provided will only be used to generate a report and no personal information provided will be stored during this process.</Text>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>ASSUMPTIONS:</Text> Input age is the age at next tax year end. Calculated assuming your salary is your only income. Your input contributions are your only retirement fund contributions in the tax year. Any additional pension or provident fund contributions are ignored. Tax benefit is limited according to the tax-deductible limit of 27.5% of your yearly taxable income (or R350 000). You don’t skip any contributions throughout the year. Fees are not taken into account. The calculation is based on the 2024/25 SARS income tax tables.</Text>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>IMPORTANT:</Text> The yearly tax deduction on a retirement annuity is limited to 27.5% of your yearly taxable income, up to a maximum of R350 000. Any amount above this is treated as deduction in the following year.</Text>
                     <Text style={styles.footerText}>Old Mutual Life Assurance Company (SA) Limited is a licensed FSP and life insurer.</Text>               
                 </View>
 
@@ -681,7 +680,7 @@ const handleDownload = async () => {
                         </Text>
                         <Text style={{ height: 5 }} ></Text>
                         <Text style={styles.infoText}>
-                            Redeem your points at over 50 partners – buy groceries and fuel, watch a movie, and treat the family to a meal. Or save your Old Mutual Rewards points for the future ­– save points in qualifying Old Mutual products, or even donate your points to a charity. Plus, get up to 100% off with TaxTim to simplify tax filing and boost your chances of a refund!
+                            Redeem your points at over 50 partners - buy groceries and fuel, watch a movie, and treat the family to a meal. Or save your Old Mutual Rewards points for the future - save points in qualifying Old Mutual products, or even donate your points to a charity. Plus, get up to 100% off with TaxTim to simplify tax filing and boost your chances of a refund!
                         </Text>
                         <Text style={{ height: 5 }} ></Text>
                         <Text style={styles.infoText}>
@@ -695,9 +694,9 @@ const handleDownload = async () => {
                 </View>
 
                 <View style={styles.footer}>
-                    <Text style={styles.footerText}><Text style={styles.footerBold}>DISCLAIMER:</Text> The information in this tool is intended for illustrative purposes only and the values shown aren&lsquo;t guaranteed. This isn&lsquo;t an offer and it&lsquo;s not part of a contractual undertaking by Old Mutual Limited, Old Mutual Life Assurance Company (South Africa) Ltd or any of Old Mutual Limited&lsquo;s subsidiaries. The tool also doesn&lsquo;t represent financial advice by any of the companies in the Old Mutual Limited Group. The personal information provided will only be used to generate a report and no personal information provided will be stored during this process.</Text>
-                    <Text style={styles.footerText}><Text style={styles.footerBold}>ASSUMPTIONS:</Text> Input age is the age at next tax year end. Calculated assuming your salary is your only income. You have not exceeded the limit of 27.5% of your yearly taxable income (or R350 000) which includes your pension or provident fund yearly contributions. You don’t skip any contributions throughout the year. Fees are not taken into account. The calculation is based on the 2024/25 SARS income tax tables.</Text>
-                    <Text style={styles.footerText}><Text style={styles.footerBold}>IMPORTANT:</Text> The yearly tax deduction on a retirement annuity is limited to 27.5% of your income, up to a maximum of R350 000. Any amount above this is treated as deduction in the following year.</Text>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>DISCLAIMER:</Text> The information in this tool is intended for illustrative purposes only and the values shown aren&apos;t guaranteed. This isn&apos;t an offer and it&apos;s not part of a contractual undertaking by Old Mutual Limited, Old Mutual Life Assurance Company (South Africa) Ltd or any of Old Mutual Limited&apos;s subsidiaries. The tool also doesn&apos;t represent financial advice by any of the companies in the Old Mutual Limited Group. The personal information provided will only be used to generate a report and no personal information provided will be stored during this process.</Text>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>ASSUMPTIONS:</Text> Input age is the age at next tax year end. Calculated assuming your salary is your only income. Your input contributions are your only retirement fund contributions in the tax year. Any additional pension or provident fund contributions are ignored. Tax benefit is limited according to the tax-deductible limit of 27.5% of your yearly taxable income (or R350 000). You don’t skip any contributions throughout the year. Fees are not taken into account. The calculation is based on the 2024/25 SARS income tax tables.</Text>
+                    <Text style={styles.footerText}><Text style={styles.footerBold}>IMPORTANT:</Text> The yearly tax deduction on a retirement annuity is limited to 27.5% of your yearly taxable income, up to a maximum of R350 000. Any amount above this is treated as deduction in the following year.</Text>
                     <Text style={styles.footerText}>Old Mutual Life Assurance Company (SA) Limited is a licensed FSP and life insurer.</Text>               
                 </View>
 
@@ -987,7 +986,7 @@ const handleDownload = async () => {
                                 </div>
 
 
-                                <VideoCard heading="Tax back explained" image="/images/video-1-thumb.png" url="videos/video-1.mp4" className="mt-[60px]"/>
+                                <VideoCard heading="Tax back explained" image="/images/video-1-thumb.png" url="/videos/video-1.mp4" className="mt-[60px]"/>
 
                                 <StepButton heading="NEXT STEP" content="See how your money will grow until retirement." link="/retirement-annuity" className="mt-[60px]" />
 

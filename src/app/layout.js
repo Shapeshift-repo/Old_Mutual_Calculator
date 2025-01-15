@@ -10,7 +10,7 @@ const montserrat = Montserrat({
 
 export const metadata = {
   title: "OM Retirement",
-  description: "Invest in your future & get your tax back for that holiday",
+  description: "Secure your future, so that your children won`t have to when you retire.",
 };
 
 export default function RootLayout({ children }) {

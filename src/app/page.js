@@ -108,11 +108,11 @@ export default function Home() {
   }
 
   const CallToActionData2 = {
-    heading: 'JOIN OLD MUTUAL REWARDS',
+    heading: 'GET REWARDED WHILE SAVING FOR RETIREMENT',
     subHeading: '',
     content: (
       <>
-        Get rewarded while saving for retirement
+         Make your savings journey much more <Link className="font-bold text-[#ED0080] underline" href="https://oldmutual.co.za/rewards/">rewarding.</Link>
       </>
     ),
     buttonLabel: 'FIND OUT MORE',

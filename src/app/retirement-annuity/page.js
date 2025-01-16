@@ -1567,6 +1567,18 @@ console.log("N13",N13);
                   name="contribution"
                 />
 
+                {/* Only show error message if result for U5 is false */}
+                <p>{checkFlag ? "" : "Contribution Limit: The yearly tax deduction on a retirement annuity is limited to 27.5% of your total income, up to a maximum of R350 000."}</p>
+                                <SelectInput
+                                    label="Investment strategy"
+                                    required
+                                    className="mt-[28px]" 
+                                    value={formData.investment}
+                                    onChange={handleChange}
+                                    name="investment"
+                                    options={contributionOptions}
+                                />
+
                 <SelectInput
                   label="Investment strategy"
                   required

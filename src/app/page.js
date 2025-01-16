@@ -89,15 +89,15 @@ export default function Home() {
       content: (
         <>
           <p className='mb-[30px]'>Knowing how much tax you will get back and how compound growth boosts your retirement annuity is great, but the most important step is to take action today.</p>
-          <p className='text-[#4fb848]'>Talk to your financial adviser or purchase a retirement annuity online now!</p>
+          <p className='text-[#4fb848]'>Talk to your financial adviser or <Link className="font-bold text-primary underline" href="https://www.oldmutual.co.za/personal/solutions/retirement-plans/max-investments-optimal-retirement-plan/">purchase a retirement annuity online now!</Link></p>
         </>
       )
     },
   ];
 
   const CallToActionData1 = {
-    heading: 'LIFE AND DISABILITY COVER',
-    subHeading: 'Protect you & your family’s financial future with',
+    heading: 'PROTECT YOUR RETIREMENT SAVINGS',
+    subHeading: '',
     content: (
       <>
         Protect yours and your family’s financial future with <Link className="font-bold text-primary underline" href="https://www.oldmutual.co.za/personal/solutions/life-and-disability/life-insurance/">LIFE AND DISABILITY INSURANCE.</Link>
@@ -109,10 +109,10 @@ export default function Home() {
 
   const CallToActionData2 = {
     heading: 'JOIN OLD MUTUAL REWARDS',
-    subHeading: 'Make your savings journey much more rewarding',
+    subHeading: '',
     content: (
       <>
-        Make your savings journey much more <Link className="font-bold text-[#ED0080] underline" href="https://oldmutual.co.za/rewards/">rewarding.</Link>
+        Get rewarded while saving for retirement
       </>
     ),
     buttonLabel: 'FIND OUT MORE',
@@ -203,7 +203,7 @@ Requesting a credit report: 	100 points<br/>
 Completing a survey: 		50 points<br/><br/></p>
 
 <p>It’s free and anybody can join. Register today on <Link className='font-bold text-primary underline' href="https://oldmutual.co.za/rewards">oldmutual.co.za/rewards</Link></p>
-                              <p className="pt-5">Old Mutual Rewards (Pty) Ltd. is a company in the Old Mutual Group. Terms, Conditions and Programme Rules apply.</p>
+                              <p className="pt-5">Old Mutual Rewards (Pty) Ltd. is a company in the Old Mutual Group.<br /> Terms, Conditions and Programme Rules apply.</p>
 
                             </div>
                         </Typography>
@@ -226,11 +226,11 @@ Completing a survey: 		50 points<br/><br/></p>
                                 <path d="M1 17L17 1" stroke="#009677" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </span>
-                        <Typography id="modal-modal-title" variant="h6" component="h2" className="text-primary text-[20px] leading-[20px] font-semibold mb-[34px]">
+                        <Typography id="modal-modal-title" variant="h6" component="h2" className="text-primary text-[20px] leading-[20px] font-semibold mb-[34px]">LIFE AND DISABILITY INSURANCE
                         </Typography>
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                             <div className='text-[16px] leading-[24px] [&>h6]:mb-[30px] [&>h6]:font-bold'>
-                            <p>It is important to save for your retirement, but it’s equally important to protect your savings. Our life and disability insurance options ensure that you can still achieve your savings goals if anything happens to you. Ask your adviser about the right life and disability insurance for you and your family, or find out more <Link className='font-bold text-[#ED0080] underline' href="https://www.oldmutual.co.za/personal/solutions/life-and-disability/life-insurance/">here.</Link></p>
+                            <p>It is important to save for your retirement, but it’s equally important to protect your savings. Our life and disability insurance options ensure that you can still achieve your savings goals if anything happens to you. Ask your adviser about the right life and disability insurance for you and your family, or find out more <Link className='font-bold text-primary underline' href="https://www.oldmutual.co.za/personal/solutions/life-and-disability/life-insurance/">here.</Link></p>
                             </div>
                         </Typography>
                     </Box>

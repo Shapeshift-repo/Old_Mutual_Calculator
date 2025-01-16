@@ -249,34 +249,41 @@ export default function RetirementAnnuity() {
   // Handle change for Slider 2 (range value)
   const handleSlide2Change = (event, newValue, activeThumb) => {
     if (!Array.isArray(newValue)) return; // Ensure newValue is an array
-  
+
     if (activeThumb === 0) {
-      // Ensure Slider 2's min value cannot be greater than Slider 1's value
-      const minValue = Math.min(newValue[0], value); // Ensure min value does not exceed Slider 1's value
+      // Ensure Slider 2's min value cannot be less than Slider 1's value
+      const minValue = Math.max(newValue[0], 18); // Ensure minimum limit at 18
       setValue1([minValue, value1[1]]);
-      setValue(minValue); // Sync Slider 1 with the new min value of Slider 2
+      setValue(minValue); // Synchronize Slider 1 with the new min value
     } else {
-      // Ensure the max value is valid, and it doesn't go below the min value
+      // Ensure the max value is valid
       setValue1([value1[0], Math.max(newValue[1], value1[0] + minDistance)]);
     }
-  
-    // Clean and process form data if needed
+
+    // Clean the values by removing non-numeric characters
     let { grossIncome, contribution, investment, saving, monthly } = formData;
-    const age = value;
+
+    const age = value; // Use the slider value as the age
     const N8 = value1[1];
-    grossIncome = parseFloat(grossIncome.replace(/[^\d]/g, "")); 
+
+    grossIncome = parseFloat(grossIncome.replace(/[^\d]/g, ""));
+    const annualIncome = grossIncome * 12;
     contribution = parseFloat(contribution.replace(/[^\d]/g, ""));
+    const annualContribution = contribution * 12;
+
+    // Clean and set saving and monthly, defaulting to 0 if empty
     saving = parseFloat((saving || "").replace(/[^\d]/g, "")) || 0;
     monthly = parseFloat((monthly || "").replace(/[^\d]/g, "")) || "";
-  
+
     const J9 = choice === "yes" ? 1 : 0;
-  
+
     const result = calculateInvestmentAndTax({
       ...formData,
       age,
       J9,
       N8,
     });
+
     setResult(result);
   };  
 
@@ -1721,7 +1728,7 @@ export default function RetirementAnnuity() {
                 <PrimarySlider2
                   getAriaLabel={() => "Age"}
                   value={value1}
-                  min={18}
+                  min={value}
                   max={65}
                   onChange={handleSlide2Change}
                   valueLabelDisplay="on"

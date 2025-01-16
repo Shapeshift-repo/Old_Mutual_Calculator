@@ -89,7 +89,7 @@ export default function Home() {
       content: (
         <>
           <p className='mb-[30px]'>Knowing how much tax you will get back and how compound growth boosts your retirement annuity is great, but the most important step is to take action today.</p>
-          <p className='text-[#4fb848]'>Talk to your financial adviser or <Link className="font-bold text-primary underline" href="https://www.oldmutual.co.za/personal/solutions/retirement-plans/max-investments-optimal-retirement-plan/">purchase a retirement annuity online now!</Link></p>
+          <p className='text-[#4fb848]'>Talk to your financial adviser or <Link className="underline" href="https://www.oldmutual.co.za/personal/solutions/retirement-plans/max-investments-optimal-retirement-plan/">purchase a retirement annuity online now!</Link></p>
         </>
       )
     },

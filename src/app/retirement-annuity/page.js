@@ -39,7 +39,7 @@ const PrimarySlider = styled(Slider)(({ theme }) => ({
         },
         // Change color for the left thumb (if needed, use :nth-child for specific instance)
         '&:nth-of-type(1)': {
-            backgroundColor: '#FF0000', // New color for the left thumb
+            backgroundColor: '#ed0080', // New color for the left thumb
         },
     },
     '& .MuiSlider-track': {

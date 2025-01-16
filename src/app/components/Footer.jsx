@@ -126,7 +126,7 @@ export default function Footer() {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box className="absolute top-[2%] left-[3%] lg:top-1/2 lg:left-1/2 transform translate-x-0 translate-y-0 lg:-translate-x-1/2 lg:-translate-y-1/2 w-[94%] lg:w-[900px] h-5/6 bg-white rounded-[15px] shadow-lg p-8 overflow-scroll ">
+          <Box className="absolute top-[2%] left-[3%] lg:top-1/2 lg:left-1/2 transform translate-x-0 translate-y-0 lg:-translate-x-1/2 lg:-translate-y-1/2 w-[94%] lg:w-[900px] h-5/6 bg-white rounded-[15px] shadow-lg p-8 overflow-y-scroll ">
             <span
               CloseIcon
               onClick={handleClose}
@@ -155,7 +155,7 @@ export default function Footer() {
                 />
               </svg>
             </span>
-            <div className="overflow-scroll">
+            <div>
               <Typography
                 id="modal-modal-title"
                 variant="h6"

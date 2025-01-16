@@ -312,251 +312,317 @@ export default function RetirementAnnuity() {
 
   const investmentStrategyTable = [
     {
-      lowest: 1.5,
-      low: 2.63,
-      light: 3.08,
-      moderate: 4.67,
-      medium: 5.24,
-      high: 5.6,
-      highest: 6.41,
-    },
-  ];
-
-  const taxBrackets = [
-    { bracket: 0, startBracket: 0, taxRate: 0, previousBracket: 0 },
-    { bracket: 1, startBracket: 95750, taxRate: 18, previousBracket: 0 },
-    { bracket: 2, startBracket: 237100, taxRate: 26, previousBracket: 25443 },
-    { bracket: 3, startBracket: 370500, taxRate: 31, previousBracket: 60127 },
-    { bracket: 4, startBracket: 512800, taxRate: 36, previousBracket: 104240 },
-    { bracket: 5, startBracket: 673000, taxRate: 39, previousBracket: 161912 },
-    { bracket: 6, startBracket: 857900, taxRate: 41, previousBracket: 234023 },
-    { bracket: 7, startBracket: 1817000, taxRate: 45, previousBracket: 627254 },
-  ];
-
-  const calculateInvestmentAndTax = (formData) => {
-    // Clean the values by removing non-numeric characters
-    let {
-      age,
-      grossIncome,
-      contribution,
-      investment,
-      saving,
-      monthly,
-      J9,
-      N8,
-    } = formData;
-
-    grossIncome = parseFloat((grossIncome || "").replace(/R|\D/g, "")) || 0;
-    const annualIncome = grossIncome * 12;
-    contribution = parseFloat((contribution || "").replace(/R|\D/g, "")) || 0;
-    const annualContribution = contribution * 12;
-
-    // Clean and set saving and monthly, defaulting to 0 if empty
-    saving = parseFloat((saving || "").replace(/R|\D/g, "")) || 0;
-    if (J9 == 1) {
-      J9 = saving;
-    }
-
-    monthly = parseFloat((monthly || "").replace(/R|\D/g, "")) || 0;
-
-    // Parsing inputs
-    let D9 = age;
-    let G9 = grossIncome;
-    let D11 = contribution;
-    let investmentStrategyValue = investmentStrategyTable[0][investment] / 100;
-    let D13 = monthly;
-    let D15 = D13 + D11; // Total Monthly Contributions
-
-    let N5 = 0.05; // 5% as a decimal
-
-    let N9 = 0.05; // Rate again
-
-    // Calculate effective return rate
-    let N7 = (1 + N9) * (1 + investmentStrategyValue) - 1;
-
-    N7 = Math.round(N7 * 10000) / 10000;
-
-    let N15 =
-      N5 === 0
-        ? D15 * (N8 - D9) * 12
-        : 12 * D15 * (((1 + N5) ** (N8 - D9) - 1) / N5);
-
-    N15 = Math.round(N15);
-
-    let N16 = J9; // Initial investment
-
-    let Q5 = (1 + N7) ** (1 / 12) - 1;
-    Q5 = Math.round(Q5 * 100000000) / 100000000;
-
-    // Step 1: Calculate the first part of the formula
-    let part1 = (1 + Q5) ** 12 - 1; // (1 + 0.0079)^12 - 1
-    let part2 = Q5 / (1 + Q5); // 0.0079 / (1 + 0.0079)
-    let firstTerm = D15 * (part1 / part2); // First term calculation
-
-    // Step 2: Calculate the second part of the formula
-    let part3 = (1 + N7) ** (N8 - D9) - (1 + N5) ** (N8 - D9);
-    let part4 = N7 - N5;
-    let secondTerm = firstTerm * (part3 / part4); // Second term calculation
-
-    // Step 3: Calculate the third term
-    let thirdTerm = J9 * (1 + N7) ** (N8 - D9); // J9 * (1 + 0.099)^(55 - 38)
-
-    // Step 4: Sum all terms to get the final result
-    let N13 = secondTerm + thirdTerm;
-
-    // Step 5: Round to 2 decimal places (to match Excel)
-    N13 = Math.round(N13 * 100) / 100;
-
-    let N14 = N13 - N15 - N16;
-
-    // Function to calculate tax based on income
-    const calculateTax = (income) => {
-      // Check for income less than the lowest bracket
-      if (income < taxBrackets[1].startBracket) return 0;
-
-      let taxAmount = 0;
-      let previousBracket = 0;
-
-      // Find the applicable tax bracket using a loop
-      for (const bracket of taxBrackets) {
-        if (income >= bracket.startBracket) {
-          // Calculate tax for the current bracket
-          taxAmount +=
-            (Math.min(income, bracket.startBracket) - previousBracket) *
-            (bracket.taxRate / 100);
-          previousBracket = bracket.startBracket;
-        } else {
-          // Break the loop if income is less than the current bracket
-          break;
+      lowest: 0.015,
+      low: 0.02625,
+      light: 0.03075,
+      moderate: 0.0466625,
+      medium: 0.052375,
+      high: 0.056,
+      highest: 0.0641,
+      },
+    ];
+    
+    const taxBrackets = [
+        { bracket: 0, startBracket: 0, taxRate: 0, previousBracket: 0 },
+        { bracket: 1, startBracket: 95750, taxRate: 18, previousBracket: 0 },
+        { bracket: 2, startBracket: 237100, taxRate: 26, previousBracket: 25443 },
+        { bracket: 3, startBracket: 370500, taxRate: 31, previousBracket: 60127 },
+        { bracket: 4, startBracket: 512800, taxRate: 36, previousBracket: 104240 },
+        { bracket: 5, startBracket: 673000, taxRate: 39, previousBracket: 161912 },
+        { bracket: 6, startBracket: 857900, taxRate: 41, previousBracket: 234023 },
+        { bracket: 7, startBracket: 1817000, taxRate: 45, previousBracket: 627254 }
+    ];
+    const [checkFlag, setCheckFlag] = useState(true);
+    const calculateInvestmentAndTax = (formData) => {
+        
+        // Clean the values by removing non-numeric characters
+        let { age, grossIncome, contribution, investment, saving, monthly, J9, N8 } = formData;
+        
+        grossIncome = parseFloat((grossIncome || '').replace(/R|\D/g, '')) || 0; //checked
+        const annualIncome = grossIncome * 12; //checked
+        contribution = parseFloat((contribution || '').replace(/R|\D/g, '')) || 0; //checked
+        const annualContribution = contribution * 12; //checked
+        
+        // Clean and set saving and monthly, defaulting to 0 if empty
+        saving = parseFloat((saving || '').replace(/R|\D/g, '')) || 0; //checked
+        if(J9 == 1){
+            J9 = saving; //checked
         }
-      }
+           
+        monthly = parseFloat((monthly || '').replace(/R|\D/g, '')) || 0; //checked
+        
+        // Parsing inputs
+        let D9 = age; //checked
+        let F32 = N8; // Retirement Age
+        let G9 = grossIncome; //checked
+        let D11 = contribution; //checked
+        let investmentStrategyValue = investmentStrategyTable[0][investment];
+        let D13 = monthly; //checked
+        let D15 = D13 + D11; // Total Monthly Contributions
+        let agediff = N8 - D9; // Age Difference
+        let D32 = age;
+        let N5 = 0.05; // Default escalation rate 
+        let N9 = 0.05; // Default inflation assumption
+        let X5 = 0.275;// Maximum % Gross Salary Tax Deductible
+        let X6 = 350000; // Maximum Notional Deduction
+    
+        // Calculate effective return rate
+        // N7 This was the old Calculation updated on 17 December 2024
+        // let N7 = (1 + N9) * (1 + investmentStrategyValue) - 1;
+        let N7 = N9 + (1 + investmentStrategyValue) - 1;
 
-      return taxAmount;
-    };
+        //N7 = Math.round(N7 * 1000) / 1000;
+console.log("N7",N7);
+        // Round to 10 decimal places (to match Excel)
 
-    const getBracketDetails = (income) => {
-      let bracketDetails = {};
+        let N15 = N5 === 0
+            ? D15 * (agediff) * 12
+            : 12 * D15 * (((1 + N5) ** (agediff) - 1) / N5);
+        
+        // Round to 10 decimal places (to match Excel)
+        N15 = Math.round(N15 * 10000000000) / 10000000000;
+        
+console.log("N15",N15);
+        
+        let N16 = J9; // Lumpsum Investment
+    
+        let Q5s1 = (1 + N7);
+        let Q5s2 = (1 / 12);
+        let Q5s3 = Q5s1 ** Q5s2;
+        let Q5s4 = Q5s3 -1;
 
-      for (const bracket of taxBrackets) {
-        if (income >= bracket.startBracket) {
-          bracketDetails = {
-            startBracket: bracket.startBracket,
-            previousBracket: bracket.previousBracket,
-            taxRate: bracket.taxRate,
+        let Q5 = Q5s4;
+        
+        // Round to 10 decimal places (to match Excel)
+        //Q5 = Math.round(Q5 * 10000000000) / 10000000000;
+
+console.log("Q5",Q5);
+
+        // Step 1: Calculate the first part of the formula
+        let Step1Part1 = (1 + Q5);        
+console.log("Step1Part1",Step1Part1);
+        let Step1Part2 = Step1Part1 ** 12;
+console.log("Step1Part2",Step1Part2);
+        let Step1Part3 = Step1Part2 - 1;
+console.log("Step1Part3",Step1Part3);
+        let Step1Part4 = Q5 / Step1Part1; 
+console.log("Step1Part4",Step1Part4);
+        let firstTerm = (D15 * Step1Part3) / Step1Part4;
+
+console.log("T1",firstTerm);
+
+        // Step 2: Calculate the second part of the formula
+        let T2P1 = 1 + N7;
+        let T2P2 = 1 + N5;
+        let T2P3 = T2P1 ** agediff;
+        let T2P4 = T2P2 ** agediff;
+        let secondTerm = T2P3 - T2P4;
+        //secondTerm = Math.round(secondTerm * 100) / 100;
+
+console.log("T2",secondTerm);
+        
+        // Step 3: Calculate the third part of the formula
+        let T3P1 = N7 - N5;
+        let T3P2 = 1 + N7;
+        let T3P3 = T3P2 ** agediff;
+        let thirdTerm = T3P1 + J9 * T3P3;
+        
+console.log("T3",thirdTerm);
+
+const part1 = (D15 * ((Math.pow(1 + Q5, 12) - 1) / (Q5 / (1 + Q5))));
+const part2 = ((Math.pow(1 + N7, F32 - D9) - Math.pow(1 + N5, F32 - D9)) / (N7 - N5));
+const part3 = J9 * Math.pow(1 + N7, F32 - D9);
+const result = (part1 * part2) + part3;
+
+        // let N13 = (firstTerm) * (secondTerm) / (thirdTerm);
+        let N13 = result;
+        N13 = Math.round(N13 * 100000000) / 100000000;
+
+console.log("N13",N13);
+
+        let N14 = N13 - N15 - N16;
+
+        // Calculating N17
+        function calculateValueForN17(X5, G9, X6, D15, N9, F32, D9) {
+            const minValue = Math.min(
+              X5 * 12 * G9,
+              X6,
+              D15 * 12
+            );            
+            const growthFactor = ((Math.pow(1 + N9, F32 - D9) - 1) / N9);            
+            return minValue * growthFactor;
+          }
+          
+          let N17 = calculateValueForN17(X5, G9, X6, D15, N9, F32, D9);
+          console.log("N17",N17);
+
+        // Calculating N24
+        function calculateValueForN24(X5, G9, X6, D15, N9, F32, D32) {
+            const minValue = Math.min(
+              X5 * 12 * G9,
+              X6,
+              D15 * 12
+            );            
+            const growthFactor = ((Math.pow(1 + N9, F32 - D32) - 1) / N9);            
+            return minValue * growthFactor;
+          }
+          
+          let N24 = calculateValueForN24(X5, G9, X6, D15, N9, F32, D32);
+          console.log("N24",N24);
+
+        const checkU5Condition = (D15, X6, X5, G9) => {
+            const leftValue = D15 * 12; // Calculate D15 * 12
+            const rightValue = Math.min(X6, X5 * G9 * 12); // MIN(X6, X5 * G9 * 12)
+            setCheckFlag(leftValue <= rightValue);
           };
-        } else {
-          // Once the correct bracket is found, exit the loop
-          break;
-        }
-      }
+        checkU5Condition(D15, X6, X5, G9);
+        const U5result = checkFlag;
+        //console.log("U5result",U5result);
 
-      return bracketDetails;
+        // Function to calculate tax based on income
+        const calculateTax = (income) => {
+            // Check for income less than the lowest bracket
+            if (income < taxBrackets[1].startBracket) return 0;
+        
+            let taxAmount = 0;
+            let previousBracket = 0;
+        
+            // Find the applicable tax bracket using a loop
+            for (const bracket of taxBrackets) {
+                if (income >= bracket.startBracket) {
+                    // Calculate tax for the current bracket
+                    taxAmount += (Math.min(income, bracket.startBracket) - previousBracket) * (bracket.taxRate / 100);
+                    previousBracket = bracket.startBracket;
+                } else {
+                    // Break the loop if income is less than the current bracket
+                    break;
+                }
+            }
+            
+            return taxAmount;
+        };
+
+        const getBracketDetails = (income) => {
+            let bracketDetails = {};
+        
+            for (const bracket of taxBrackets) {
+                if (income >= bracket.startBracket) {
+                    bracketDetails = {
+                        startBracket: bracket.startBracket,
+                        previousBracket: bracket.previousBracket,
+                        taxRate: bracket.taxRate,
+                    };
+                } else {
+                    // Once the correct bracket is found, exit the loop
+                    break;
+                }
+            }
+        
+            return bracketDetails;
+        };
+    
+        let U14 = G9 * 12; // Annual gross income
+
+        let { startBracket: U16, previousBracket: U17, taxRate: U15 } = getBracketDetails(U14);
+        
+        U15 = U15 / 100;
+
+        let U18 = U17+(U14-U16)*U15;
+
+        function calculateDifferenceForU19(U14, X5, G9, X6, D15) {
+            // Calculate the minimum value
+            const minValue = Math.min(
+              X5 * 12 * G9, // First term
+              X6,           // Second term
+              D15 * 12      // Third term
+            );
+          
+            // Subtract the minimum value from U14
+            return U14 - minValue;
+          }
+
+        // Old U19 Calculation
+        // let U19 = U14 - D15 * 12 - J9;
+        // New U19 Calculation
+        let U19 = calculateDifferenceForU19(U14, X5, G9, X6, D15);
+        console.log("U19",U19);
+        let { startBracket: U21, previousBracket: U22, taxRate: U20 } = getBracketDetails(U19);
+        console.log("U21",U21);
+        console.log("U22",U22);
+
+        U20 = U20 / 100;
+        console.log("U20",U20);
+        let U23 = U22+(U19-U21)*U20;
+        console.log("U23",U23);
+
+        function calculateDivisionforU24(U18, U23, X5, G9, X6, D15) {
+            // Calculate the difference (U18 - U23)
+            const difference = U18 - U23;
+          
+            // Calculate the minimum value
+            const minValue = Math.min(
+              X5 * 12 * G9, // First term
+              X6,           // Second term
+              D15 * 12      // Third term
+            );
+          
+            // Perform the division
+            if (minValue === 0) {
+              throw new Error("Division by zero is not allowed");
+            }
+          
+            return difference / minValue;
+          }
+
+        // Old U24 Calculation
+        // let U24 = (U18 - U23) / (D15 * 12 + J9);
+        // New U24 Calculation        
+        let U24 = calculateDivisionforU24(U18, U23, X5, G9, X6, D15);
+
+        console.log("U24",U24);
+        // Old U24 Calculation
+        // let Q13 = U24 * (N16 + 12 * D15);
+        // New U24 Calculation 
+        let U242 = Math.round(U24 * 10000000000) / 10000000000;   
+        let Q13 = U242 * N17;
+        console.log("Q13",Q13);
+
+        let V14 = G9 * 12;
+        
+        let { startBracket: V16, previousBracket: V17, taxRate: V15 } = getBracketDetails(V14);
+
+        V15 = V15 / 100;
+
+        let V18 = V17+(V14-V16)*V15;
+        
+        let V19 = V14 - D15 * 12;
+        
+        let { startBracket: V21, previousBracket: V22, taxRate: V20 } = getBracketDetails(V19);
+
+        V20 = V20 / 100;
+
+        let V23 = V22+(V19-V21)*V20;
+        
+        let V24 = (V18 - V23) / (D15 * 12);
+        
+        let Q14 = V24 * (N15 - 12 * D15);
+        
+        let Q15 = (Q13 + Q14);    
+        Q15 = Math.round(Q15 * 10000000000) / 10000000000;
+        
+        const totalInvestment = N13.toFixed(2);
+        localStorage.setItem('totalInvestment', totalInvestment);
+        // const taxGetBack = Q15.toFixed(2); - Old
+        const taxGetBack = Q13.toFixed(2);
+        const investmentGrowth = N14.toFixed(2);
+        const totalContributionPaid = (N15 + N16).toFixed(2);
+        const lampSum = J9.toFixed(2);
+        const investmentOption = contributionOptions.find(option => option.value === investment);
+        const investmentLabel = investmentOption ? investmentOption.label.split(' - ')[1] : 'inflation plus 3%-4%';
+
+        return { totalInvestment, taxGetBack, investmentGrowth, totalContributionPaid, lampSum, grossIncome, contribution, monthly, age, investmentLabel, U5result };
     };
 
-    let U14 = G9 * 12; // Annual gross income
-
-    let {
-      startBracket: U16,
-      previousBracket: U17,
-      taxRate: U15,
-    } = getBracketDetails(U14);
-
-    U15 = U15 / 100;
-
-    let U18 = U17 + (U14 - U16) * U15;
-
-    let U19 = U14 - D15 * 12 - J9;
-
-    let {
-      startBracket: U21,
-      previousBracket: U22,
-      taxRate: U20,
-    } = getBracketDetails(U19);
-
-    U20 = U20 / 100;
-
-    let U23 = U22 + (U19 - U21) * U20;
-
-    let U24 = (U18 - U23) / (D15 * 12 + J9);
-
-    let Q13 = U24 * (N16 + 12 * D15);
-
-    let V14 = G9 * 12;
-
-    let {
-      startBracket: V16,
-      previousBracket: V17,
-      taxRate: V15,
-    } = getBracketDetails(V14);
-
-    V15 = V15 / 100;
-
-    let V18 = V17 + (V14 - V16) * V15;
-
-    let V19 = V14 - D15 * 12;
-
-    let {
-      startBracket: V21,
-      previousBracket: V22,
-      taxRate: V20,
-    } = getBracketDetails(V19);
-
-    V20 = V20 / 100;
-
-    let V23 = V22 + (V19 - V21) * V20;
-
-    let V24 = (V18 - V23) / (D15 * 12);
-
-    let Q14 = V24 * (N15 - 12 * D15);
-
-    let Q15 = Math.round(Q13 + Q14);
-
-    let Q20 = U24 * (J9 + 12 * D15);
-
-    let N22;
-    if (N5 === 0) {
-      N22 = D15 * (65 - 25) * 12;
-    } else {
-      N22 = 12 * D15 * (((1 + N5) ** (65 - 25) - 1) / N5);
-    }
-
-    let Q21 = V24 * (N22 - 12 * D15);
-
-    let Q22 = Q20 + Q21;
-
-    let Q28 = Q15 - Q22;
-
-    const totalInvestment = N13.toFixed(0);
-    localStorage.setItem("totalInvestment", totalInvestment);
-    localStorage.setItem("age", value);
-
-    const taxGetBack = Q15.toFixed(0);
-    const investmentGrowth = N14.toFixed(0);
-    const totalContributionPaid = (N15 + N16).toFixed(0);
-    const lampSum = J9.toFixed(0);
-    const costOfDelay = Q28.toFixed(0);
-
-    const investmentOption = contributionOptions.find(
-      (option) => option.value === investment
-    );
-    const investmentLabel = investmentOption
-      ? investmentOption.label.split(" - ")[1]
-      : "inflation plus 3%-4%";
-
-    return {
-      totalInvestment,
-      taxGetBack,
-      investmentGrowth,
-      totalContributionPaid,
-      lampSum,
-      grossIncome,
-      contribution,
-      monthly,
-      age,
-      investmentLabel,
-      costOfDelay,
-    };
-  };
 
   // On submit
   const handleSubmit = (e) => {

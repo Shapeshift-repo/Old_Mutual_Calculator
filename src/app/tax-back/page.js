@@ -897,7 +897,7 @@ const handleDownload = async () => {
                             </div>
                             <div className="output-holder relative z-10">
 
-                                <div className="notes-icon pt-[95px] lg:pt-[260px] pl-[45px] lg:pl-0 flex justify-center">
+                                <div className="notes-icon pt-[95px] lg:pt-[200px] pl-[45px] lg:pl-0 flex justify-center">
                                     <div class="pr-0 lg:pr-[105px] min-h-[200px] lg:min-h-[320px]">
                                         <div
                                             ref={animation2Ref}
@@ -920,7 +920,7 @@ const handleDownload = async () => {
                                     </div>
                                 </div>
 
-                                <div class="means flex justify-center mt-[130px] lg:mt-[265px]">
+                                <div class="means flex justify-center mt-[130px] lg:mt-[200px]">
                                     <div
                                         ref={animation3Ref}
                                         className="flex justify-center items-center max-w-[240px] lg:max-w-[385px] fadeIn"
@@ -942,7 +942,7 @@ const handleDownload = async () => {
                                     </div>
                                 </div>
 
-                                <div className="now mt-[225px] lg:mt-[298px] flex justify-center text-center mb-[380px]">
+                                <div className="now mt-[200px] lg:mt-[200px] flex justify-center text-center mb-[300px]">
                                     <div class="inline-block min-w-[308px] fadeIn">
                                         <p>
                                             <span className="text-[30px] lg:text-[40px] leading-[36px] font-light block">Now that’s a</span>

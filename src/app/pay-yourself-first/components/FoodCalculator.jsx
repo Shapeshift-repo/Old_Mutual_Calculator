@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import RangeSlider from "./RangeSlider";
 
+import HeaderBackground from "/public/food-header.jpg";
 import FoodIconWhite from "/public/food-icon-white.svg";
 import ToolTip from "/public/tooltip.svg";
-import HeaderBackground from "/public/food-header.jpg";
 let activeSections = [];
 
-const FoodCalculator = ({ onSectionUpdate, notificationShown, setNotificationShown }) => {
+const FoodCalculator = ({
+  onSectionUpdate,
+  notificationShown,
+  setNotificationShown,
+}) => {
   const [sectionBudget, setSectionBudget] = useState(0);
   const [savingGroceries, setSavingGroceries] = useState(0);
   const [savingShopping, setSavingShopping] = useState(0);
@@ -53,8 +57,8 @@ const FoodCalculator = ({ onSectionUpdate, notificationShown, setNotificationSho
   };
 
   const updateBudget = (e) => {
-    const result = Number(e.target.value.replace(/\D/g, '').slice(0, 6));
-	e.target.value = result;
+    const result = Number(e.target.value.replace(/\D/g, "").slice(0, 6));
+    e.target.value = result;
     setSectionBudget(result);
   };
 
@@ -68,7 +72,13 @@ const FoodCalculator = ({ onSectionUpdate, notificationShown, setNotificationSho
   return (
     <>
       <section id="Food" className="font-montserrat pt-20">
-        <div className="bg-food-header bg-center bg-cover max-w-full h-[280px] flex flex-col justify-end font-montserrat" style={{ backgroundImage: `url(${HeaderBackground.src})`, backgroundPosition:'top' }}>
+        <div
+          className="bg-food-header bg-center bg-cover max-w-full h-[280px] flex flex-col justify-end font-montserrat"
+          style={{
+            backgroundImage: `url(${HeaderBackground.src})`,
+            backgroundPosition: "top",
+          }}
+        >
           <div className="py-12 px-16  bg-gradient-to-t from-[#62B64F] to-transparent">
             <img
               className="w-[63px] mb-2"
@@ -80,8 +90,11 @@ const FoodCalculator = ({ onSectionUpdate, notificationShown, setNotificationSho
               <h3 className="text-white text-[22px] font-light mt-2">
                 How much do you spend on groceries every month?
               </h3>
-              <div className="shadow-xl flex items-center bg-white" style={{borderRadius:'3px'}}>
-                <span className="text-2xl text-brandGreen px-3">R</span>
+              <div
+                className="shadow-xl flex items-center bg-white"
+                style={{ borderRadius: "3px" }}
+              >
+                <span className="text-2xl text-[#009677] px-3">R</span>
                 <input
                   type="text"
                   onKeyDown={(event) => {
@@ -89,9 +102,9 @@ const FoodCalculator = ({ onSectionUpdate, notificationShown, setNotificationSho
                       event.preventDefault();
                     }
                   }}
-                  className="no-arrows outline-none border-none text-2xl text-brandGreen text-right max-w-[150px] py-[10px] px-[16px]"
+                  className="no-arrows outline-none border-none text-2xl text-[#009677] text-right max-w-[150px] py-[10px] px-[16px]"
                   onChange={updateBudget}
-                  style={{borderRadius:'3px'}}
+                  style={{ borderRadius: "3px" }}
                 />
               </div>
             </div>
@@ -132,7 +145,11 @@ const FoodCalculator = ({ onSectionUpdate, notificationShown, setNotificationSho
                         "opacity-20"
                       }`}
                     >
-                      <img src={ToolTip.src} className="cursor-pointer " alt="" />
+                      <img
+                        src={ToolTip.src}
+                        className="cursor-pointer "
+                        alt=""
+                      />
                       {activeSections.length >= 2 &&
                       !activeSections.includes("groceries") ? null : (
                         <div className="p-5 bg-[#F7F7F7] top-5 left-5 rounded-lg shadow-xl absolute w-[300px] hidden group-hover/tooltip:block">
@@ -156,8 +173,8 @@ const FoodCalculator = ({ onSectionUpdate, notificationShown, setNotificationSho
                       symbol="%"
                       disabled={true}
                       budget={sectionBudget}
-					  notificationShown={notificationShown}
-					  setNotificationShown={setNotificationShown}
+                      notificationShown={notificationShown}
+                      setNotificationShown={setNotificationShown}
                     />
                   ) : (
                     <RangeSlider
@@ -167,8 +184,8 @@ const FoodCalculator = ({ onSectionUpdate, notificationShown, setNotificationSho
                       theme="green"
                       symbol="%"
                       budget={sectionBudget}
-					  notificationShown={notificationShown}
-					  setNotificationShown={setNotificationShown}
+                      notificationShown={notificationShown}
+                      setNotificationShown={setNotificationShown}
                     />
                   )}
                 </div>
@@ -219,7 +236,11 @@ const FoodCalculator = ({ onSectionUpdate, notificationShown, setNotificationSho
                         "opacity-20"
                       }`}
                     >
-                      <img src={ToolTip.src} className="cursor-pointer " alt="" />
+                      <img
+                        src={ToolTip.src}
+                        className="cursor-pointer "
+                        alt=""
+                      />
                       {activeSections.length >= 2 &&
                       !activeSections.includes("shopping") ? null : (
                         <div className="p-5 bg-[#F7F7F7] top-5 left-5 rounded-lg shadow-xl absolute w-[300px] hidden group-hover/tooltip:block">
@@ -242,8 +263,8 @@ const FoodCalculator = ({ onSectionUpdate, notificationShown, setNotificationSho
                       symbol="%"
                       disabled={true}
                       budget={sectionBudget}
-					  notificationShown={notificationShown}
-					  setNotificationShown={setNotificationShown}
+                      notificationShown={notificationShown}
+                      setNotificationShown={setNotificationShown}
                     />
                   ) : (
                     <RangeSlider
@@ -253,8 +274,8 @@ const FoodCalculator = ({ onSectionUpdate, notificationShown, setNotificationSho
                       theme="green"
                       symbol="%"
                       budget={sectionBudget}
-					  notificationShown={notificationShown}
-					  setNotificationShown={setNotificationShown}
+                      notificationShown={notificationShown}
+                      setNotificationShown={setNotificationShown}
                     />
                   )}
                 </div>
@@ -305,7 +326,11 @@ const FoodCalculator = ({ onSectionUpdate, notificationShown, setNotificationSho
                         "opacity-20"
                       }`}
                     >
-                      <img src={ToolTip.src} className="cursor-pointer " alt="" />
+                      <img
+                        src={ToolTip.src}
+                        className="cursor-pointer "
+                        alt=""
+                      />
                       {activeSections.length >= 2 &&
                       !activeSections.includes("meals") ? null : (
                         <div className="p-5 bg-[#F7F7F7] top-5 left-5 rounded-lg shadow-xl absolute w-[300px] hidden group-hover/tooltip:block">
@@ -328,8 +353,8 @@ const FoodCalculator = ({ onSectionUpdate, notificationShown, setNotificationSho
                       symbol="%"
                       disabled={true}
                       budget={sectionBudget}
-					  notificationShown={notificationShown}
-					  setNotificationShown={setNotificationShown}
+                      notificationShown={notificationShown}
+                      setNotificationShown={setNotificationShown}
                     />
                   ) : (
                     <RangeSlider
@@ -339,8 +364,8 @@ const FoodCalculator = ({ onSectionUpdate, notificationShown, setNotificationSho
                       theme="green"
                       symbol="%"
                       budget={sectionBudget}
-					  notificationShown={notificationShown}
-					  setNotificationShown={setNotificationShown}
+                      notificationShown={notificationShown}
+                      setNotificationShown={setNotificationShown}
                     />
                   )}
                 </div>
@@ -390,7 +415,11 @@ const FoodCalculator = ({ onSectionUpdate, notificationShown, setNotificationSho
                         "opacity-20"
                       }`}
                     >
-                      <img src={ToolTip.src} className="cursor-pointer " alt="" />
+                      <img
+                        src={ToolTip.src}
+                        className="cursor-pointer "
+                        alt=""
+                      />
                       {activeSections.length >= 2 &&
                       !activeSections.includes("meat") ? null : (
                         <div className="p-5 bg-[#F7F7F7] top-5 left-5 rounded-lg shadow-xl absolute w-[300px] hidden group-hover/tooltip:block">
@@ -414,8 +443,8 @@ const FoodCalculator = ({ onSectionUpdate, notificationShown, setNotificationSho
                       symbol="%"
                       disabled={true}
                       budget={sectionBudget}
-					  notificationShown={notificationShown}
-					  setNotificationShown={setNotificationShown}
+                      notificationShown={notificationShown}
+                      setNotificationShown={setNotificationShown}
                     />
                   ) : (
                     <RangeSlider
@@ -425,8 +454,8 @@ const FoodCalculator = ({ onSectionUpdate, notificationShown, setNotificationSho
                       theme="green"
                       symbol="%"
                       budget={sectionBudget}
-					  notificationShown={notificationShown}
-					  setNotificationShown={setNotificationShown}
+                      notificationShown={notificationShown}
+                      setNotificationShown={setNotificationShown}
                     />
                   )}
                 </div>

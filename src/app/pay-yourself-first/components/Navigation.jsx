@@ -21,7 +21,7 @@ const Navigation = () => {
                 }
               >
                 Home
-                <span className="active-border block bg-gradient-to-r from-brandGreen to-[#60B849] w-full h-1 -mb-1"></span>
+                <span className="active-border block bg-gradient-to-r from-[#009677] to-[#60B849] w-full h-1 -mb-1"></span>
               </NavLink>
             </li>
             <li>
@@ -32,7 +32,7 @@ const Navigation = () => {
                 }
               >
                 Calculator
-                <span className="active-border block bg-gradient-to-r from-brandGreen to-[#60B849] w-full h-1 -mb-1"></span>
+                <span className="active-border block bg-gradient-to-r from-[#009677] to-[#60B849] w-full h-1 -mb-1"></span>
               </NavLink>
             </li>
           </ul>

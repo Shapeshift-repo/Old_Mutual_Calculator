@@ -12,9 +12,13 @@ const Modal = ({ onClose }) => {
         >
           <img className="w-[23px] h-[23px] " src={Close.src} alt="close" />
         </button>
-        <img className="absolute  right-0 w-[130px]" src={ModalRight.src} alt="" />
+        <img
+          className="absolute  right-0 w-[130px]"
+          src={ModalRight.src}
+          alt=""
+        />
         <div className="px-32 pt-28 pb-10">
-          <h2 className="text-brandGreen text-5xl font-light mb-10 ">
+          <h2 className="text-[#009677] text-5xl font-light mb-10 ">
             User Guide
           </h2>
           <p className="text-2xl text-grey">
@@ -29,8 +33,11 @@ const Modal = ({ onClose }) => {
             </li>
             <li>
               Move the slider to indicate how much you can save with each tip as
-              a percentage of the estimated spend amount.<br />
-			  Please note: Although it is possible to reach the full savings, it takes extreme discipline, be realistic with what you think you can achieve.
+              a percentage of the estimated spend amount.
+              <br />
+              Please note: Although it is possible to reach the full savings, it
+              takes extreme discipline, be realistic with what you think you can
+              achieve.
             </li>
           </ul>
           <p className="text-xl text-grey mt-10 font-light mb-10">
@@ -66,7 +73,11 @@ const Modal = ({ onClose }) => {
             generate a report that you can use to track your savings.
           </p>
         </div>
-        <img className="absolute bottom-20 left-0 w-[80px]" src={ModalLeft.src} alt="" />
+        <img
+          className="absolute bottom-20 left-0 w-[80px]"
+          src={ModalLeft.src}
+          alt=""
+        />
       </div>
     </div>
   );

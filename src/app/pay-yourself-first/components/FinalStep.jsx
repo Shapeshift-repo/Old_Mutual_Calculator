@@ -77,11 +77,12 @@ const FinalStep = ({
       <div className="final_container flex mt-9">
         <div className="final_graph_container w-3/5 mr-20">
           <div className="pb-10">
-            <p className="text-2xl text-brandGreen mb-2 font-montserrat font-semibold">
+            <p className="text-2xl text-[#009677] mb-2 font-montserrat font-semibold">
               Your potential savings invested over time
             </p>
             <p className="text-base text-grey font-light">
-              Use the slider below the graph to choose how long you want to save.
+              Use the slider below the graph to choose how long you want to
+              save.
             </p>
           </div>
           <div className="w-full mb-10 ">
@@ -115,15 +116,19 @@ const FinalStep = ({
           <div className="mw=2/5 pt-7">
             <div className="pb-7 text-base font-light">
               Select your preferred Investment Strategy
-			  <div className={`inline-block ml-1 relative group/tooltip top-1 z-10 `}>
-					<img src={ToolTip.src} className="cursor-pointer " alt="" />
-					<div className="p-5 bg-[#F7F7F7] top-5 right-5 rounded-lg shadow-xl absolute w-[300px] hidden group-hover/tooltip:block">
-						<p className="text-sm font-light">
-						Your investment strategy determines how much above inflation you would like your investment to grow. Inflation is currently 5%. The higher the investment strategy, the higher your investment risk.
-						</p>
-					</div>
-					
-				</div>
+              <div
+                className={`inline-block ml-1 relative group/tooltip top-1 z-10 `}
+              >
+                <img src={ToolTip.src} className="cursor-pointer " alt="" />
+                <div className="p-5 bg-[#F7F7F7] top-5 right-5 rounded-lg shadow-xl absolute w-[300px] hidden group-hover/tooltip:block">
+                  <p className="text-sm font-light">
+                    Your investment strategy determines how much above inflation
+                    you would like your investment to grow. Inflation is
+                    currently 5%. The higher the investment strategy, the higher
+                    your investment risk.
+                  </p>
+                </div>
+              </div>
             </div>
             <Select
               value={strategyValue}
@@ -145,7 +150,7 @@ const FinalStep = ({
                 "& .MuiSvgIcon-root": {
                   marginRight: "10px",
                 },
-                marginBottom:0
+                marginBottom: 0,
               }}
             >
               <MenuItem value={CPI1}>Inflation + 1% - 2%</MenuItem>
@@ -171,8 +176,8 @@ const FinalStep = ({
                   border: "none",
                   background: "#FFFFFF !important",
                   borderBottom: "solid 1px #EEE",
-                  width:'100%',
-                  borderRadius: '0',
+                  width: "100%",
+                  borderRadius: "0",
                   color: "#282828",
                   fontWeight: "600",
                   fontSize: "20px",
@@ -201,17 +206,17 @@ const FinalStep = ({
                 <MenuItem value={4500}>R 4 500</MenuItem>
                 <MenuItem value={5000}>R 5 000</MenuItem>
               </Select>
-              <p className="text-xl text-brandGreen font-light pt-5 px-5">
+              <p className="text-xl text-[#009677] font-light pt-5 px-5">
                 {months / 12}
                 {months / 12 === 1 ? " YEAR" : " YEARS"}
               </p>
 
               <SavedTotal object={savingsObject} />
 
-              <p className="text-xl text-brandGreen font-light px-5">
+              <p className="text-xl text-[#009677] font-light px-5">
                 Towards my savings for
               </p>
-              <p className="text-[44px] leading-[44px] text-brandGreen font-bold px-5">
+              <p className="text-[44px] leading-[44px] text-[#009677] font-bold px-5">
                 {type}
               </p>
             </div>
@@ -235,7 +240,7 @@ const FinalStep = ({
 
 const SavedTotal = ({ object }) => {
   return (
-    <p className="text-brandGreen text-[44px] leading-[44px] font-bold px-5 py-0">
+    <p className="text-[#009677] text-[44px] leading-[44px] font-bold px-5 py-0">
       R{object.length > 0 && numberWithSpaces(object[object.length - 1].value)}
     </p>
   );

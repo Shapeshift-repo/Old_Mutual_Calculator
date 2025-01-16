@@ -463,7 +463,7 @@ const Report = ({
               </View>
               <View style={{ width: 200 }}>
                 <Text style={styles.titleGreen}>Adviser</Text>
-                <Text style={styles.body}>{advisorName === '' && '-'}</Text>
+                <Text style={styles.body}>{advisorName === "" && "-"}</Text>
                 <Text style={styles.body}>{advisorCell}</Text>
                 <Text style={styles.body}>{advisorEmail}</Text>
               </View>
@@ -1338,7 +1338,7 @@ const Report = ({
                         Attend low-cost or free sporting events.
                       </Text>
                     </View>
-					<View
+                    <View
                       style={{
                         display: "flex",
                         flexDirection: "row",
@@ -1350,7 +1350,7 @@ const Report = ({
                     >
                       {dotIcon}
                       <Text style={styles.bodySmall}>
-						Get your family involved in saving too.
+                        Get your family involved in saving too.
                       </Text>
                     </View>
                   </View>
@@ -1453,62 +1453,65 @@ const GeneratePDF = ({
     }
   };
   return (
-    <div className="generate-pdf-form-container w-2/5" style={{marginTop: "30px"}}>
-      <p className="text-base font-light" style={{textAlign:"left"}}>
+    <div
+      className="generate-pdf-form-container w-2/5"
+      style={{ marginTop: "30px" }}
+    >
+      <p className="text-base font-light" style={{ textAlign: "left" }}>
         Complete these fields to generate a PDF of the results.
       </p>
       <div className="title-gradient w-full h-1"></div>
       <form className="my-8" onSubmit={handleSubmit}>
         <input
-          className="border border-[#E4E4E4] w-full mb-2 text-lg text-brandGreen placeholder:text-brandGreen placeholder:font-light py-2 px-2"
+          className="border border-[#E4E4E4] w-full mb-2 text-lg text-[#009677] placeholder:text-[#009677] placeholder:font-light py-2 px-2"
           type="text"
           maxLength="20"
           onChange={(event) => setCustomerName(event.target.value)}
           placeholder="Name"
           required
-          style={{borderRadius:"3px"}}
+          style={{ borderRadius: "3px" }}
         />
         <input
-          className="border border-[#E4E4E4] w-full mb-2 text-lg text-brandGreen placeholder:text-brandGreen placeholder:font-light  py-2 px-2"
+          className="border border-[#E4E4E4] w-full mb-2 text-lg text-[#009677] placeholder:text-[#009677] placeholder:font-light  py-2 px-2"
           type="tel"
           maxLength="10"
           onChange={(event) => setCustomerCell(event.target.value)}
           placeholder="Cell No.*"
-          style={{borderRadius:"3px"}}
+          style={{ borderRadius: "3px" }}
         />
         <input
-          className="border border-[#E4E4E4] w-full mb-2 text-lg text-brandGreen placeholder:text-brandGreen placeholder:font-light  py-2 px-2"
+          className="border border-[#E4E4E4] w-full mb-2 text-lg text-[#009677] placeholder:text-[#009677] placeholder:font-light  py-2 px-2"
           type="email"
           maxLength="40"
           onChange={(event) => setCustomerEmail(event.target.value)}
           placeholder="Email *"
-          style={{borderRadius:"3px"}}
+          style={{ borderRadius: "3px" }}
         />
         <input
-          className="border border-[#E4E4E4] w-full mb-2 text-lg text-brandGreen placeholder:text-brandGreen placeholder:font-light  py-2 px-2"
+          className="border border-[#E4E4E4] w-full mb-2 text-lg text-[#009677] placeholder:text-[#009677] placeholder:font-light  py-2 px-2"
           type="text"
           maxLength="20"
           onChange={(event) => setadvisorName(event.target.value)}
           placeholder="Adviser name *"
-          style={{borderRadius:"3px"}}
+          style={{ borderRadius: "3px" }}
         />
         <input
-          className="border border-[#E4E4E4] w-full mb-2 text-lg text-brandGreen placeholder:text-brandGreen placeholder:font-light  py-2 px-2"
+          className="border border-[#E4E4E4] w-full mb-2 text-lg text-[#009677] placeholder:text-[#009677] placeholder:font-light  py-2 px-2"
           type="tel"
           maxLength="10"
           onChange={(event) => setadvisorCell(event.target.value)}
           placeholder="Adviser cell *"
-          style={{borderRadius:"3px"}}
+          style={{ borderRadius: "3px" }}
         />
         <input
-          className="border border-[#E4E4E4] w-full mb-2 text-lg text-brandGreen placeholder:text-brandGreen placeholder:font-light py-2 px-2"
+          className="border border-[#E4E4E4] w-full mb-2 text-lg text-[#009677] placeholder:text-[#009677] placeholder:font-light py-2 px-2"
           type="email"
           maxLength="40"
           onChange={(event) => setadvisorEmail(event.target.value)}
           placeholder="Adviser email *"
-          style={{borderRadius:"3px"}}
+          style={{ borderRadius: "3px" }}
         />
-        <div className="mb-10 text-base font-light"> * Optional</div>       
+        <div className="mb-10 text-base font-light"> * Optional</div>
         {readyPDF ? (
           <PDFDownloadLink
             document={
@@ -1537,11 +1540,11 @@ const GeneratePDF = ({
           >
             {({ blob, url, loading, error }) =>
               loading ? (
-                <span className="text-base font-semibold w-full tracking-[0.4px] flex justify-center items-center bg-gradient-to-r from-brandGreen to-[#60B849] rounded-full px-11 py-4 text-white">
+                <span className="text-base font-semibold w-full tracking-[0.4px] flex justify-center items-center bg-gradient-to-r from-[#009677] to-[#60B849] rounded-full px-11 py-4 text-white">
                   LOADING...
                 </span>
               ) : (
-                <span className="text-base font-semibold w-full tracking-[0.4px] flex justify-center  items-center bg-gradient-to-r from-brandGreen to-[#60B849] rounded-full px-11 py-4 text-white">
+                <span className="text-base font-semibold w-full tracking-[0.4px] flex justify-center  items-center bg-gradient-to-r from-[#009677] to-[#60B849] rounded-full px-11 py-4 text-white">
                   DOWNLOAD
                 </span>
               )

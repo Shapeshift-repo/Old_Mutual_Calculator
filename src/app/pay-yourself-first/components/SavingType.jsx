@@ -30,7 +30,7 @@ const SavingType = ({ onSavingChange }) => {
           <h3 className="text-2xl text-grey mb-4">Retirement</h3>
           {savingsType === "Retirement" ? (
             <div className="bg-white border border-[#DDDDDD] rounded-full w-8 h-8">
-              <div className="border-white border-4 rounded-full w-full h-full bg-gradient-to-r from-brandGreen to-[#60B849]"></div>
+              <div className="border-white border-4 rounded-full w-full h-full bg-gradient-to-r from-[#009677] to-[#60B849]"></div>
             </div>
           ) : (
             <div className="bg-white border border-[#DDDDDD] rounded-full w-8 h-8 "></div>
@@ -40,11 +40,15 @@ const SavingType = ({ onSavingChange }) => {
           className="flex flex-col items-center justify-center bg-[#F7F7F7] py-11 px-16  w-1/3  cursor-pointer"
           onClick={() => handleSavingsType("Education")}
         >
-          <img className="w-[66px] mb-[30px]" src={EducationIcon.src} alt="Education" />
+          <img
+            className="w-[66px] mb-[30px]"
+            src={EducationIcon.src}
+            alt="Education"
+          />
           <h3 className="text-2xl text-grey mb-4">Education</h3>
           {savingsType === "Education" ? (
             <div className="bg-white border border-[#DDDDDD] rounded-full w-8 h-8">
-              <div className="border-white border-4 rounded-full w-full h-full bg-gradient-to-r from-brandGreen to-[#60B849]"></div>
+              <div className="border-white border-4 rounded-full w-full h-full bg-gradient-to-r from-[#009677] to-[#60B849]"></div>
             </div>
           ) : (
             <div className="bg-white border border-[#DDDDDD] rounded-full w-8 h-8"></div>
@@ -59,7 +63,7 @@ const SavingType = ({ onSavingChange }) => {
           <h3 className="text-2xl text-grey mb-4">A Goal</h3>
           {savingsType === "A Goal" ? (
             <div className="bg-white border border-[#DDDDDD] rounded-full w-8 h-8">
-              <div className="border-white border-4 rounded-full w-full h-full bg-gradient-to-r from-brandGreen to-[#60B849]"></div>
+              <div className="border-white border-4 rounded-full w-full h-full bg-gradient-to-r from-[#009677] to-[#60B849]"></div>
             </div>
           ) : (
             <div className="bg-white border border-[#DDDDDD] rounded-full w-8 h-8"></div>

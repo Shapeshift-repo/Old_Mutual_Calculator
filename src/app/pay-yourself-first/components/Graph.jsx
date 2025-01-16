@@ -15,8 +15,8 @@ function numberWithSpaces(x) {
 const CustomTooltip = ({ active, payload }) => {
   if (active) {
     return (
-      <div className="bg-white py-2 px-3 rounded-lg shadow-lg border border-brandGreen">
-        <p className="font-bold text-brandGreen">
+      <div className="bg-white py-2 px-3 rounded-lg shadow-lg border border-[#009677]">
+        <p className="font-bold text-[#009677]">
           {numberWithSpaces(payload[0].value)}{" "}
         </p>
       </div>

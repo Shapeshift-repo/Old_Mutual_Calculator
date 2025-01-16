@@ -49,7 +49,7 @@ const PrimarySlider = styled(Slider)(({ theme }) => ({
       boxShadow: "0px 0px 0px 8px rgba(0, 150, 119, 0.16)",
     },
     // Change color for the left thumb (if needed, use :nth-child for specific instance)
-    "&:nth-of-type(1)": {
+    "&:nth-of-type(2)": {
       backgroundColor: "#FF0000", // New color for the left thumb
     },
   },
@@ -217,43 +217,36 @@ export default function RetirementAnnuity() {
   // Handle change for Slider 2 (range value)
   const handleSlide2Change = (event, newValue, activeThumb) => {
     if (!Array.isArray(newValue)) return; // Ensure newValue is an array
-
+  
     if (activeThumb === 0) {
-      // Ensure Slider 2's min value cannot be less than Slider 1's value
-      const minValue = Math.max(newValue[0], 18); // Ensure minimum limit at 18
+      // Ensure Slider 2's min value cannot be greater than Slider 1's value
+      const minValue = Math.min(newValue[0], value); // Ensure min value does not exceed Slider 1's value
       setValue1([minValue, value1[1]]);
-      setValue(minValue); // Synchronize Slider 1 with the new min value
+      setValue(minValue); // Sync Slider 1 with the new min value of Slider 2
     } else {
-      // Ensure the max value is valid
+      // Ensure the max value is valid, and it doesn't go below the min value
       setValue1([value1[0], Math.max(newValue[1], value1[0] + minDistance)]);
     }
-
-    // Clean the values by removing non-numeric characters
+  
+    // Clean and process form data if needed
     let { grossIncome, contribution, investment, saving, monthly } = formData;
-
-    const age = value; // Use the slider value as the age
+    const age = value;
     const N8 = value1[1];
-
-    grossIncome = parseFloat(grossIncome.replace(/[^\d]/g, ""));
-    const annualIncome = grossIncome * 12;
+    grossIncome = parseFloat(grossIncome.replace(/[^\d]/g, "")); 
     contribution = parseFloat(contribution.replace(/[^\d]/g, ""));
-    const annualContribution = contribution * 12;
-
-    // Clean and set saving and monthly, defaulting to 0 if empty
     saving = parseFloat((saving || "").replace(/[^\d]/g, "")) || 0;
     monthly = parseFloat((monthly || "").replace(/[^\d]/g, "")) || "";
-
+  
     const J9 = choice === "yes" ? 1 : 0;
-
+  
     const result = calculateInvestmentAndTax({
       ...formData,
       age,
       J9,
       N8,
     });
-
     setResult(result);
-  };
+  };  
 
   // Display value as text for sliders
   function valuetext(value) {

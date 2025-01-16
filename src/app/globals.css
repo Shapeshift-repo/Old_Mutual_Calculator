@@ -345,3 +345,28 @@ header.active.small-header .navbar-holder {
   -ms-transition: 0.5s;
   transition: 0.5s;
 }
+
+
+.modal-video {
+  max-width: 100%;
+  width: auto;
+}
+
+.modal-video-movie-wrap {
+  width: 250px !important;
+}
+
+.modal-video-body {
+  max-width: 100%;
+  width: auto;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-video-body iframe {
+  width: 100%;
+  height: auto;
+  max-width: 252px;
+}

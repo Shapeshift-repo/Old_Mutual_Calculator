@@ -1,0 +1,172 @@
+// _mixins.scss
+
+// GENERAL
+@mixin border-radius($radius: 10px){
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin border-radius-right($radius: 10px){
+	-webkit-border-top-right-radius: $radius;
+	-moz-border-radius-topright: $radius;
+	border-top-right-radius: $radius;
+	-webkit-border-bottom-right-radius: $radius;
+	-moz-border-radius-bottomright: $radius;
+	border-bottom-right-radius: $radius;
+}
+
+@mixin border-radius-bottom-left($radius: 10px){
+	-webkit-border-bottom-left-radius: $radius;
+	-moz-border-radius-bottomleft: $radius;
+	border-bottom-left-radius: $radius;
+}
+
+@mixin opacity($opacity: 0){
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity="+ $opacity * 100 +")";
+  filter: alpha(opacity=$opacity * 100);
+  -moz-opacity: $opacity;
+  opacity: $opacity;
+}
+
+@mixin box-sizing($sizing: border-box){
+  -webkit-box-sizing: $sizing;
+  -moz-box-sizing: $sizing;
+  box-sizing: $sizing;
+}
+
+@mixin transform($transform){
+  -webkit-transform: $transform;
+  -moz-transform: $transform;
+  -ms-transform: $transform;
+  -o-transform: $transform;
+  transform: $transform;
+}
+@mixin transform-origin($x, $y){
+  -webkit-transform-origin: $x $y;
+  -moz-transform-origin: $x $y;
+  -ms-transform-origin: $x $y;
+  -o-transform-origin: $x $y;
+  transform-origin: $x $y;
+}
+
+@mixin scaleX($amount){
+  @include transform(scaleX($amount));
+}
+@mixin scaleY($amount){
+  @include transform(scaleY($amount));
+}
+
+@mixin transition($transition: all 250ms){
+  -webkit-transition: $transition;
+  -moz-transition: $transition;
+  -ms-transition: $transition;
+  -o-transition: $transition;
+  transition: $transition;
+}
+
+@mixin transition-timing($function){
+  -webkit-transition-timing-function: $function;
+  -moz-transition-timing-function: $function;
+  -ms-transition-timing-function: $function;
+  -o-transition-timing-function: $function;
+  transition-timing-function: $function;
+}
+
+@mixin animation($animation){
+  -webkit-animation: $animation;
+  -o-animation: $animation;
+  animation: $animation;
+}
+
+// CENTERING ELEMENTS
+@mixin center-vertical(){
+  @include transform(translateY(-50%));
+}
+@mixin cancel-vertical-center(){
+  @include transform(translateY(0));
+}
+
+@mixin center-horizontal(){
+  @include transform(translateX(-50%));
+}
+@mixin cancel-horizontal-center(){
+  @include transform(translateX(0));
+}
+
+@mixin center-element(){
+  @include transform(translate(-50%, -50%));
+}
+@mixin cancel-element-center(){
+  @include transform(translate(0, 0));
+}
+
+// HORIZONTAL AND VERTICAL BORDERS
+@mixin horizontal-border(){
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  left: 0;
+  @include scaleY(.5);
+}
+
+@mixin vertical-border(){
+  content: '';
+  display: block;
+  width: 1px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  @include scaleX(.5);
+}
+
+@mixin border-top($color){
+  @include horizontal-border();
+  background: $color;
+  top: 0;
+}
+
+@mixin border-bottom($color){
+  @include horizontal-border();
+  background: $color;
+  bottom: 0;
+}
+
+@mixin border-left($color){
+  @include vertical-border();
+  background: $color;
+  left: 0;
+}
+
+@mixin border-right($color){
+  @include vertical-border();
+  background: $color;
+  right: 0;
+}
+
+@mixin box-shadow($shadow, $shadow2: null, $shadow3: null){
+  @if $shadow3 != null {
+    -webkit-box-shadow: $shadow, $shadow2, $shadow3;
+    -moz-box-shadow: $shadow, $shadow2, $shadow3;
+    box-shadow: $shadow, $shadow2, $shadow3;
+  } @else if $shadow2 != null {
+    -webkit-box-shadow: $shadow, $shadow2;
+    -moz-box-shadow: $shadow, $shadow2;
+    box-shadow: $shadow, $shadow2;
+  } @else {
+    -webkit-box-shadow: $shadow;
+    -moz-box-shadow: $shadow;
+    box-shadow: $shadow;
+  }
+}
+
+@mixin text-area($width, $height){
+  width: $width;
+  max-width: $width;
+  min-width: $width;
+  height:$height;
+  max-height:$height;
+  min-height:$height;
+}

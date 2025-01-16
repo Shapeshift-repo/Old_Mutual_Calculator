@@ -48,10 +48,42 @@ const PrimarySlider = styled(Slider)(({ theme }) => ({
     "&:hover, &:focus": {
       boxShadow: "0px 0px 0px 8px rgba(0, 150, 119, 0.16)",
     },
-    // Change color for the left thumb (if needed, use :nth-child for specific instance)
-    "&:nth-of-type(2)": {
-      backgroundColor: "#FF0000", // New color for the left thumb
+  },
+  "& .MuiSlider-track": {
+    background: "linear-gradient(to right, #009677, #50B848)",
+    height: "4px",
+    border: 0,
+    boxShadow: "0 0 7px 0 #8DC63F",
+  },
+  "& .MuiSlider-rail": {
+    backgroundColor: "#D9D9D9",
+    height: "4px",
+    opacity: 1,
+  },
+  "& .MuiSlider-valueLabel": {
+    backgroundColor: "transparent",
+    color: "black",
+    fontSize: "20px",
+    lineHeight: "25px",
+    fontWeight: "500",
+  },
+}));
+
+const PrimarySlider2 = styled(Slider)(({ theme }) => ({
+  "& .MuiSlider-thumb": {
+    height: 29,
+    width: 29,
+    border: "3px solid white",
+    boxShadow: "2px 2px 5px 0 rgba(00, 00, 00, .25)",
+    "&:hover, &:focus": {
+      boxShadow: "0px 0px 0px 8px rgba(0, 150, 119, 0.16)",
     },
+  },
+  '& .MuiSlider-thumb[data-index="0"]': {
+    color: '#F3702F',
+  },
+  '& .MuiSlider-thumb[data-index="1"]': {
+    color: '#009677',
   },
   "& .MuiSlider-track": {
     background: "linear-gradient(to right, #009677, #50B848)",
@@ -1686,7 +1718,7 @@ export default function RetirementAnnuity() {
                   </span>
                 </div>
 
-                <PrimarySlider
+                <PrimarySlider2
                   getAriaLabel={() => "Age"}
                   value={value1}
                   min={18}

@@ -89,21 +89,14 @@ export default function RetirementAnnuity() {
     const savedInvestment = localStorage.getItem("totalInvestment");
     setFormData((prevData) => ({
       ...prevData,
-      savedAge: savedAge ? parseInt(savedAge, 10) : 60,
+      savedAge: savedAge ? parseInt(savedAge, 10) : 25,
       monthlyInvest: savedInvestment
         ? `R${formatNumberWithSpaces(savedInvestment)}`
         : "",
     }));
-
-    // Set the slider values to savedAge if it exists
     if (savedAge) {
-      if (savedAge >= 55) {
-        // If savedAge is greater than or equal to 55, set the slider value to 55
-        setValue(savedAge);
-      } else {
-        // Otherwise, use the saved age as the value
-        setValue(60);
-      }
+      setValue(savedAge);
+      // setValue1([savedAge, Math.max(savedAge, value1[1])]); // Range slider (min, max)
     }
   }, []);
 
@@ -111,7 +104,7 @@ export default function RetirementAnnuity() {
     monthlyInvest: "",
   });
 
-  const [value, setValue] = useState(60);
+  const [value, setValue] = useState(25);
 
   const handleSlideChange = (event, newValue) => {
     setValue(newValue);
@@ -122,6 +115,21 @@ export default function RetirementAnnuity() {
 
   function valuetext(value) {
     return `${value}%`;
+  }
+
+  function calculateRoundedValueForTodaysMoney(E64, G45, N9, D45) {
+    // const value = ((E64 * G45) / 12) * Math.pow(1 + N9, -D45);
+    const value = ((E64 * G45) / 12) * Math.pow(1 + N9, -D45);
+    console.log("E64", E64);
+    console.log("G45", G45);
+    console.log("N9", N9);
+    console.log("D45", D45);
+
+    // Round down to the nearest multiple of 1000
+    const roundedValue = Math.floor(value / 1000) * 1000;
+
+    // Format the result
+    return roundedValue;
   }
 
   const [value2, setValue2] = useState(4.5);
@@ -174,6 +182,11 @@ export default function RetirementAnnuity() {
     monthlyInvest =
       parseFloat(String(monthlyInvest || "").replace(/[^\d]/g, "")) || 0; // Convert to string before replace
 
+    let N5 = 0.05; // Default escalation rate
+    let N9 = 0.05; // Default inflation assumption
+    let X5 = 0.275; // Maximum % Gross Salary Tax Deductible
+    let X6 = 350000; // Maximum Notional Deduction
+
     let G45 = monthlyInvest;
 
     let E64 = (currentValue2 || value2) / 100; // Use passed slider value or fallback to state
@@ -182,23 +195,39 @@ export default function RetirementAnnuity() {
 
     let J64 = 0.5;
 
-    let P47 = -0.01;
+    let P47 = N9 + 0.02;
+    let P48 = N9 + 0.04;
 
     let P50 = (G45 * P47 * (1 - E64)) / E64;
 
-    let P53 = calculateRoundedValue(G45, P50, E52);
+    let Q47 = (1 + P47) ** (1 / 12) - 1;
+    let Q48 = (1 + P48) ** (1 / 12) - 1;
+
+    let U49 = 0.175;
+
+    let P53 =
+      Math.log(
+        (U49 * (1 - ((E64 / 12) * P47) / (Q47 / (1 + Q47)) / (P47 - N9))) /
+          (E64 - (((U49 * E64) / 12) * P47) / (Q47 / (1 + Q47)) / (P47 - N9))
+      ) / Math.log((1 + N9) / (1 + P47));
 
     let P56 = P53 / J64;
 
-    let P48 = 0.03;
-
     let P51 = (G45 * P48 * (1 - E64)) / E64;
 
-    let P54 = Math.round((G45 + P51) / E52 / 12);
+    let P54 =
+      Math.log(
+        (U49 * (1 - ((E64 / 12) * P48) / (Q48 / (1 + Q48)) / (P48 - N9))) /
+          (E64 - (((U49 * E64) / 12) * P48) / (Q48 / (1 + Q48)) / (P48 - N9))
+      ) / Math.log((1 + N9) / (1 + P48));
 
     let P57 = P54 / J64;
 
-    return { E52, P53, P54, G45 };
+    let D45 = 55 - value; // Years until retirement
+
+    let E53 = calculateRoundedValueForTodaysMoney(E64, G45, N9, D45);
+
+    return { E52, P53, P54, G45, E53 };
   };
 
   // On submit
@@ -432,7 +461,7 @@ export default function RetirementAnnuity() {
       marginBottom: 2,
     },
     bottomHeading3: {
-      fontSize: 10,
+      fontSize: 9,
       fontWeight: "bold",
       marginTop: 10,
     },
@@ -567,9 +596,12 @@ export default function RetirementAnnuity() {
           <Text style={styles.contentAfterHi}>
             When you retire (from the age of 55), your retirement savings will
             need to provide an income so that you can support yourself and your
-            family. You will have to buy an income annuity with your retirement
-            savings, which will provide you with a regular income when you
-            retire. For more information visit{" "}
+            family. You have to invest a minimum of two thirds of your
+            retirement savings to buy an income annuity. This is an investment
+            that will pay you a regular income during your retirement. You may
+            withdraw the rest of your retirement savings as a lump sum when you
+            retire. This will depend on how much you have withdrawn before
+            retirement. For more information visit{" "}
             <PDFLink
               style={styles.greenText}
               src="https://www.oldmutual.co.za/two-pot-retirement-system"
@@ -596,15 +628,11 @@ export default function RetirementAnnuity() {
             <Text style={styles.boldGreen}>{value2}%</Text>.
           </Text>
           <Text>
-            In average markets (
-            {result ? formatNumberWithSpaces(result.P53) : 0}% growth), your
-            income will last about{" "}
+            In Average markets (7% growth), your income will last about{" "}
             <Text style={styles.boldGreen}>
               {result ? formatNumberWithSpaces(result.P53) : 0}
             </Text>{" "}
-            years. If you experience{" "}
-            {result ? formatNumberWithSpaces(result.P54) : 0}% growth, your
-            income could last up to{" "}
+            years. If you experience 9% growth, your income could last up to{" "}
             <Text style={styles.boldGreen}>
               {result ? formatNumberWithSpaces(result.P54) : 0}
             </Text>{" "}
@@ -643,7 +671,7 @@ export default function RetirementAnnuity() {
             </View>
 
             <View>
-              <Text style={styles.barInfo}>Poor markets (4% growth)</Text>
+              <Text style={styles.barInfo}>Average markets (7% growth)</Text>
             </View>
 
             <Text style={[styles.boxBorderLabel, styles.boxBorderLabelGreen]}>
@@ -667,7 +695,7 @@ export default function RetirementAnnuity() {
             </View>
 
             <View>
-              <Text style={styles.barInfo}>Average markets (8% growth)</Text>
+              <Text style={styles.barInfo}>Good markets (9% growth)</Text>
             </View>
           </View>
         </View>
@@ -684,7 +712,7 @@ export default function RetirementAnnuity() {
           </Text>
           <Text style={styles.bottomHeading2}>Living annuity</Text>
           <Text>
-            A living annuity is a flexible plan where you decide how your
+            A living annuity is a flexibility plan where you decide how your
             savings are invested and you choose an income level that suits your
             needs. You can withdraw an income between 2.5% and 17.5% of your
             investment a year, allowing you to adapt your income when needed.
@@ -748,23 +776,19 @@ export default function RetirementAnnuity() {
             provided will be stored during this process.
           </Text>
           <Text style={styles.footerText}>
-            <Text style={styles.footerBold}>ASSUMPTIONS:</Text> Retirement age
-            is 55 unless selected otherwise. Inflation is at 5% (compounded
-            yearly). Growth at 7% (compounded yearly) in average markets, and 9%
-            (compounded yearly) in good markets. Calculations presented are from
-            a living annuity. The initial yearly drawdown rate is determined by
-            the selection in the calculator. Drawdown rate is adjusted each year
-            to keep up with inflation and maintain purchasing power, subject to
-            the drawdown limits of 2.5% to 17.5%. A maximum of 120 years is
-            displayed. Fees are not taken into account. Fees will reduce the
-            time that funds last (please contact a financial adviser for more
-            detailed information on fees). Monthly income amount is a pre-tax
-            amount.
+            <Text style={styles.footerBold}>ASSUMPTIONS:</Text> Input age is the
+            age at next tax year end. Calculated assuming your salary is your
+            only income. You have not exceeded the limit of 27.5% of your yearly
+            taxable income (or R350 000) which includes your pension or
+            provident fund yearly contributions. You don’t skip any
+            contributions throughout the year. Fees are not taken into account.
+            The calculation is based on the 2024/25 SARS income tax tables.
           </Text>
           <Text style={styles.footerText}>
-            <Text style={styles.footerBold}>IMPORTANT:</Text> You may be able to
-            draw more than 8% (up to 17.5%), but this will deplete your capital.
-            Please consult a financial adviser.
+            <Text style={styles.footerBold}>IMPORTANT:</Text> The yearly tax
+            deduction on a retirement annuity is limited to 27.5% of your
+            income, up to a maximum of R350 000. Any amount above this is
+            treated as deduction in the following year.
           </Text>
           <Text style={styles.footerText}>
             Old Mutual Life Assurance Company (SA) Limited is a licensed FSP and
@@ -802,11 +826,11 @@ export default function RetirementAnnuity() {
             </Text>
             <Text style={styles.infoText}>
               It is important to save for your retirement, but it’s equally
-              important to protect your savings. Our disability insurance
-              options ensure that you can still achieve your savings goals if
-              anything happens to you. Ask your adviser about the right
-              disability cover for you and your family. Click here for more
-              information.
+              important to protect your savings. Our life and disability
+              insurance options ensure that you can still achieve your savings
+              goals if anything happens to you. Ask your adviser about the right
+              life and disability cover for you and your family. Click here for
+              more information.
             </Text>
           </View>
         </View>
@@ -836,7 +860,7 @@ export default function RetirementAnnuity() {
             <Text style={styles.infoText}>
               Redeem your points at over 50 partners – buy groceries and fuel,
               watch a movie, and treat the family to a meal. Or save your Old
-              Mutual Rewards points for the future - save points in qualifying
+              Mutual Rewards points for the future ­– save points in qualifying
               Old Mutual products, or even donate your points to a charity.
               Plus, get up to 100% off with TaxTim to simplify tax filing and
               boost your chances of a refund!
@@ -871,23 +895,19 @@ export default function RetirementAnnuity() {
             provided will be stored during this process.
           </Text>
           <Text style={styles.footerText}>
-            <Text style={styles.footerBold}>ASSUMPTIONS:</Text> Retirement age
-            is 55 unless selected otherwise. Inflation is at 5% (compounded
-            yearly). Growth at 7% (compounded yearly) in average markets, and 9%
-            (compounded yearly) in good markets. Calculations presented are from
-            a living annuity. The initial yearly drawdown rate is determined by
-            the selection in the calculator. Drawdown rate is adjusted each year
-            to keep up with inflation and maintain purchasing power, subject to
-            the drawdown limits of 2.5% to 17.5%. A maximum of 120 years is
-            displayed. Fees are not taken into account. Fees will reduce the
-            time that funds last (please contact a financial adviser for more
-            detailed information on fees). Monthly income amount is a pre-tax
-            amount.
+            <Text style={styles.footerBold}>ASSUMPTIONS:</Text> Input age is the
+            age at next tax year end. Calculated assuming your salary is your
+            only income. You have not exceeded the limit of 27.5% of your yearly
+            taxable income (or R350 000) which includes your pension or
+            provident fund yearly contributions. You don’t skip any
+            contributions throughout the year. Fees are not taken into account.
+            The calculation is based on the 2024/25 SARS income tax tables.
           </Text>
           <Text style={styles.footerText}>
-            <Text style={styles.footerBold}>IMPORTANT:</Text> You may be able to
-            draw more than 8% (up to 17.5%), but this will deplete your capital.
-            Please consult a financial adviser.
+            <Text style={styles.footerBold}>IMPORTANT:</Text> The yearly tax
+            deduction on a retirement annuity is limited to 27.5% of your
+            income, up to a maximum of R350 000. Any amount above this is
+            treated as deduction in the following year.
           </Text>
           <Text style={styles.footerText}>
             Old Mutual Life Assurance Company (SA) Limited is a licensed FSP and
@@ -906,7 +926,7 @@ export default function RetirementAnnuity() {
             <div className="relative lg:static top-0 lg:top-[-230px] left-0 w-full">
               <Banner
                 id="main-banner"
-                heading="INCOME ANNUITY"
+                heading="RETIREMENT INCOME"
                 subHeading="CALCULATOR"
                 content="See what monthly income you could get during retirement from a Living Annuity"
                 image="/images/banner3-img-desktop.jpg"
@@ -927,21 +947,21 @@ export default function RetirementAnnuity() {
             <form className="mt-[155px] lg:mt-0 px-[34px] lg:px-0">
               <div className="form-field-holder max-w-[570px]">
                 <Heading
-                  content="See what monthly income you could get during retirement from a living annuity"
+                  content="See what monthly income you could get during retirement from a Living Annuity"
                   className="text-[24px] leading-[28px] hidden lg:flex font-normal pb-[60px] text-[#1E1E1E] pr-[20px]"
                   tag="h3"
                 />
                 <div className="flex justify-between items-center">
-                  <label>Select your retirement age</label>
+                  <label>Age</label>
                   <span>{value}</span>
                 </div>
 
                 <PrimarySlider
                   aria-label="Age"
-                  min={55}
-                  max={65}
+                  min={18}
+                  max={54}
                   value={value}
-                  defaultValue={60}
+                  defaultValue={25}
                   onChange={handleSlideChange}
                 />
 
@@ -998,11 +1018,29 @@ export default function RetirementAnnuity() {
                       className="text-[47px] leading-[26px] font-semibold pt-[15px] text-white text-center w-full"
                       tag="h5"
                     />
+                    <div className="relative flex justify-center items-center gap-4 custom-tooltip">
+                      <p className="text-[22px] leading-[19px] font-light text-white text-center">
+                        (
+                        {`R ${
+                          result ? formatNumberWithSpaces(result.E53) : ""
+                        }`}{" "}
+                        in today’s money)
+                      </p>
+                      <p>
+                        <Tooltip
+                          text="Today’s money is the equivalent buying power that your estimated
+monthly income would provide you today. Over time, prices of goods
+and services tend to rise (inflation), reducing your buying power.
+E.G., R100 will buy you 5 loaves of bread today, but in 10 years
+R100 might only buy you one loaf."
+                        />
+                      </p>
+                    </div>
                   </div>
                   <div className="estimate-body pt-[55px] pb-[48px] px-[34px] lg:px-[75px] bg-[#F0F0F0]">
                     <Heading
-                      content="Your income will last"
-                      className="text-[20px] leading-[19px] font-medium text-primary w-full"
+                      content="Your income will last*"
+                      className="text-[24px] leading-[19px] font-medium text-primary w-full"
                       tag="h5"
                     />
 
@@ -1010,7 +1048,7 @@ export default function RetirementAnnuity() {
                       label={`${
                         result ? formatNumberWithSpaces(result.P53) : 0
                       } Years`}
-                      hint={`Poor markets 4% growth)`}
+                      hint={`Average markets 7% growth)`}
                       progress={`${result ? result.P53 : 0}`}
                       labelClasses="mt-[42px] from-[#ED0080] to-[#F37021]"
                       trackClasses=""
@@ -1020,10 +1058,20 @@ export default function RetirementAnnuity() {
 
                     <ProgressBar
                       label={`${
-                        result ? formatNumberWithSpaces(result.P54) : 0
+                        result
+                          ? result.P54
+                            ? formatNumberWithSpaces(result.P54)
+                            : "120"
+                          : 0
                       } Years`}
-                      hint={`Average markets 8% growth)`}
-                      progress={`${result ? result.P54 : 0}`}
+                      hint={`Good markets 9% growth)`}
+                      progress={`${
+                        result
+                          ? result.P54
+                            ? formatNumberWithSpaces(result.P54)
+                            : 100
+                          : 0
+                      }`}
                       labelClasses="mt-[37px]"
                       trackClasses=""
                       progressClasses=""
@@ -1059,21 +1107,36 @@ export default function RetirementAnnuity() {
                   </div>
                 </div>
 
+                <p>
+                  <span className="text-[18px] pt-[40px] pb-[0px] font-light block inline-block text-center">
+                    *The years above indicate the point at which the purchasing
+                    power of your income will begin to decline.
+                  </span>
+                </p>
+
                 <div className="container px-[34px] lg:px-0">
                   <ColorCard
                     heading=""
                     content={`
                                             <p>Your different income annuity options at retirement</p>
-                                            <p><strong>Living annuity</strong><br><br>A living annuity is a flexible plan where you decide how your savings are invested and you choose an income level that suits your needs.</p>
+                                            <p><strong>Living annuity</strong><br><br>A living annuity is a flexibility plan where you decide how your savings are invested and you choose an income level that suits your needs.</p>
                                             <p><strong>Guaranteed (or life) annuity</strong><br><br>A guaranteed annuity ensures that you receive a regular income for as long as you live.</p>
                                             <p><strong>Composite (or compound) annuity</strong><br><br>By combining the features of a living annuity and a guaranteed annuity, a composite annuity ensures that you receive an income for life and allows you to keep a portion of your capital invested in the markets.</p>
                                         `}
-                    className="rounded-[15px] px-[25px] lg:px-[65px] py-[45px] lg:py-[60px] mt-[78px] [&>div>div>div>div>p]:mb-[32px]"
+                    className="rounded-[15px] px-[25px] lg:px-[65px] py-[45px] lg:py-[60px] mt-[40px] [&>div>div>div>div>p]:mb-[32px]"
                     showShadow={false}
                   />
                 </div>
 
-                <div className="generate-report bg-transparent rounded-[15px] pt-[90px] pb-[54px] px-[15px]">
+                <p>
+                  <span className="text-[18px] pt-[40px] pb-[0px] font-light block inline-block text-center">
+                    This calculator will produce estimates. To get a more
+                    accurate income plan, speak to your financial adviser or
+                    click on the CALL ME BACK button below.
+                  </span>
+                </p>
+
+                <div className="generate-report bg-transparent rounded-[15px] pt-[20px] pb-[54px] px-[15px]">
                   <div className="flex flex-col items-center gap-[20px] justify-center mt-[35px]">
                     <button
                       onClick={handleDownload}
@@ -1090,9 +1153,9 @@ export default function RetirementAnnuity() {
                 </div>
 
                 <VideoCard
-                  heading="Compound growth explained"
-                  image="/images/video-3-thumb.png"
-                  url="/videos/video-3.mp4"
+                  heading="Tax back explained"
+                  image="/images/video-thumb.jpg"
+                  videoID="L61p2uyiMSo"
                   className="mt-[60px]"
                 />
               </div>

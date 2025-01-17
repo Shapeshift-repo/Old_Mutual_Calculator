@@ -222,8 +222,8 @@ export default function RetirementAnnuity() {
     // Clean the values by removing non-numeric characters
     let { grossIncome, contribution, investment, saving, monthly } = formData;
 
-    const age = value1[0]; // Use the slider value as the age
-    const N8 = value1[1];
+    const age = value; // Use the slider value as the age
+    const N8 = value;
 
     grossIncome = parseFloat(grossIncome.replace(/[^\d]/g, ""));
     const annualIncome = grossIncome * 12;
@@ -363,6 +363,7 @@ export default function RetirementAnnuity() {
 
     // Parsing inputs
     let D9 = age; //checked
+    let savedAge = value;
     let F32 = N8; // Retirement Age
     let G9 = grossIncome; //checked
     let D11 = contribution; //checked
@@ -370,7 +371,7 @@ export default function RetirementAnnuity() {
     let D13 = monthly; //checked
     let D15 = D13 + D11; // Total Monthly Contributions
     let agediff = N8 - D9; // Age Difference
-    let D32 = value1;
+    let D32 = value1[0];
     let N5 = 0.05; // Default escalation rate
     let N9 = 0.05; // Default inflation assumption
     let X5 = 0.275; // Maximum % Gross Salary Tax Deductible
@@ -448,20 +449,23 @@ export default function RetirementAnnuity() {
 
     const part1Two = D15 * ((Math.pow(1 + Q5, 12) - 1) / (Q5 / (1 + Q5)));
     const part2Two =
-      (Math.pow(1 + N7, F32 - D32[0]) - Math.pow(1 + N5, F32 - D32[0])) /
+      (Math.pow(1 + N7, F32 - savedAge) - Math.pow(1 + N5, F32 - savedAge)) /
       (N7 - N5);
-    const part3Two = J9 * Math.pow(1 + N7, F32 - D32[0]);
-    const secondResult = part1Two * part2Two + part3Two;
+    const part3Two = J9 * Math.pow(1 + N7, F32 - savedAge);
+    const resultTwo = part1Two * part2Two + part3Two;
 
     // let N13 = (firstTerm) * (secondTerm) / (thirdTerm);
+    let N27 = resultTwo;
     let N13 = result;
-    let N27 = secondResult;
-
     N13 = Math.round(N13 * 100000000) / 100000000;
-    console.log("F32", F32);
-    console.log("N13", N13);
-    console.log("N27", N27);
-    console.log("D32", D32[0]);
+    N27 = Math.round(N27 * 100000000) / 100000000;
+
+    console.log("---------------------");
+    console.log("saved age", savedAge);
+    console.log("current age", D9);
+    console.log("previous amount", N27);
+    console.log("new amount", N13);
+    console.log("---------------------");
 
     let N14 = N13 - N15 - N16;
 
@@ -652,10 +656,7 @@ export default function RetirementAnnuity() {
     }
     let Q21 = V24 * (N22 - 12 * D15);
     let Q22 = Q20 + Q21;
-    let Q28 = Q15 - Q22;
-
-    console.log("Q15", Q15);
-    console.log("Q22", Q22);
+    let Q28 = N27 - N13;
 
     const totalInvestment = N13.toFixed(2);
     localStorage.setItem("totalInvestment", totalInvestment);
@@ -664,7 +665,7 @@ export default function RetirementAnnuity() {
     const investmentGrowth = N14.toFixed(2);
     const totalContributionPaid = (N15 + N16).toFixed(2);
     const lampSum = J9.toFixed(2);
-    const costOfDelay = (N13 - N27).toFixed(0);
+    const costOfDelay = Q28.toFixed(0);
     const investmentOption = contributionOptions.find(
       (option) => option.value === investment
     );

@@ -785,8 +785,8 @@ const Report = ({
             <View style={{ marginBottom: "10px" }}>{FoodIcon}</View>
             <Text style={styles.titleText}>
               You&apos;ll be saving{" "}
-              <Text style={styles.titleGreen13}>R{food}</Text> on{" "}
-              <Text style={styles.titleGreen13}>food</Text> every month by:
+              <Text style={styles.titleGreen13}>R{numberWithSpaces(food)}</Text>{" "}
+              on <Text style={styles.titleGreen13}>food</Text> every month by:
             </Text>
             <View style={{ padding: "5px" }}></View>
             <View
@@ -870,8 +870,10 @@ const Report = ({
             <View style={{ marginBottom: "10px" }}>{energyIcon}</View>
             <Text style={styles.titleText}>
               You&apos;ll be saving{" "}
-              <Text style={styles.titleGreen13}>R{energy}</Text> on{" "}
-              <Text style={styles.titleGreen13}>energy</Text> every month by:
+              <Text style={styles.titleGreen13}>
+                R{numberWithSpaces(energy)}
+              </Text>{" "}
+              on <Text style={styles.titleGreen13}>energy</Text> every month by:
             </Text>
             <View style={{ padding: "5px" }}></View>
             <View
@@ -958,8 +960,8 @@ const Report = ({
             <View style={{ marginBottom: "10px" }}>{fuelIcon}</View>
             <Text style={styles.titleText}>
               You&apos;ll be saving{" "}
-              <Text style={styles.titleGreen13}>R{fuel}</Text> on{" "}
-              <Text style={styles.titleGreen13}>fuel</Text> every month by:
+              <Text style={styles.titleGreen13}>R{numberWithSpaces(fuel)}</Text>{" "}
+              on <Text style={styles.titleGreen13}>fuel</Text> every month by:
             </Text>
             <View style={{ padding: "5px" }}></View>
             <View
@@ -1043,8 +1045,10 @@ const Report = ({
             <View style={{ marginBottom: "10px" }}>{entIcon}</View>
             <Text style={styles.titleText}>
               You&apos;ll be saving{" "}
-              <Text style={styles.titleGreen13}>R{entertainment}</Text> on{" "}
-              <Text style={styles.titleGreen13}>entertainment </Text>
+              <Text style={styles.titleGreen13}>
+                R{numberWithSpaces(entertainment)}
+              </Text>{" "}
+              on <Text style={styles.titleGreen13}>entertainment </Text>
               every month by:
             </Text>
             <View style={{ padding: "5px" }}></View>

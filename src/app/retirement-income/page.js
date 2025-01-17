@@ -1021,10 +1021,9 @@ export default function RetirementAnnuity() {
                     <div className="relative flex justify-center items-center gap-4 custom-tooltip">
                       <p className="text-[22px] leading-[19px] font-light text-white text-center">
                         (
-                        {`R ${
-                          result ? formatNumberWithSpaces(result.E53) : ""
-                        }`}{" "}
-                        in today’s money)
+                        {`R${
+                          result ? formatNumberWithSpaces(result.E53) : " "
+                        }`}{" "} in today’s money)
                       </p>
                       <p>
                         <Tooltip

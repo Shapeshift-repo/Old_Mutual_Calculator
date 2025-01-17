@@ -609,6 +609,17 @@ console.log("N13",N13);
         
         let Q15 = (Q13 + Q14);    
         Q15 = Math.round(Q15 * 10000000000) / 10000000000;
+          // New Calculations from ext dev's previous code 17-01-2025
+        let Q20 = U24 * (J9 + 12 * D15);
+        let N22;
+        if (N5 === 0) {
+          N22 = D15 * (65 - 25) * 12;
+        } else {
+          N22 = 12 * D15 * (((1 + N5) ** (65 - 25) - 1) / N5);
+        }
+        let Q21 = V24 * (N22 - 12 * D15);
+        let Q22 = Q20 + Q21;
+        let Q28 = Q15 - Q22;
         
         const totalInvestment = N13.toFixed(2);
         localStorage.setItem('totalInvestment', totalInvestment);
@@ -617,10 +628,11 @@ console.log("N13",N13);
         const investmentGrowth = N14.toFixed(2);
         const totalContributionPaid = (N15 + N16).toFixed(2);
         const lampSum = J9.toFixed(2);
+        const costOfDelay = Q28.toFixed(0);
         const investmentOption = contributionOptions.find(option => option.value === investment);
         const investmentLabel = investmentOption ? investmentOption.label.split(' - ')[1] : 'inflation plus 3%-4%';
 
-        return { totalInvestment, taxGetBack, investmentGrowth, totalContributionPaid, lampSum, grossIncome, contribution, monthly, age, investmentLabel, U5result };
+        return { totalInvestment, taxGetBack, investmentGrowth, totalContributionPaid, lampSum, grossIncome, contribution, monthly, age, investmentLabel, U5result, costOfDelay };
     };
 
   // On submit

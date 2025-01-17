@@ -1031,6 +1031,11 @@ export default function TaxBack() {
                     maxValueError="There is a limit on tax-free contributions of 27.5% or R350 000 per year."
                   />
                 </div>
+                <span className="text-[16px] font-light block">
+                  Contribution Limit: The yearly tax deduction on a retirement
+                  annuity is limited to 27.5% of your total income, up to a
+                  maximum of R350 000.
+                </span>
                 <div id="view-section" className="mt-[30px]"></div>
                 <div className="flex justify-center">
                   <Button

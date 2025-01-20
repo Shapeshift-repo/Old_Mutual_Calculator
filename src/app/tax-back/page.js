@@ -973,7 +973,8 @@ export default function TaxBack() {
             </div>
           </div>
 
-          <div id="calculator-form" className="w-full relative">
+          <div className="w-full relative">
+            <div id="calculator-form" className="absolute -top-20"></div>
             <form className="relative px-[30px] lg:px-0 mt-[-418px] lg:mt-0 pt-[468px] lg:pt-0 pb-[88px] lg:pb-0 bg-[#F0F0F0] lg:bg-transparent rounded-bl-[214px] lg:rounded-bl-0 rounded-br-[214px] lg:rounded-br-0">
               <div className="form-field-holder max-w-[570px]">
                 <Heading

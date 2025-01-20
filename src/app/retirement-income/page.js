@@ -942,10 +942,8 @@ export default function RetirementAnnuity() {
               />
             </div>
           </div>
-          <div
-            id="calculator-form"
-            className="w-full relative min-h-[400px] 2xl:min-h-[900px]"
-          >
+          <div className="w-full relative min-h-[400px] 2xl:min-h-[900px]">
+            <div id="calculator-form" className="absolute -top-20"></div>
             <form className="mt-[155px] lg:mt-0 px-[34px] lg:px-0">
               <div className="form-field-holder max-w-[570px]">
                 <Heading
@@ -1118,9 +1116,9 @@ R100 might only buy you one loaf."
                     heading=""
                     content={`
                                             <p>Your different income annuity options at retirement</p>
-                                            <p><strong>Living annuity</strong><br><br>A living annuity is a flexible plan where you decide how your savings are invested and you choose an income level that suits your needs.</p>
-                                            <p><strong>Guaranteed (or life) annuity</strong><br><br>A guaranteed annuity ensures that you receive a regular income for as long as you live.</p>
-                                            <p><strong>Composite (or compound) annuity</strong><br><br>By combining the features of a living annuity and a guaranteed annuity, a composite annuity ensures that you receive an income for life and allows you to keep a portion of your capital invested in the markets.</p>
+                                            <p><strong>Living annuity</strong><br>A living annuity is a flexible plan where you decide how your savings are invested and you choose an income level that suits your needs.</p>
+                                            <p><strong>Guaranteed (or life) annuity</strong><br>A guaranteed annuity ensures that you receive a regular income for as long as you live.</p>
+                                            <p><strong>Composite (or compound) annuity</strong><br>By combining the features of a living annuity and a guaranteed annuity, a composite annuity ensures that you receive an income for life and allows you to keep a portion of your capital invested in the markets.</p>
                                         `}
                     className="rounded-[15px] px-[25px] lg:px-[65px] py-[45px] lg:py-[60px] mt-[40px] [&>div>div>div>div>p]:mb-[32px]"
                     showShadow={false}
@@ -1152,9 +1150,9 @@ R100 might only buy you one loaf."
                 </div>
 
                 <VideoCard
-                  heading="Tax back explained"
+                  heading="Retirement income explained"
                   image="/images/video-thumb.jpg"
-                  videoID="L61p2uyiMSo"
+                  url="/videos/video-3.mp4"
                   className="mt-[60px]"
                 />
               </div>

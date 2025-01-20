@@ -144,7 +144,7 @@ export default function Home() {
           </p>
           <p>
             Download the comprehensive report to review or share with your
-            financial adviser
+            financial adviser.
           </p>
         </>
       ),
@@ -269,7 +269,7 @@ export default function Home() {
           buttonLabel={CallToActionData1.buttonLabel}
           buttonOnClick={handleOpen2}
           sectionClasses="bg-gradient-to-r from-[#F4F3F6] to-[#807c79]"
-          headingClasses="text-transparent bg-gradient-to-l custom-gradient"
+          headingClasses="text-transparent bg-gradient-to-l custom-gradient w-2/3"
           buttonClasses="border-0 lg:border border-primary text-primary from-transparent to-transparent"
           img={CallToActionData1.img}
           imgBoxClasses="right-[-165px] lg:right-[60px]"
@@ -284,7 +284,7 @@ export default function Home() {
           buttonLabel={CallToActionData2.buttonLabel}
           buttonOnClick={handleOpen1}
           sectionClasses="custom-artwork"
-          headingClasses="from-[#ED0080] to-[#F37021] text-transparent"
+          headingClasses="from-[#ED0080] to-[#F37021] text-transparent w-2/3"
           buttonClasses="border-0 lg:border border-[#ED0080] text-[#ED0080] from-transparent to-transparent"
           artwork={CallToActionData2.artwork}
           img={CallToActionData2.img}
@@ -293,6 +293,7 @@ export default function Home() {
       <ArtworkBackgroundBlock />
       <Modal
         open={open1}
+        className="overflow-scroll"
         onClose={handleClose1}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -417,6 +418,7 @@ export default function Home() {
       <Modal
         open={open2}
         onClose={handleClose2}
+        className="overflow-scroll"
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >

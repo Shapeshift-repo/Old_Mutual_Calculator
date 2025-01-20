@@ -1585,7 +1585,8 @@ export default function RetirementAnnuity() {
               />
             </div>
           </div>
-          <div id="calculator-form" className="w-full relative z-[99]">
+          <div className="w-full relative z-[99]">
+            <div id="calculator-form" className="absolute -top-32 w-full"></div>
             <form className="relative mt-[-110px] pt-[30px] pb-[48px] lg:pb-0 lg:pt-0 lg:mt-0 bg-white px-[34px] lg:px-0 rounded-[64px] lg:rounded-0 z-10 lg:z-2 shadow-[0_4px_29px_0_rgba(0,0,0,0.24)] lg:shadow-none">
               <div className="flex justify-center mb-[60px] block lg:hidden">
                 <span className="w-[66px] h-[7px] rounded-[4px] bg-[#028F72]"></span>
@@ -1961,7 +1962,7 @@ export default function RetirementAnnuity() {
               </div>
 
               <VideoCard
-                heading="Retirement income explained"
+                heading="Compound growth explained"
                 image="/images/video-2-thumb.png"
                 url="/videos/video-2.mp4"
                 className="mt-[60px]"

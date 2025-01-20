@@ -205,21 +205,23 @@ export default function RetirementAnnuity() {
 
     let U49 = 0.175;
 
-    let P53 =
+    let P53 = Math.ceil(
       Math.log(
         (U49 * (1 - ((E64 / 12) * P47) / (Q47 / (1 + Q47)) / (P47 - N9))) /
           (E64 - (((U49 * E64) / 12) * P47) / (Q47 / (1 + Q47)) / (P47 - N9))
-      ) / Math.log((1 + N9) / (1 + P47));
+      ) / Math.log((1 + N9) / (1 + P47))
+    );
 
     let P56 = P53 / J64;
 
     let P51 = (G45 * P48 * (1 - E64)) / E64;
 
-    let P54 =
+    let P54 = Math.ceil(
       Math.log(
         (U49 * (1 - ((E64 / 12) * P48) / (Q48 / (1 + Q48)) / (P48 - N9))) /
           (E64 - (((U49 * E64) / 12) * P48) / (Q48 / (1 + Q48)) / (P48 - N9))
-      ) / Math.log((1 + N9) / (1 + P48));
+      ) / Math.log((1 + N9) / (1 + P48))
+    );
 
     let P57 = P54 / J64;
 

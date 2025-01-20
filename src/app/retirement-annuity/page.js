@@ -25,8 +25,8 @@ import NumberPlate from "../components/NumberPlate";
 import SelectInput from "../components/SelectInput";
 import StepButton from "../components/StepButton";
 import TextInput from "../components/TextInput";
+import Tooltip from "../components/Tooltip";
 import VideoCard from "../components/VideoCard";
-
 Font.register({
   family: "Montserrat",
   fonts: [
@@ -1639,15 +1639,28 @@ export default function RetirementAnnuity() {
                     ? ""
                     : "Contribution Limit: The yearly tax deduction on a retirement annuity is limited to 27.5% of your total income, up to a maximum of R350 000."}
                 </p>
-                <SelectInput
-                  label="Investment strategy"
-                  required
-                  className="mt-[28px]"
-                  value={formData.investment}
-                  onChange={handleChange}
-                  name="investment"
-                  options={contributionOptions}
-                />
+                <div className="custom-tooltip relative">
+                  <div className="absolute right-0">
+                    <Tooltip
+                      text="Your investment strategy determines
+how much above inflation you would
+like your investment to grow.
+Inflation is currently 5%. The higher
+the investment strategy, the higher
+your investment risk."
+                    />
+                  </div>
+
+                  <SelectInput
+                    label="Investment strategy"
+                    required
+                    className="mt-[28px]"
+                    value={formData.investment}
+                    onChange={handleChange}
+                    name="investment"
+                    options={contributionOptions}
+                  />
+                </div>
 
                 <label className="mt-[20px] mb-[15px] text-[20px] leading-[25px] font-light block">
                   Do you have any current retirement savings?

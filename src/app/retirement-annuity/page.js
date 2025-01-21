@@ -840,9 +840,10 @@ export default function RetirementAnnuity() {
     },
     contentTop2: {
       marginTop: 8,
+      paddingBottom: 20,
       paddingLeft: 30,
       paddingRight: 30,
-      fontSize: 12,
+      fontSize: 11,
       fontWeight: "light",
       lineHeight: 1.2,
     },
@@ -908,7 +909,6 @@ export default function RetirementAnnuity() {
       flexDirection: "row",
       justifyContent: "space-between",
       width: "100%",
-      backgroundColor: "#F9F9F9",
       paddingTop: 10,
       paddingBottom: 10,
       paddingLeft: 30,
@@ -978,7 +978,7 @@ export default function RetirementAnnuity() {
       marginBottom: 10,
     },
     boxText: {
-      fontSize: 10,
+      fontSize: 9,
       fontWeight: "light",
       lineHeight: 1.1,
     },
@@ -1473,7 +1473,7 @@ export default function RetirementAnnuity() {
 
           <View style={styles.infoContent}>
             <Text style={styles.infoHeading2}>
-              PROTECT YOUR RETIREMENT SAVINGS 
+              GET REWARDED WHILE SAVING FOR RETIREMENT
             </Text>
             <Text style={styles.infoText}>
               Old Mutual Rewards is a free-to-join financial wellness programme
@@ -1501,7 +1501,10 @@ export default function RetirementAnnuity() {
             <Text style={{ height: 5 }}></Text>
             <Text style={styles.infoText}>
               Register today on{" "}
-              <PDFLink style={styles.greenText} src="https://www.sars.gov.za">
+              <PDFLink
+                style={styles.greenText}
+                src="https://www.oldmutual.co.za/rewards"
+              >
                 oldmutual.co.za/rewards
               </PDFLink>{" "}
               and explore the many ways that you can earn and spend your points.
@@ -1792,7 +1795,11 @@ your investment risk."
                     <path
                       class="animated-line"
                       d="M2 457C151.627 437.403 500.905 318.966 701 2"
-                      stroke="#009677"
+                      stroke={
+                        Number(value) == Number(value1[0])
+                          ? "#009677"
+                          : "#F3702F"
+                      }
                       strokeWidth="3.5"
                       stroke-linecap="round"
                     />
@@ -1879,7 +1886,7 @@ your investment risk."
                 <PrimarySlider2
                   aria-label="Age"
                   value={value1}
-                  min={value}
+                  min={Number(value)}
                   max={65}
                   onChange={handleSlide2Change}
                   valueLabelDisplay="on"

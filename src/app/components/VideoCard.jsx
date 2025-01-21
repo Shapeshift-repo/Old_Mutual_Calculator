@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import Heading from "./Heading";
 import ModalVideo from "react-modal-video";
 import "react-modal-video/scss/modal-video.scss";
+import Heading from "./Heading";
 
 export default function VideoCard({
   heading = null,
@@ -89,6 +89,7 @@ export default function VideoCard({
           isOpen={isOpen}
           url={url}
           onClose={() => setOpen(false)}
+          ratio="9:16"
         />
       )}
     </div>

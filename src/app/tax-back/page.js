@@ -865,7 +865,7 @@ export default function TaxBack() {
 
           <View style={styles.infoContent}>
             <Text style={styles.infoHeading2}>
-              PROTECT YOUR RETIREMENT SAVINGS 
+              GET REWARDED WHILE SAVING FOR RETIREMENT
             </Text>
             <Text style={styles.infoText}>
               Old Mutual Rewards is a free-to-join financial wellness programme
@@ -893,7 +893,10 @@ export default function TaxBack() {
             <Text style={{ height: 5 }}></Text>
             <Text style={styles.infoText}>
               Register today on{" "}
-              <Link style={styles.greenText} src="https://www.sars.gov.za">
+              <Link
+                style={styles.greenText}
+                src="https://www.oldmutual.co.za/rewards"
+              >
                 oldmutual.co.za/rewards
               </Link>{" "}
               and explore the many ways that you can earn and spend your points.

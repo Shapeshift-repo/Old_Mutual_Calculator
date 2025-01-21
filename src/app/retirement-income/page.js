@@ -598,12 +598,9 @@ export default function RetirementAnnuity() {
           <Text style={styles.contentAfterHi}>
             When you retire (from the age of 55), your retirement savings will
             need to provide an income so that you can support yourself and your
-            family. You have to invest a minimum of two thirds of your
-            retirement savings to buy an income annuity. This is an investment
-            that will pay you a regular income during your retirement. You may
-            withdraw the rest of your retirement savings as a lump sum when you
-            retire. This will depend on how much you have withdrawn before
-            retirement. For more information visit{" "}
+            family. You will have to buy an income annuity with your retirement
+            savings, which will provide you with a regular income when you
+            retire. For more information visit{" "}
             <PDFLink
               style={styles.greenText}
               src="https://www.oldmutual.co.za/two-pot-retirement-system"
@@ -842,7 +839,7 @@ export default function RetirementAnnuity() {
 
           <View style={styles.infoContent}>
             <Text style={styles.infoHeading2}>
-              PROTECT YOUR RETIREMENT SAVINGS 
+              GET REWARDED WHILE SAVING FOR RETIREMENT
             </Text>
             <Text style={styles.infoText}>
               Old Mutual Rewards is a free-to-join financial wellness programme
@@ -870,7 +867,10 @@ export default function RetirementAnnuity() {
             <Text style={{ height: 5 }}></Text>
             <Text style={styles.infoText}>
               Register today on{" "}
-              <PDFLink style={styles.greenText} src="https://www.sars.gov.za">
+              <PDFLink
+                style={styles.greenText}
+                src="https://www.oldmutual.co.za/rewards"
+              >
                 oldmutual.co.za/rewards
               </PDFLink>{" "}
               and explore the many ways that you can earn and spend your points.
@@ -928,7 +928,7 @@ export default function RetirementAnnuity() {
             <div className="relative lg:static top-0 lg:top-[-230px] left-0 w-full">
               <Banner
                 id="main-banner"
-                heading="RETIREMENT INCOME"
+                heading="INCOME ANNUITY"
                 subHeading="CALCULATOR"
                 content="See what monthly income you could get during retirement from a Living Annuity"
                 image="/images/banner3-img-desktop.jpg"
@@ -1023,15 +1023,14 @@ export default function RetirementAnnuity() {
                         (R{result ? formatNumberWithSpaces(result.E53) : " "} in
                         today’s money)
                       </p>
-                      <p>
-                        <Tooltip
-                          text="Today’s money is the equivalent buying power that your estimated
+
+                      <Tooltip
+                        text="Today’s money is the equivalent buying power that your estimated
 monthly income would provide you today. Over time, prices of goods
 and services tend to rise (inflation), reducing your buying power.
 E.G., R100 will buy you 5 loaves of bread today, but in 10 years
 R100 might only buy you one loaf."
-                        />
-                      </p>
+                      />
                     </div>
                   </div>
                   <div className="estimate-body pt-[55px] pb-[48px] px-[34px] lg:px-[75px] bg-[#F0F0F0]">
@@ -1151,7 +1150,7 @@ R100 might only buy you one loaf."
 
                 <VideoCard
                   heading="Retirement income explained"
-                  image="/images/video-thumb.jpg"
+                  image="/images/video-3-thumb.png"
                   url="/videos/video-3.mp4"
                   className="mt-[60px]"
                 />

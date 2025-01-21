@@ -24,7 +24,7 @@ export default function InvestingBlock() {
         }
       },
       {
-        threshold: 0.5, // Adjust as needed (50% of the element is in view)
+        threshold: 0.1, // Adjust as needed (50% of the element is in view)
       }
     );
 
@@ -84,18 +84,17 @@ export default function InvestingBlock() {
               </p>
               <ul>
                 <li className="relative pl-[15px]">
-                  <span className="absolute left-0 top-[-5px]">.</span> You get
-                  tax back
-                </li>
-                <li className="relative pl-[15px]">
-                  <span className="absolute left-0 top-[-5px]">.</span> Your
-                  investment growth is{" "}
+                  <span className="absolute left-0 top-[-5px]">.</span> You get{" "}
                   <span
                     className="underline decoration-1 text-primary cursor-pointer"
                     onClick={() => setTaxOpen(true)}
                   >
-                    tax free
+                    tax back
                   </span>
+                </li>
+                <li className="relative pl-[15px]">
+                  <span className="absolute left-0 top-[-5px]">.</span> Your
+                  investment growth is tax free
                 </li>
                 <li className="relative pl-[15px]">
                   <span className="absolute left-0 top-[-5px]">.</span> Benefit
@@ -131,18 +130,21 @@ export default function InvestingBlock() {
         isOpen={isTaxOpen}
         url="/videos/video-1.mp4"
         onClose={() => setTaxOpen(false)}
+        ratio="9:16"
       />
       <ModalVideo
         channel="custom"
         isOpen={isRetirementOpen}
         url="/videos/video-2.mp4"
         onClose={() => setRetirementOpen(false)}
+        ratio="9:16"
       />
       <ModalVideo
         channel="custom"
         isOpen={isIncomeOpen}
         url="/videos/video-3.mp4"
         onClose={() => setIncomeOpen(false)}
+        ratio="9:16"
       />
     </section>
   );

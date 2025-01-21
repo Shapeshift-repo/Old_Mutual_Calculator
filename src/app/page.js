@@ -269,7 +269,7 @@ export default function Home() {
           buttonLabel={CallToActionData1.buttonLabel}
           buttonOnClick={handleOpen2}
           sectionClasses="bg-gradient-to-r from-[#F4F3F6] to-[#807c79]"
-          headingClasses="text-transparent bg-gradient-to-l custom-gradient w-2/3"
+          headingClasses="text-primary w-2/3"
           buttonClasses="border-0 lg:border border-primary text-primary from-transparent to-transparent"
           img={CallToActionData1.img}
           imgBoxClasses="right-[-165px] lg:right-[60px]"

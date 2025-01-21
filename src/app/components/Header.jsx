@@ -1,9 +1,9 @@
-'use client'; 
+"use client";
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import Navbar from './Navbar';
-import Image from 'next/image';
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import Navbar from "./Navbar";
 
 export default function Header() {
   const [isActive, setIsActive] = useState(false);
@@ -15,20 +15,20 @@ export default function Header() {
 
       // Set 'active' class on the first scroll
       setIsActive(scrollY > 0);
-
+      console.log(scrollY);
       // Set 'small-header' class after some scroll (e.g., 150px)
-      setIsSmall(scrollY > 150);
+      setIsSmall(scrollY > 250);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <header
       className={`sticky top-0 left-0 w-full z-[999] transition-all duration-300 ${
-        isActive ? 'active' : ''
-      } ${isSmall ? 'small-header' : ''}`}
+        isActive ? "active" : ""
+      } ${isSmall ? "small-header" : ""}`}
     >
       <div className="pl-[10px] pr-[10px] 2xl:pl-[30px] 2xl:pr-[30px]">
         <div className="flex relative gap-[40px] items-center justify-between">

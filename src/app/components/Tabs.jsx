@@ -5,6 +5,7 @@ import Heading from "./Heading";
 
 export default function ScrollableTabs({ tabs }) {
   const containerRef = useRef(null);
+  const mainRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
   const [activeTabIndex, setActiveTabIndex] = useState(0);
@@ -43,7 +44,8 @@ export default function ScrollableTabs({ tabs }) {
       const newTab = tabElements[newIndex];
 
       if (newTab) {
-        newTab.scrollIntoView({ behavior: "smooth", inline: "center" });
+        newTab.scrollIntoView({ behavior: "smooth", inline: "start" });
+        mainRef.current.scrollIntoView();
       }
 
       // Update arrow visibility
@@ -54,18 +56,15 @@ export default function ScrollableTabs({ tabs }) {
 
   const handleTabClick = (index) => {
     setActiveTabIndex(index);
-    const tabElement = containerRef.current;
-    if (tabElement) {
-      tabElement.scrollIntoView({ behavior: "smooth", inline: "center" });
-    }
+    const tabElement = containerRef.current.children[index];
   };
 
   return (
     <section
       id="steps-section"
-      ref={containerRef}
-      className="shadow-box py-[80px] pb-[51px] lg:pb-[80px]"
+      className="shadow-box relative py-[80px] pb-[51px] lg:pb-[80px]"
     >
+      <div ref={mainRef} className="absolute -top-10"></div>
       <div className="container">
         <div className="shadow-box-holder bg-white pt-[24px] lg:pt-[52px] pb-0 px-[27px] lg:px-[70px] rounded-[30px] shadow-[0_4px_64px_0_rgba(0,0,0,0.12)] lg:shadow-[0_0_12px_0_rgba(0,0,0,0.12)]">
           <div className="relative overflow-hidden">
@@ -89,6 +88,7 @@ export default function ScrollableTabs({ tabs }) {
               </button>
             )}
             <div
+              ref={containerRef}
               className="relative flex justify-between overflow-x-auto whitespace-nowrap after:content-[''] after:absolute after:bottom-0 after:h-[4px] after:w-full after:bg-[#D9D9D9] after:rounded-md scroll-smooth scrollbar-hide"
               onScroll={() => {
                 const container = containerRef.current;

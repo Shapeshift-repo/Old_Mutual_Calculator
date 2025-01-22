@@ -626,8 +626,8 @@ export default function RetirementAnnuity() {
               R{result && formatNumberWithSpaces(result.G45)}
             </Text>{" "}
             by your retirement age of{" "}
-            <Text style={styles.boldGreen}>{value}</Text> years, you can expect
-            an income of{" "}
+            <Text style={styles.boldGreen}>{retireVale}</Text> years, you can
+            expect an income of{" "}
             <Text style={styles.boldGreen}>
               R{result ? formatNumberWithSpaces(result.E52) : ""}
             </Text>{" "}

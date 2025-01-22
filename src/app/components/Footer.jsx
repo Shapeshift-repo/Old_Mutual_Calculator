@@ -76,10 +76,7 @@ export default function Footer() {
 
   return (
     <ThemeProvider theme={theme}>
-      <footer
-        ref={footerRef}
-        className="bg-[#252525] relative pl-[10px] 2xl:pl-[30px]"
-      >
+      <footer ref={footerRef} className="bg-[#252525] relative 2xl:pl-[30px]">
         <div className="max-w-[1920px] pt-[55px] pb-[40px] relative">
           <Link
             href="/"

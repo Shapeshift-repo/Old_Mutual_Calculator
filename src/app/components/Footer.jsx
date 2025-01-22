@@ -76,11 +76,14 @@ export default function Footer() {
 
   return (
     <ThemeProvider theme={theme}>
-      <footer ref={footerRef} className="bg-[#252525] relative">
-        <div className="container pt-[55px] pb-[40px] relative">
+      <footer
+        ref={footerRef}
+        className="bg-[#252525] relative pl-[10px] 2xl:pl-[30px]"
+      >
+        <div className="max-w-[1920px] pt-[55px] pb-[40px] relative">
           <Link
             href="/"
-            className="mobile-logo flex justify-center items-start p-[10px] absolute top-[-26px] lg:top-[-11px] left-[10px] lg:left-0 w-[65px] lg:w-[82px] h-[calc(100%+26px)] lg:h-[calc(100%+11px)] bg-gradient-to-r from-[#009677] to-[#50B848]"
+            className="mobile-logo flex justify-center items-start p-[10px] absolute top-[-26px] lg:top-[-11px] left-[10px] lg:left-0 w-[82px] h-[calc(100%+26px)] lg:h-[calc(100%+11px)] bg-gradient-to-r from-[#009677] to-[#50B848]"
           >
             <h4 className="rotate-[-90deg] absolute top-[75px] lg:top-[85px] text-white text-[20px] lg:text-[24px]">
               OLD<span className="font-bold">MUTUAL</span>

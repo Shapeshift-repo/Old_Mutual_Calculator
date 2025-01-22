@@ -162,13 +162,8 @@ export default function Home() {
             is to take action today.
           </p>
           <p className="text-[#4fb848]">
-            Talk to your financial adviser or{" "}
-            <Link
-              className="underline"
-              href="https://www.oldmutual.co.za/personal/solutions/retirement-plans/max-investments-optimal-retirement-plan/"
-            >
-              purchase a retirement annuity online now!
-            </Link>
+            Talk to your financial adviser or purchase a retirement annuity
+            online now!
           </p>
         </>
       ),

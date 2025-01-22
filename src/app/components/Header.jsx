@@ -30,7 +30,7 @@ export default function Header() {
         isActive ? "active" : ""
       } ${isSmall ? "small-header" : ""}`}
     >
-      <div className="pl-[10px] pr-[10px] 2xl:pl-[30px] 2xl:pr-[30px]">
+      <div className="pl-[10px] max-w-[1920px] pr-[10px] 2xl:pl-[30px] 2xl:pr-[30px]">
         <div className="flex relative gap-[40px] items-center justify-between">
           <div className="w-full">
             <Link href="/">

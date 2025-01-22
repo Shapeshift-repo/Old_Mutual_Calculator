@@ -15,7 +15,7 @@ import {
   pdf,
 } from "@react-pdf/renderer";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import Banner from "../components/Banner";
 import Button from "../components/Button";
 import ColorCard from "../components/ColorCard";
@@ -83,10 +83,14 @@ export default function RetirementAnnuity() {
     monthlyInvest: "",
   });
 
+  const [value, setValue] = useState(25);
+  const [retireVale, setretireVale] = useState(55);
+
   // Use useEffect to retrieve the stored value when the component mounts
   useEffect(() => {
     const savedAge = localStorage.getItem("age");
     const savedInvestment = localStorage.getItem("totalInvestment");
+
     setFormData((prevData) => ({
       ...prevData,
       savedAge: savedAge ? parseInt(savedAge, 10) : 25,
@@ -100,14 +104,18 @@ export default function RetirementAnnuity() {
     }
   }, []);
 
+  useEffect(() => {}, [value, retireVale]);
+
   const [errors, setErrors] = useState({
     monthlyInvest: "",
   });
 
-  const [value, setValue] = useState(25);
-
   const handleSlideChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  const handleSlideChangeRetirement = (event, newValue) => {
+    setretireVale(newValue);
   };
 
   const min = 2.5;
@@ -225,7 +233,7 @@ export default function RetirementAnnuity() {
 
     let P57 = P54 / J64;
 
-    let D45 = 55 - value; // Years until retirement
+    let D45 = retireVale - value; // Years until retirement
 
     let E53 = calculateRoundedValueForTodaysMoney(E64, G45, N9, D45);
 
@@ -828,8 +836,14 @@ export default function RetirementAnnuity() {
               important to protect your savings. Our life and disability
               insurance options ensure that you can still achieve your savings
               goals if anything happens to you. Ask your adviser about the right
-              life and disability cover for you and your family. Click here for
-              more information.
+              life and disability cover for you and your family.{" "}
+              <PDFLink
+                style={styles.greenText}
+                src="https://www.oldmutual.co.za/personal/solutions/life-and-disability/life-insurance/"
+              >
+                Click here for more information
+              </PDFLink>
+              .
             </Text>
           </View>
         </View>
@@ -963,6 +977,18 @@ export default function RetirementAnnuity() {
                   value={value}
                   defaultValue={25}
                   onChange={handleSlideChange}
+                />
+                <div className="flex pt-5 justify-between items-center">
+                  <label>Retirement age</label>
+                  <span>{retireVale}</span>
+                </div>
+                <PrimarySlider
+                  aria-label="Retirement age"
+                  min={55}
+                  max={65}
+                  value={retireVale}
+                  defaultValue={55}
+                  onChange={handleSlideChangeRetirement}
                 />
 
                 <TextInput

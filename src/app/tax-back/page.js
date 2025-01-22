@@ -854,8 +854,14 @@ export default function TaxBack() {
               important to protect your savings. Our disability insurance
               options ensure that you can still achieve your savings goals if
               anything happens to you. Ask your adviser about the right
-              disability cover for you and your family. Click here for more
-              information.
+              disability cover for you and your family.{" "}
+              <Link
+                style={styles.greenText}
+                src="https://www.oldmutual.co.za/personal/solutions/life-and-disability/life-insurance/"
+              >
+                Click here for more information
+              </Link>
+              n.
             </Text>
           </View>
         </View>

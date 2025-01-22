@@ -1208,11 +1208,11 @@ export default function RetirementAnnuity() {
           <Text>
             With your monthly contribution of{" "}
             <Text style={styles.boldGreen}>
-              R{result ? formatNumberWithSpaces(result.grossIncome) : 0}
+              R{result ? formatNumberWithSpaces(result.contribution) : 0}
             </Text>{" "}
             and your current retirement savings of{" "}
             <Text style={styles.boldGreen}>
-              R{result ? formatNumberWithSpaces(result.contribution) : 0}
+              R{result ? formatNumberWithSpaces(result.grossIncome) : 0}
             </Text>
             , with an investment strategy of{" "}
             <Text style={styles.boldGreen}>
@@ -1222,9 +1222,9 @@ export default function RetirementAnnuity() {
             <Text style={styles.boldGreen}>{result ? result.age : 25}</Text>{" "}
             will be{" "}
             <Text style={styles.boldGreen}>
-              R{result ? formatNumberWithSpaces(result.taxGetBack) : 0}.
-            </Text>{" "}
-            Your cost of delay is{" "}
+              R{result ? formatNumberWithSpaces(result.taxGetBack) : 0}
+            </Text>
+            . Your cost of delay is{" "}
             <Text style={styles.boldGreen}>
               R{result ? formatNumberWithSpaces(result.costOfDelay) : 0}
             </Text>
@@ -1462,8 +1462,14 @@ export default function RetirementAnnuity() {
               important to protect your savings. Our disability insurance
               options ensure that you can still achieve your savings goals if
               anything happens to you. Ask your adviser about the right
-              disability cover for you and your family. Click here for more
-              information.
+              disability cover for you and your family.{" "}
+              <PDFLink
+                style={styles.greenText}
+                src="https://www.oldmutual.co.za/personal/solutions/life-and-disability/life-insurance/"
+              >
+                Click here for more information
+              </PDFLink>
+              .
             </Text>
           </View>
         </View>

@@ -345,14 +345,21 @@ header.active.active .navbar-holder {
   -ms-transition: 0.5s;
   transition: 0.5s;
 }
-
+.modal-video .modal-video-body {
+  max-width: 80%;
+  margin-top: 10px;
+}
+.modal-video-inner {
+  padding: 10px !important;
+}
+/*
 .modal-video {
   max-width: 100%;
   width: auto;
   z-index: 999;
 }
 
-/* .modal-video-movie-wrap {
+ .modal-video-movie-wrap {
   width: 250px !important;
 }
 

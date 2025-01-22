@@ -755,13 +755,7 @@ export default function TaxBack() {
             </Text>
           </Text>
           <Text style={{ height: 3 }}></Text>
-          <Text style={styles.bottomBold}>
-            For more information,{" "}
-            <Link style={styles.greenText} src="#">
-              watch this video
-            </Link>
-            .
-          </Text>
+
           <Text style={styles.bottomHeading2}>
             How you use your TAX BACK is up to you
           </Text>

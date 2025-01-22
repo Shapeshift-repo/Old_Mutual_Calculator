@@ -746,13 +746,7 @@ export default function RetirementAnnuity() {
             the markets.
           </Text>
           <Text style={{ height: 10 }}></Text>
-          <Text>
-            For more information,{" "}
-            <PDFLink style={styles.greenText} src="#">
-              watch this video
-            </PDFLink>
-            .
-          </Text>
+
           <Text style={styles.bottomHeading3}>
             Knowing what your income will be when you retire is great, but the
             most important step is taking action today.

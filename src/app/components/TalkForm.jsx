@@ -1,22 +1,22 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import TextInput from './TextInput';
-import Button from './Button';
-import Link from 'next/link';
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import Button from "./Button";
+import TextInput from "./TextInput";
 
 export default function TalkForm() {
   const [formData, setFormData] = useState({
-    name: '',
-    surname: '',
-    phone: '',
-    postalCode: '',
+    name: "",
+    surname: "",
+    phone: "",
+    postalCode: "",
   });
 
   const [errors, setErrors] = useState({
-    name: '',
-    surname: '',
-    phone: '',
+    name: "",
+    surname: "",
+    phone: "",
   });
 
   const [isFormValid, setIsFormValid] = useState(false);
@@ -32,7 +32,7 @@ export default function TalkForm() {
     // Clear error when the user starts typing
     setErrors({
       ...errors,
-      [name]: '',
+      [name]: "",
     });
   };
 
@@ -46,52 +46,54 @@ export default function TalkForm() {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const newErrors = {};
-  
+
     // Simple validation logic
-    if (!formData.name) newErrors.name = 'Name is required';
-    if (!formData.surname) newErrors.surname = 'Surname is required';
-    if (!formData.phone) newErrors.phone = 'Phone number is required';
-  
+    if (!formData.name) newErrors.name = "Name is required";
+    if (!formData.surname) newErrors.surname = "Surname is required";
+    if (!formData.phone) newErrors.phone = "Phone number is required";
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      console.log('Errors:', newErrors);
+      console.log("Errors:", newErrors);
     } else {
       const requestBody = {
-        pageURL: "https://www.oldmutual.co.za",
-        source: "Retirement Calculator Tools",
+        pageURL: "https://www.oldmutualretirementtools.co.za",
+        source: "Retirement Landing Page 2025",
         googleAnalyticsId: "G-H2MLQMKQ3T",
         formData: {
           firstName: formData.name,
           surname: formData.surname,
           phoneNumber: formData.phone,
-          comment: "Let's talk",
-          sourceProduct: "Retirement Calculator Tools",
+          comment: "Call me back form submission",
+          sourceProduct: "Retirement Landing Page 2025",
+          postalCode: formData.postalCode,
         },
-        // Additional fields
-        postalCode: formData.postalCode,
       };
-  
+
       try {
-        const response = await fetch('https://leadscapture.qa.digital.omapps.net/v1/chatbot/lead', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(requestBody),
-        });
-  
+        const response = await fetch(
+          "https://leadscapture.qa.digital.omapps.net/v1/chatbot/lead",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestBody),
+          }
+        );
+
         if (response.status === 201) {
-          console.log('Form submitted successfully:', await response.json());
+          console.log("Form submitted successfully:", await response.json());
         } else {
-          console.error('Failed to submit form. Status code:', response.status);
+          console.error("Failed to submit form. Status code:", response.status);
         }
       } catch (error) {
-        console.error('Error submitting form:', error);
+        console.error("Error submitting form:", error);
       }
     }
-  };  
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -127,7 +129,10 @@ export default function TalkForm() {
       />
 
       <div className="mb-[25px]">
-        <Link className="link text-primary text-[18px] leading-[25px] font-light underline" href="https://www.oldmutual.co.za/privacy-notice/">
+        <Link
+          className="link text-primary text-[18px] leading-[25px] font-light underline"
+          href="https://www.oldmutual.co.za/privacy-notice/"
+        >
           View our Privacy Policy
         </Link>
       </div>

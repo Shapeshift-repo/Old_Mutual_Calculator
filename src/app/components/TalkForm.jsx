@@ -43,7 +43,7 @@ export default function TalkForm() {
     setIsFormValid(valid);
   }, [formData]);
 
-  // Handle form submission
+  //Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -59,9 +59,6 @@ export default function TalkForm() {
       console.log("Errors:", newErrors);
     } else {
       const requestBody = {
-        pageURL: "https://www.oldmutualretirementtools.co.za",
-        source: "Retirement Landing Page 2025",
-        googleAnalyticsId: "G-H2MLQMKQ3T",
         formData: {
           firstName: formData.name,
           surname: formData.surname,
@@ -73,24 +70,24 @@ export default function TalkForm() {
       };
 
       try {
-        const response = await fetch(
-          "https://leadscapture.qa.digital.omapps.net/v1/chatbot/lead",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(requestBody),
-          }
-        );
+        const response = await fetch("/api/formSubmit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Referer-Policy": "no-referrer",
+          },
+          body: JSON.stringify(requestBody),
+        });
 
-        if (response.status === 201) {
-          console.log("Form submitted successfully:", await response.json());
-        } else {
-          console.error("Failed to submit form. Status code:", response.status);
+        if (response) {
+          console.log("Form submitted:", await response.json());
         }
       } catch (error) {
-        console.error("Error submitting form:", error);
+        if (error.name === "TypeError" && error.message === "Failed to fetch") {
+          console.error("Network error or CORS issue:", error);
+        } else {
+          console.error("Error submitting form:", error);
+        }
       }
     }
   };

@@ -19,6 +19,9 @@ export default function TalkForm() {
     phone: "",
   });
 
+  const [formSuccess, setFormSuccess] = useState(false);
+  const [formError, setFormError] = useState(false);
+
   const [isFormValid, setIsFormValid] = useState(false);
 
   // Handle input changes
@@ -80,20 +83,31 @@ export default function TalkForm() {
         });
 
         if (response) {
-          console.log("Form submitted:", await response.json());
+          const result = await response.json();
+          if (result.result == "") {
+            setFormSuccess(true);
+            setFormData({
+              name: "",
+              surname: "",
+              phone: "",
+              postalCode: "",
+            });
+          } else {
+            setFormError(true);
+            setFormData({
+              name: "",
+              surname: "",
+              phone: "",
+              postalCode: "",
+            });
+          }
         }
-      } catch (error) {
-        if (error.name === "TypeError" && error.message === "Failed to fetch") {
-          console.error("Network error or CORS issue:", error);
-        } else {
-          console.error("Error submitting form:", error);
-        }
-      }
+      } catch (error) {}
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} id="talk-form">
       <TextInput
         label="Your Name"
         name="name"
@@ -140,6 +154,14 @@ export default function TalkForm() {
         disabled={!isFormValid}
         className="down-bounce text-white disabled:text-black"
       />
+      {formSuccess && (
+        <p className="pt-5 text-primary">Your request has been sent.</p>
+      )}
+      {formError && (
+        <p className="pt-5 text-red-700">
+          An error occured, please try again later.
+        </p>
+      )}
     </form>
   );
 }

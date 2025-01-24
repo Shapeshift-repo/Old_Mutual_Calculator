@@ -1291,7 +1291,10 @@ export default function RetirementAnnuity() {
             </Text>
             <Text style={styles.boxText}>
               For more information, see the example below or{" "}
-              <PDFLink style={styles.greenText} src="#">
+              <PDFLink
+                style={styles.greenText}
+                src="https://oldmutualretirementtools.co.za/videos/video-2.mp4"
+              >
                 watch this video.
               </PDFLink>
             </Text>

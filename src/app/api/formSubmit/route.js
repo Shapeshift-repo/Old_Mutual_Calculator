@@ -55,7 +55,7 @@ export async function POST(request) {
 
     try {
       const response = await fetch(
-        "https://momapi.qa.digital.oldmutual.co.za/gateway/leadscapture/chatbot/lead",
+        "https://momapi.digital.oldmutual.co.za/gateway/leadscapture/chatbot/lead",
         requestOptions
       );
 

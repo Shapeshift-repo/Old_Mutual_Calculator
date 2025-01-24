@@ -33,7 +33,7 @@ export async function POST(request) {
 
     const raw = JSON.stringify({
       pageURL: "https://www.oldmutualretirementtools.co.za",
-      source: "OMCOZA",
+      source: "MyOldMutualPublicWebsite",
       googleAnalyticsId: "G-H2MLQMKQ3T",
       formData: {
         name: "Test",
@@ -61,7 +61,7 @@ export async function POST(request) {
 
       const result = await response.text();
       return NextResponse.json({
-        message: "Form submitted successfully",
+        message: "Form submitted",
         result,
       });
     } catch (response) {

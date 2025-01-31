@@ -195,6 +195,7 @@ export default function RetirementAnnuity() {
   };
 
   const minDistance = 0; // Minimum distance between the two thumbs on Slider 2
+  
 
   // Ensure both sliders remain in sync when value1[0] changes
   useEffect(() => {
@@ -1171,6 +1172,8 @@ export default function RetirementAnnuity() {
     },
   });
 
+
+  console.log("result", result);
   const MyDocument = () => (
     <Document title="Retirement Annuity">
       <Page size={{ width: 595.28, height: 980 }} style={styles.page}>
@@ -1208,26 +1211,27 @@ export default function RetirementAnnuity() {
           <Text>
             With your monthly contribution of{" "}
             <Text style={styles.boldGreen}>
-              R{result ? formatNumberWithSpaces(result.contribution) : 0}
+              R{result ? formatNumberWithSpaces(result.contribution + result.monthly) : 0}
             </Text>{" "}
-            and your current retirement savings of{" "}
-            <Text style={styles.boldGreen}>
-              R{result ? formatNumberWithSpaces(result.grossIncome) : 0}
-            </Text>
+
             , with an investment strategy of{" "}
             <Text style={styles.boldGreen}>
               {result ? result.investmentLabel : "inflation plus 3%-4%"}
             </Text>
-            , your total savings at age{" "}
-            <Text style={styles.boldGreen}>{result ? result.age : 25}</Text>{" "}
+            , your total savings at retirement{" "}
+         
             will be{" "}
             <Text style={styles.boldGreen}>
-              R{result ? formatNumberWithSpaces(result.taxGetBack) : 0}
+              R{result ? formatNumberWithSpaces(result.taxGetBack) : 0} .
             </Text>
-            . Your cost of delay is{" "}
+            {result.coseOfDelay > 0 && (
+<>
+ Your cost of delay is{" "}
             <Text style={styles.boldGreen}>
               R{result ? formatNumberWithSpaces(result.costOfDelay) : 0}
-            </Text>
+            </Text></>
+            )}
+           
           </Text>
         </View>
 

@@ -853,9 +853,9 @@ export default function TaxBack() {
                 style={styles.greenText}
                 src="https://www.oldmutual.co.za/personal/solutions/life-and-disability/life-insurance/"
               >
-                Click here for more information
+                Click here for more information.
               </Link>
-              n.
+
             </Text>
           </View>
         </View>

@@ -247,7 +247,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="relative pt-[118px] lg:p-0">
+      <div className="relative pt-14 sm:pt-[118px] lg:p-0">
         <Hero />
       </div>
       <div className="side-bg hidden lg:block sm-hidden absolute top-[1000px] right-0 z-[-1]">

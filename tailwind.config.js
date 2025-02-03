@@ -21,6 +21,7 @@ module.exports = {
         foreground: "var(--foreground)",
       },
     },
+  
   },
   plugins: [
     require('tailwindcss-dotted-background'),

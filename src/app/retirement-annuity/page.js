@@ -757,7 +757,6 @@ export default function RetirementAnnuity() {
     { value: "moderate", label: "Moderate - Inflation plus 3%-4%" },
     { value: "medium", label: "Medium - Inflation plus 4%-5% " },
     { value: "high", label: "High - Inflation plus 5%-7%" },
-    { value: "highest", label: "Highest - Maximum Return" },
   ];
 
   const linkIcon = (
@@ -1222,7 +1221,8 @@ export default function RetirementAnnuity() {
          
             will be{" "}
             <Text style={styles.boldGreen}>
-              R{result ? formatNumberWithSpaces(result.taxGetBack) : 0} .
+              
+              R{result ? formatNumberWithSpaces(result.totalInvestment)  : 0} .
             </Text>
             {result.coseOfDelay > 0 && (
 <>
@@ -1339,7 +1339,7 @@ export default function RetirementAnnuity() {
             </Text>
             <Text style={styles.boxText}>
               If you don’t have a financial adviser, call{" "}
-              <Text style={styles.boxStrong}>0860 66 66 59</Text> and we will
+              <Text style={styles.boxStrong}>0860 007 007</Text> and we will
               gladly assist you.
             </Text>
           </View>
@@ -1792,7 +1792,7 @@ your investment risk."
                 heading={`R${
                   result ? formatNumberWithSpaces(result.taxGetBack) : ""
                 }`}
-                content="<p>Total TAX BACK over the term</p>"
+                content="<p class='text-center'>Total TAX BACK over the term</p>"
                 className="mt-[-200px] lg:mt-0 pt-[236px] lg:pt-[50px] rounded-[64px] lg:rounded-0"
               />
 

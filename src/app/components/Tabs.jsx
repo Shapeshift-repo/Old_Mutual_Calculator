@@ -71,7 +71,7 @@ export default function ScrollableTabs({ tabs }) {
                     <div className="relative overflow-hidden">
                         {showLeftArrow && (
                             <button
-                                className="absolute block lg:hidden top-[10px] left-0 transform -translate-y-1/2 z-10 p-[10px] bg-white shadow-md rounded-full"
+                                className="absolute block lg:hidden top-[10px] left-0 transform -translate-y-1/2 z-10 p-[10px] bg-white shadow-md rounded-full w-[38px] h-[38px]"
                                 onClick={() => scroll("left")}
                             >
                                 <svg
@@ -136,7 +136,7 @@ export default function ScrollableTabs({ tabs }) {
                         </div>
                         {showRightArrow && (
                             <button
-                                className="absolute block lg:hidden top-[10px] right-0 transform -translate-y-1/2 z-10 p-[10px] bg-white shadow-md rounded-full"
+                                className="absolute block lg:hidden top-[10px] right-0 transform -translate-y-1/2 z-10 p-[10px] bg-white shadow-md rounded-full w-[38px] h-[38px]"
                                 onClick={() => scroll("right")}
                             >
                                 <svg

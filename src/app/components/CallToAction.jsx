@@ -17,6 +17,7 @@ export default function CallToAction({
     artwork = null,
     artworkClasses = "",
     img = null,
+    mobileImg = null, // Mobile-specific image
     imgBoxClasses = "",
     imgClasses = "",
 }) {
@@ -45,7 +46,7 @@ export default function CallToAction({
                                 />
                             )}
                             {content && (
-                                <p className="text-[16px] leading-[24px] lg:text-[18px] lg:leading-[28px] mt-[11px] font-light">
+                                <p className="text-base lg:text-lg leading-6 lg:leading-7 mt-3 font-light">
                                     {content}
                                 </p>
                             )}
@@ -69,19 +70,27 @@ export default function CallToAction({
                                 {artwork}
                             </div>
                         )}
-                        {img && (
-                            <div
-                                className={`img-box absolute top-[-270px] lg:top-0 right-[-130px] lg:right-[60px] ${imgBoxClasses}`}
-                            >
+
+                        <div
+                            className={`img-box absolute top-[-270px] lg:top-0 right-[-130px] lg:right-[60px] ${imgBoxClasses}`}
+                        >
+                            <Image
+                                src={img}
+                                alt=""
+                                width="360"
+                                height="340"
+                                className={`hidden lg:block w-[290px] lg:w-[468px] h-auto ${imgClasses}`} // Desktop Image
+                            />
+                            {mobileImg && (
                                 <Image
-                                    src={img}
+                                    src={mobileImg}
                                     alt=""
                                     width="360"
                                     height="340"
-                                    className={`w-[290px] lg:w-[468px] h-auto ${imgClasses}`}
+                                    className={`block lg:hidden w-[290px] lg:w-[468px] h-auto ${imgClasses}`} // Mobile Image
                                 />
-                            </div>
-                        )}
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>

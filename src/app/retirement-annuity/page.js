@@ -1224,7 +1224,7 @@ export default function RetirementAnnuity() {
               
               R{result ? formatNumberWithSpaces(result.totalInvestment)  : 0} .
             </Text>
-            {result.coseOfDelay > 0 && (
+            {result.costOfDelay > 0 && (
 <>
  Your cost of delay is{" "}
             <Text style={styles.boldGreen}>
@@ -1366,7 +1366,7 @@ export default function RetirementAnnuity() {
 
             <View style={styles.graphCol}>
               <Text>Total return</Text>
-              <Text style={styles.graphStrong}>R3 961 860</Text>
+              <Text style={styles.graphStrong}>R3 763 191</Text>
               <Text style={{ height: 5 }}></Text>
               <View style={[styles.graphBar, styles.lightBar]}>
                 <View
@@ -1376,7 +1376,7 @@ export default function RetirementAnnuity() {
                   <Text>Growth</Text>
                 </View>
                 <View style={[styles.whiteBox, styles.whiteBoxLarge]}>
-                  <Text style={styles.graphStrong}>R120 000</Text>
+                  <Text style={styles.graphStrong}>R420 000</Text>
                   <Text>Contributed</Text>
                 </View>
               </View>

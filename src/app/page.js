@@ -185,7 +185,8 @@ export default function Home() {
       </>
     ),
     buttonLabel: "FIND OUT MORE",
-    img: "/images/cta-img-1.png",
+    img: "/images/cta-img-10.png",
+    mobileImg: "/images/cta-img-1.png",
   };
 
   const CallToActionData2 = {
@@ -234,7 +235,8 @@ export default function Home() {
         </svg>
       </>
     ),
-    img: "/images/cta-img-2.png",
+     img: "/images/cta-img-20.png",
+    mobileImg: "/images/cta-img-2.png",
   };
 
   const onClickAction = () => {
@@ -247,7 +249,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="relative pt-[118px] lg:p-0">
+      <div className="relative pt-14 sm:pt-[118px] lg:p-0">
         <Hero />
       </div>
       <div className="side-bg hidden lg:block sm-hidden absolute top-[1000px] right-0 z-[-1]">
@@ -267,7 +269,8 @@ export default function Home() {
           headingClasses="text-primary w-2/3"
           buttonClasses="border-0 lg:border border-primary text-primary from-transparent to-transparent"
           img={CallToActionData1.img}
-          imgBoxClasses="right-[-165px] lg:right-[60px]"
+          mobileImg={CallToActionData1.mobileImg}
+          imgBoxClasses="top-[-300px] lg:top-0 right-[-27px] lg:right-[60px]"
           imgClasses="w-[290px] lg:w-[444px]"
         />
       </section>
@@ -281,8 +284,11 @@ export default function Home() {
           sectionClasses="custom-artwork"
           headingClasses="from-[#ED0080] to-[#F37021] text-transparent w-2/3"
           buttonClasses="border-0 lg:border border-[#ED0080] text-[#ED0080] from-transparent to-transparent"
+           imgBoxClasses="top-[-341px] lg:top-0 right-[-15px] lg:right-[60px]"
+           imgClasses="w-[220px] lg:w-[468px]"
           artwork={CallToActionData2.artwork}
           img={CallToActionData2.img}
+          mobileImg={CallToActionData2.mobileImg}
         />
       </section>
       <ArtworkBackgroundBlock />

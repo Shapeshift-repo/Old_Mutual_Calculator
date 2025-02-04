@@ -757,7 +757,6 @@ export default function RetirementAnnuity() {
     { value: "moderate", label: "Moderate - Inflation plus 3%-4%" },
     { value: "medium", label: "Medium - Inflation plus 4%-5% " },
     { value: "high", label: "High - Inflation plus 5%-7%" },
-    { value: "highest", label: "Highest - Maximum Return" },
   ];
 
   const linkIcon = (
@@ -1211,10 +1210,8 @@ export default function RetirementAnnuity() {
           <Text>
             With your monthly contribution of{" "}
             <Text style={styles.boldGreen}>
-              R{result ? formatNumberWithSpaces(result.contribution + result.monthly) : 0}
-            </Text>{" "}
-
-            , with an investment strategy of{" "}
+              R{result ? formatNumberWithSpaces(result.contribution + result.monthly) : 0},
+            </Text>{" "} with an investment strategy of{" "}
             <Text style={styles.boldGreen}>
               {result ? result.investmentLabel : "inflation plus 3%-4%"}
             </Text>
@@ -1222,13 +1219,14 @@ export default function RetirementAnnuity() {
          
             will be{" "}
             <Text style={styles.boldGreen}>
-              R{result ? formatNumberWithSpaces(result.taxGetBack) : 0} .
+              
+              R{result ? formatNumberWithSpaces(result.totalInvestment)  : 0}.
             </Text>
-            {result.coseOfDelay > 0 && (
+            {result.costOfDelay > 0 && (
 <>
  Your cost of delay is{" "}
             <Text style={styles.boldGreen}>
-              R{result ? formatNumberWithSpaces(result.costOfDelay) : 0}
+              R{result ? formatNumberWithSpaces(result.costOfDelay) : 0}.
             </Text></>
             )}
            
@@ -1339,7 +1337,7 @@ export default function RetirementAnnuity() {
             </Text>
             <Text style={styles.boxText}>
               If you don’t have a financial adviser, call{" "}
-              <Text style={styles.boxStrong}>0860 66 66 59</Text> and we will
+              <Text style={styles.boxStrong}>0860 007 007</Text> and we will
               gladly assist you.
             </Text>
           </View>
@@ -1366,7 +1364,7 @@ export default function RetirementAnnuity() {
 
             <View style={styles.graphCol}>
               <Text>Total return</Text>
-              <Text style={styles.graphStrong}>R3 961 860</Text>
+              <Text style={styles.graphStrong}>R3 763 191</Text>
               <Text style={{ height: 5 }}></Text>
               <View style={[styles.graphBar, styles.lightBar]}>
                 <View
@@ -1376,7 +1374,7 @@ export default function RetirementAnnuity() {
                   <Text>Growth</Text>
                 </View>
                 <View style={[styles.whiteBox, styles.whiteBoxLarge]}>
-                  <Text style={styles.graphStrong}>R120 000</Text>
+                  <Text style={styles.graphStrong}>R420 000</Text>
                   <Text>Contributed</Text>
                 </View>
               </View>
@@ -1792,7 +1790,7 @@ your investment risk."
                 heading={`R${
                   result ? formatNumberWithSpaces(result.taxGetBack) : ""
                 }`}
-                content="<p>Total TAX BACK over the term</p>"
+                content="<p class='text-center'>Total TAX BACK over the term</p>"
                 className="mt-[-200px] lg:mt-0 pt-[236px] lg:pt-[50px] rounded-[64px] lg:rounded-0"
               />
 

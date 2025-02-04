@@ -1210,10 +1210,8 @@ export default function RetirementAnnuity() {
           <Text>
             With your monthly contribution of{" "}
             <Text style={styles.boldGreen}>
-              R{result ? formatNumberWithSpaces(result.contribution + result.monthly) : 0}
-            </Text>{" "}
-
-            , with an investment strategy of{" "}
+              R{result ? formatNumberWithSpaces(result.contribution + result.monthly) : 0},
+            </Text>{" "} with an investment strategy of{" "}
             <Text style={styles.boldGreen}>
               {result ? result.investmentLabel : "inflation plus 3%-4%"}
             </Text>
@@ -1222,7 +1220,7 @@ export default function RetirementAnnuity() {
             will be{" "}
             <Text style={styles.boldGreen}>
               
-              R{result ? formatNumberWithSpaces(result.totalInvestment)  : 0} .
+              R{result ? formatNumberWithSpaces(result.totalInvestment)  : 0}.
             </Text>
             {result.costOfDelay > 0 && (
 <>

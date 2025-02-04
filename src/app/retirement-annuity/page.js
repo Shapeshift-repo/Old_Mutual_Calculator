@@ -1226,7 +1226,7 @@ export default function RetirementAnnuity() {
 <>
  Your cost of delay is{" "}
             <Text style={styles.boldGreen}>
-              R{result ? formatNumberWithSpaces(result.costOfDelay) : 0}
+              R{result ? formatNumberWithSpaces(result.costOfDelay) : 0}.
             </Text></>
             )}
            

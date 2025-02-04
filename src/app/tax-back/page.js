@@ -774,7 +774,7 @@ export default function TaxBack() {
             important step is taking action today.  Contact your financial
             adviser to help you choose the best investment for your future. If
             you don’t have a financial adviser, call{" "}
-            <Text style={styles.bottomBold}>0860 007 007</Text> and we will
+            <Text style={styles.bottomBold}>0860 66 66 59</Text> and we will
             gladly assist you.
           </Text>
         </View>

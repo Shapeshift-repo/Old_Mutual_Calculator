@@ -758,7 +758,7 @@ export default function RetirementAnnuity() {
           <Text>
             Contact your financial adviser to help you choose the best
             investment for your future. If you don’t have a financial adviser,
-            call <Text style={styles.phone}>0860 007 007</Text> and we will
+            call <Text style={styles.phone}>0860 66 66 59</Text> and we will
             gladly assist you.
           </Text>
         </View>
@@ -945,8 +945,7 @@ export default function RetirementAnnuity() {
                 link="#calculator-form"
                 linkIcon={linkIcon}
                 linkIconClasses="block md:hidden"
-                mobileImageStyles="object-[0_120px]"
-                className="third-banner  rounded-bl-[62px] rounded-br-[62px] lg:rounded-bl-[62px] lg:rounded-br-[62px] custom-shadow"
+                className="third-banner rounded-bl-[62px] rounded-br-[62px] lg:rounded-bl-[62px] lg:rounded-br-[62px] custom-shadow"
                 gradient="linear-gradient(0deg, #009677 24.3%, rgba(0, 150, 119, 0) 91.96%)"
               />
             </div>
@@ -1065,7 +1064,7 @@ R100 might only buy you one loaf."
                       label={`${
                         result ? formatNumberWithSpaces(result.P53) : 0
                       } Years`}
-                      hint={`Average markets (7% growth)`}
+                      hint={`Average markets 7% growth)`}
                       progress={`${result ? result.P53 : 0}`}
                       labelClasses="mt-[42px] from-[#ED0080] to-[#F37021]"
                       trackClasses=""
@@ -1081,7 +1080,7 @@ R100 might only buy you one loaf."
                             : "120"
                           : 0
                       } Years`}
-                      hint={`Good markets (9% growth)`}
+                      hint={`Good markets 9% growth)`}
                       progress={`${
                         result
                           ? result.P54
@@ -1124,7 +1123,7 @@ R100 might only buy you one loaf."
                   </div>
                 </div>
 
-                <p className="px-[34px]">
+                <p>
                   <span className="text-[18px] pt-[40px] pb-[0px] font-light block inline-block text-center">
                     *The years above indicate the point at which the purchasing
                     power of your income will begin to decline.
@@ -1145,7 +1144,7 @@ R100 might only buy you one loaf."
                   />
                 </div>
 
-                <p className="px-[34px]">
+                <p>
                   <span className="text-[18px] pt-[40px] pb-[0px] font-light block inline-block text-center">
                     This calculator will produce estimates. To get a more
                     accurate income plan, speak to your financial adviser or
